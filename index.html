@@ -1328,19 +1328,57 @@ async function fetchRates(force){
 
 /* ---------- voice: real recording where the browser supports it ---------- */
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-let rec=null, recOn=false;
+/* Phones (Android Chrome especially) resend everything said so far with each result,
+   so we keep only final phrases, drop exact repeats, and listen one phrase at a time. */
+let rec=null, recOn=false, recBase='', recFinal=[], recIdle=null;
+function collapseRepeats(t){
+  let w=t.split(/\s+/).filter(Boolean);
+  for(let k=Math.floor(w.length/2);k>=1;k--){
+    for(let i=0;i+2*k<=w.length;i++){
+      if(w.slice(i,i+k).join(' ')===w.slice(i+k,i+2*k).join(' ')){ w.splice(i+k,k); i--; }
+    }
+  }
+  return w.join(' ');
+}
+function addFinal(t){
+  t=collapseRepeats(t.trim()); if(!t) return;
+  const all=norm(recFinal.join(' ')), n=norm(t), last=recFinal.length?norm(recFinal[recFinal.length-1]):'';
+  if(all && n.startsWith(all)){ const rest=collapseRepeats(t.split(/\s+/).slice(recFinal.join(' ').split(/\s+/).length).join(' ')); if(rest) recFinal.push(rest); return; }
+  if(n===last || all.endsWith(n)) return;          // the same phrase again
+  if(last && n.startsWith(last)){ recFinal[recFinal.length-1]=t; return; } // a longer version of the last phrase
+  recFinal.push(t);
+}
+function showRec(interim){
+  const parts=[...recFinal]; const i=collapseRepeats((interim||'').trim());
+  if(i && !norm(recFinal.join(' ')).endsWith(norm(i))) parts.push(i);
+  entry.value=recBase+parts.join('\n'); updatePreview();
+}
+function stopRecUI(){ recOn=false; clearTimeout(recIdle); $('micBtn').classList.remove('rec'); $('micBtn').setAttribute('aria-label','اتكلم بدل ما تكتب'); showRec(''); }
+function listenOnce(){
+  rec=new SR(); rec.lang='ar-EG'; rec.interimResults=true; rec.continuous=false; rec.maxAlternatives=1;
+  rec.onresult=e=>{
+    clearTimeout(recIdle); recIdle=setTimeout(()=>{ if(recOn){ recOn=false; rec.stop(); } },12000);
+    let interim='';
+    for(let i=e.resultIndex;i<e.results.length;i++){ const r=e.results[i]; if(r.isFinal) addFinal(r[0].transcript); else interim=r[0].transcript; }
+    showRec(interim);
+  };
+  rec.onend=()=>{ if(recOn){ try{ listenOnce(); }catch(_){ stopRecUI(); } } else stopRecUI(); };
+  rec.onerror=e=>{
+    if(e.error==='no-speech'||e.error==='aborted') return; // onend restarts or stops
+    recOn=false;
+    if(e.error==='not-allowed'||e.error==='service-not-allowed') showToast('اسمح للموقع يستخدم المايك من إعدادات المتصفح.',null);
+    else { $('voiceSteps').textContent=voiceSteps(); $('voiceTip').hidden=false; }
+  };
+  rec.start();
+}
 $('micBtn').addEventListener('click',()=>{
   if(!SR){ $('voiceSteps').textContent=voiceSteps(); $('voiceTip').hidden=false; entry.focus(); return; }
-  if(recOn){ rec.stop(); return; }
-  rec=new SR(); rec.lang='ar-EG'; rec.interimResults=true; rec.continuous=true;
-  const base = entry.value.trim() ? entry.value.trimEnd()+'\n' : '';
-  rec.onresult=e=>{ let txt=''; for(const r of e.results) txt+=r[0].transcript+' '; entry.value=base+txt.trim(); updatePreview(); };
-  rec.onend=()=>{ recOn=false; $('micBtn').classList.remove('rec'); $('micBtn').setAttribute('aria-label','اتكلم بدل ما تكتب'); };
-  rec.onerror=e=>{ recOn=false; $('micBtn').classList.remove('rec');
-    if(e.error==='not-allowed'||e.error==='service-not-allowed') showToast('اسمح للموقع يستخدم المايك من إعدادات المتصفح.',null);
-    else if(e.error!=='aborted' && e.error!=='no-speech'){ $('voiceSteps').textContent=voiceSteps(); $('voiceTip').hidden=false; } };
-  try{ rec.start(); recOn=true; $('micBtn').classList.add('rec'); $('micBtn').setAttribute('aria-label','وقّف التسجيل'); showToast('بيسمعك… اتكلم، ودوس على المايك تاني لما تخلص',null); }
-  catch(e){ $('voiceSteps').textContent=voiceSteps(); $('voiceTip').hidden=false; }
+  if(recOn){ recOn=false; try{ rec.stop(); }catch(_){ stopRecUI(); } return; }
+  recBase = entry.value.trim() ? entry.value.trimEnd()+'\n' : ''; recFinal=[];
+  try{ recOn=true; listenOnce(); $('micBtn').classList.add('rec'); $('micBtn').setAttribute('aria-label','وقّف التسجيل');
+    recIdle=setTimeout(()=>{ if(recOn){ recOn=false; rec.stop(); } },12000);
+    showToast('بيسمعك… قول كل حاجة وسعرها، ودوس على المايك تاني لما تخلص',null); }
+  catch(e){ recOn=false; $('voiceSteps').textContent=voiceSteps(); $('voiceTip').hidden=false; }
 });
 
 /* ---------- account & sync (Supabase) ---------- */
