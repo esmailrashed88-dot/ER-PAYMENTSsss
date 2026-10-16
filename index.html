@@ -224,8 +224,17 @@ h2,h3{margin:0;text-wrap:balance}
 .day-head{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding-bottom:4px;font-size:.8rem;color:var(--muted);font-weight:600}
 .day-head span:last-child{font-family:var(--f-mono)}
 .item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line)}
-.item .nm div{overflow-wrap:anywhere;font-weight:500}
-.item select{margin-top:2px;max-width:100%;font-size:.75rem;border:0;border-radius:999px;padding:1px 8px;background:var(--bg);color:var(--muted)}
+.item .nm{min-width:0}
+.item .iname{width:100%;min-width:0;border:1px solid transparent;border-radius:6px;background:transparent;padding:2px 4px;font-weight:500;color:var(--ink)}
+.item .iname:hover,.item .iname:focus,.item input.iday:hover,.item input.iday:focus{border-color:var(--line);background:var(--surface)}
+.item .meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:2px}
+.item input.iday{font-size:.75rem;border:1px solid transparent;background:var(--bg);color:var(--muted);border-radius:999px;padding:1px 8px;max-width:9.5rem}
+.item .asset-tag{padding-inline-start:5px}
+.item.flash{background:var(--accent-soft);border-radius:8px;transition:background 1.5s}
+.edit-hint{margin:0;font-size:.8rem;color:var(--muted)}
+.act{cursor:pointer;border-radius:8px}
+.act:hover{background:var(--bg)}
+.item select{max-width:100%;font-size:.75rem;border:0;border-radius:999px;padding:1px 8px;background:var(--bg);color:var(--muted)}
 .item input.amt{width:92px;text-align:left;direction:ltr;font-family:var(--f-mono);font-weight:600;border:1px solid transparent;border-radius:6px;background:transparent;padding:3px 6px}
 .item input.amt:hover,.item input.amt:focus{border-color:var(--line);background:var(--surface)}
 .receipt.inc .item input.amt{color:var(--income)}
@@ -453,6 +462,7 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
       </section>
       <section class="panel">
         <h2>المشتريات</h2>
+        <p class="edit-hint">دوس على أي اسم أو مبلغ أو تاريخ عشان تعدّله، أو × عشان تمسحه.</p>
         <div class="receipt"><div class="receipt-head" id="expHead"></div><div id="expLedger"></div></div>
       </section>
     </div>
@@ -478,6 +488,7 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
       </section>
       <section class="panel">
         <h2>الدخل</h2>
+        <p class="edit-hint">دوس على أي اسم أو مبلغ أو تاريخ عشان تعدّله، أو × عشان تمسحه.</p>
         <div class="receipt inc"><div class="receipt-head" id="incHead"></div><div id="incLedger"></div></div>
       </section>
     </div>
@@ -928,7 +939,7 @@ function renderLedger(kind){
     g.forEach(it=>{
       const opts=cats.map(c=>`<option value="${c.id}"${c.id===it.cat?' selected':''}>${c.name}</option>`).join('');
       const assetLine = it.cur ? `<span class="asset-tag">${qtyLabel(it.cur,it.qty)}${it.rate?` · ≈ ${fmt(it.amount)} ج.م يومها`:''}</span>` : '';
-      html+=`<div class="item" data-kind="${kind}" data-id="${it.id}"><div class="nm"><div>${esc(it.name)}${assetLine}</div><select aria-label="البند" data-act="cat">${opts}</select></div>`+
+      html+=`<div class="item" data-kind="${kind}" data-id="${it.id}"><div class="nm"><input class="iname" data-act="name" value="${esc(it.name)}" aria-label="الاسم">${assetLine}<div class="meta"><select aria-label="البند" data-act="cat">${opts}</select><input class="iday" type="date" data-act="day" value="${it.day}" max="${TODAY}" aria-label="التاريخ"></div></div>`+
         `<input class="amt num" data-act="amt" type="number" inputmode="decimal" min="0" step="any" value="${it.cur?it.qty:it.amount}" aria-label="${it.cur?'الكمية':'المبلغ'}" title="${it.cur?'الكمية ('+UNIT[it.cur]+')':''}">`+
         `<button class="del" data-act="del" aria-label="امسح ${esc(it.name)}">×</button></div>`;
     });
@@ -1008,7 +1019,7 @@ function render(){
   const all=[...Object.values(S.exp).flat().map(x=>({...x,k:'out'})), ...Object.values(S.inc).flat().map(x=>({...x,k:'in'})),
     ...S.goals.flatMap(gg=>(gg.log||[]).filter(l=>!l.initial).map(l=>({id:l.id,name:(l.amount>0?'تحويش لـ ':'سحب من ')+gg.name,amount:l.amount,day:l.day,k:'sv',cat:null})))]
     .sort((a,b)=> (b.day+(b.id||'')).localeCompare(a.day+(a.id||''))).slice(0,7);
-  $('recent').innerHTML = all.length ? all.map(x=>`<div class="act"><span class="dot" style="background:${x.k==='sv'?'var(--gold)':catColor(x.cat)}"></span><div class="t">${esc(x.name)}<small>${shortDay(x.day)} · ${x.k==='sv'?'أهداف':ALL_CATS[x.cat]?.name||''}</small></div><span class="a ${x.k}">${x.k==='in'?'+':x.k==='sv'?'':'−'}${fmt(Math.abs(x.amount))}</span></div>`).join('')
+  $('recent').innerHTML = all.length ? all.map(x=>`<div class="act"${x.k==='sv'?' data-go="goals"':` data-go="${x.k==='in'?'inc':'exp'}" data-goday="${x.day}" data-goid="${x.id}"`} title="دوس عشان تعدّل"><span class="dot" style="background:${x.k==='sv'?'var(--gold)':catColor(x.cat)}"></span><div class="t">${esc(x.name)}<small>${shortDay(x.day)} · ${x.k==='sv'?'أهداف':ALL_CATS[x.cat]?.name||''}</small></div><span class="a ${x.k}">${x.k==='in'?'+':x.k==='sv'?'':'−'}${fmt(Math.abs(x.amount))}</span></div>`).join('')
     : '<p class="empty-note">لسه مفيش حركات. ابدأ بتسجيل دخلك أو أول مصروف من الخانة اللي فوق.</p>';
 
   // expenses tab
@@ -1188,6 +1199,13 @@ $('savLog').addEventListener('click',e=>{
 });
 
 /* ---------- ledger edits ---------- */
+document.addEventListener('click',e=>{
+  const a=e.target.closest('.act[data-go]'); if(!a) return;
+  if(a.dataset.goday) viewMonth=a.dataset.goday.slice(0,7);
+  setTab(a.dataset.go);
+  const id=a.dataset.goid; if(!id) return;
+  setTimeout(()=>{ const row=document.querySelector(`.item[data-id="${id}"]`); if(!row) return; row.scrollIntoView({block:'center',behavior:'smooth'}); row.classList.add('flash'); setTimeout(()=>row.classList.remove('flash'),1600); },60);
+});
 function findItem(kind,id){ const store=kind==='inc'?S.inc:S.exp; const arr=store[viewMonth]||[]; return [arr, arr.findIndex(x=>x.id===id), store]; }
 document.addEventListener('change',e=>{
   const row=e.target.closest('.item'); if(!row) return;
@@ -1195,6 +1213,16 @@ document.addEventListener('change',e=>{
   if(e.target.dataset.act==='cat'){
     arr[i].cat=e.target.value;
     S.prefs[kind==='inc'?'learnedInc':'learned'][root(norm(arr[i].name))]=e.target.value; savePrefs();
+  } else if(e.target.dataset.act==='name'){
+    const v=e.target.value.trim(); if(!v){ e.target.value=arr[i].name; return; } arr[i].name=v;
+  } else if(e.target.dataset.act==='day'){
+    const v=e.target.value; if(!/^\d{4}-\d{2}-\d{2}$/.test(v)){ e.target.value=arr[i].day; return; }
+    const it=arr[i]; const from=viewMonth, to=v.slice(0,7); it.day=v;
+    if(to!==from){
+      const store=kind==='inc'?S.inc:S.exp; arr.splice(i,1); (store[to] ||= []).push(it);
+      const save=k=>kind==='inc'?saveInc(k):saveExp(k); save(from); save(to); render();
+      return showToast(`اتنقلت لـ ${monthName(to)}`,null);
+    }
   } else if(e.target.dataset.act==='amt'){
     const it=arr[i]; const v=parseFloat(asciiDigits(e.target.value)); if(!(v>0)){ e.target.value=it.cur?it.qty:it.amount; return; }
     if(it.cur){ it.qty=v; it.amount=Math.round(v*(it.rate||0)*100)/100; } else it.amount=v;
