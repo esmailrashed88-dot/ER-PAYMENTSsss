@@ -728,7 +728,7 @@ body.app-ideas{background-image:radial-gradient(var(--line) 1px,transparent 1.2p
   .mtop b{font-family:var(--f-display);font-size:1.1rem}
   .mtop .sp{flex:1}
   .main{padding:18px max(16px,env(safe-area-inset-left,0px)) calc(92px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-right,0px))}
-  .bottomnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:20;padding:6px max(6px,env(safe-area-inset-left,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-right,0px));background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+  .bottomnav{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;position:fixed;left:0;right:0;bottom:0;z-index:20;padding:6px max(6px,env(safe-area-inset-left,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-right,0px));background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
   .bottomnav .navbtn{flex-direction:column;gap:3px;padding:6px 2px;font-size:.7rem;justify-content:center;align-items:center;border-radius:10px}
   .bottomnav .navbtn.on{background:transparent}
   .bottomnav .navbtn.on .ic{background:var(--accent-soft);border-radius:99px;padding:3px 14px;width:48px;height:28px}
@@ -750,6 +750,44 @@ body.app-ideas{background-image:radial-gradient(var(--line) 1px,transparent 1.2p
 @media (max-width:560px){ .tq-hint{display:none} .ts-grid{grid-template-columns:1fr 1fr} }
 @media (prefers-reduced-motion:reduce){ .trow,.quick button,.ring circle{transition:none} #taskSheet .sheet{animation:none} }
 
+
+/* ---- money lock ---- */
+.lockcard{justify-self:center;width:min(100%,360px);margin-top:min(6vh,48px);background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--sh2);padding:30px 24px 22px;display:grid;justify-items:center;gap:10px;text-align:center}
+.lock-ic{width:56px;height:56px;border-radius:16px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.lock-ic svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.lockcard h2{margin:6px 0 0;font-family:var(--f-display);font-size:1.25rem}
+.lockcard>p{margin:0;font-size:.9rem;min-height:1.4em}
+.lockcard>p.err{color:var(--warn)}
+.pindots{display:flex;gap:14px;margin:10px 0 6px;direction:ltr}
+.pindots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--line2);transition:background .15s,border-color .15s,transform .15s}
+.pindots i.f{background:var(--accent);border-color:var(--accent);transform:scale(1.08)}
+.pindots.shake{animation:pinshake .4s}
+@keyframes pinshake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.pinpad{display:grid;grid-template-columns:repeat(3,72px);gap:12px;margin-top:6px}
+.pinpad button{height:60px;border-radius:50%;width:72px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-family:var(--f-mono);font-size:1.45rem;font-weight:500;transition:background .12s,transform .08s}
+.pinpad button:hover{background:var(--accent-soft)}
+.pinpad button:active{transform:scale(.94)}
+.pinpad button:disabled{opacity:.4}
+.pinpad .pk-txt{background:transparent;border-color:transparent;font-family:var(--f-body);font-size:.85rem;color:var(--muted);display:grid;place-items:center}
+.pinpad .pk-txt .ic{width:24px;height:24px}
+.lockcard .link{margin-top:6px}
+.forgot{display:grid;gap:8px;width:100%}
+.forgot input{width:100%}
+.switch-row{display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.switch-row input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent);flex:none}
+.switch-row span{display:grid;gap:2px}
+.switch-row small{color:var(--muted);font-size:.8rem;line-height:1.6}
+.dlock{display:flex;align-items:center;gap:12px}
+.dlock .lock-ic{width:40px;height:40px;border-radius:12px}
+.dlock .lock-ic svg{width:20px;height:20px}
+.dlock>div:not(.lock-ic){flex:1;display:grid;gap:2px}
+.dlock .lock-ic{flex:none}
+.dlock small{color:var(--muted);font-size:.8rem}
+.lockbtn{color:var(--muted)}
+body.app-lock .navbtn[data-app=money]{background:var(--accent-soft);color:var(--accent)}
+@media (max-width:900px){body.app-lock .bottomnav .navbtn[data-app=money]{background:transparent}body.app-lock .bottomnav .navbtn[data-app=money] .ic{background:var(--accent-soft);border-radius:99px;padding:3px 14px;width:48px;height:28px}}
+body.money-hidden .navbtn[data-app=money],body.money-hidden [data-quick=exp],body.money-hidden #dashMoney{display:none!important}
+@media (max-width:420px){.pinpad{grid-template-columns:repeat(3,64px)}.pinpad button{width:64px;height:56px}}
 </style>
 </head>
 <body>
@@ -781,7 +819,7 @@ body.app-ideas{background-image:radial-gradient(var(--line) 1px,transparent 1.2p
   <div class="head">
     <div class="ph">
       <div class="ph-t"><h1 id="pageTitle">النهارده</h1><p id="pageSub"></p></div>
-      <div class="top-actions"><nav class="monthnav money-only" aria-label="تغيير الشهر" id="monthnav">
+      <div class="top-actions"><button type="button" class="iconbtn money-only lockbtn" id="lockNowBtn" aria-label="اقفل مصروفي" title="اقفل مصروفي"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></button><nav class="monthnav money-only" aria-label="تغيير الشهر" id="monthnav">
         <button id="prevM" aria-label="الشهر اللي فات">→</button>
         <span class="label" id="monthLabel"></span>
         <button id="nextM" aria-label="الشهر اللي جاي">←</button>
@@ -825,6 +863,26 @@ body.app-ideas{background-image:radial-gradient(var(--line) 1px,transparent 1.2p
   </section>
 
   <!-- DASHBOARD -->
+  <div class="view sec-view" id="v-lock" aria-label="مصروفي مقفول">
+    <section class="lockcard" id="lockCard">
+      <div class="lock-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><circle cx="12" cy="15.5" r="1.3"/></svg></div>
+      <h2 id="lockTitle">مصروفي مقفول</h2>
+      <p id="lockMsg" class="muted">اكتب الرقم السري</p>
+      <div class="pindots" id="pinDots" aria-live="polite"><i></i><i></i><i></i><i></i></div>
+      <div class="pinpad" id="pinPad" dir="ltr">
+        <button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button>
+        <button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button>
+        <button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button>
+        <button type="button" data-k="cancel" class="pk-txt">رجوع</button><button type="button" data-k="0">0</button><button type="button" data-k="del" class="pk-txt" aria-label="امسح"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-6-7z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/></svg></button>
+      </div>
+      <button type="button" class="link" id="pinForgot">نسيت الرقم السري؟</button>
+      <form class="forgot" id="forgotForm" hidden>
+        <p class="hint" style="margin:0">اكتب باسورد حسابك عشان تعمل رقم سري جديد.</p>
+        <input type="password" id="forgotPw" autocomplete="current-password" placeholder="باسورد الحساب" aria-label="باسورد الحساب">
+        <button class="btn sm" type="submit">تأكيد</button>
+      </form>
+    </section>
+  </div>
   <div class="view sec-view" id="v-dash" aria-label="النهارده">
     <section class="dhero" id="dashHello"></section>
     <div class="quick">
@@ -1094,6 +1152,15 @@ body.app-ideas{background-image:radial-gradient(var(--line) 1px,transparent 1.2p
           <button class="btn sm" type="submit">احفظ الأسعار</button>
         </form>
       </details>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>الخصوصية</h2><span class="muted" id="lockState"></span></div>
+      <label class="switch-row"><input type="checkbox" id="hideMoney"><span><b>اخفي «مصروفي» من القايمة</b><small>القسم ومبلغ فلوسك يختفوا من القايمة ومن «النهارده». تفتحه بإنك تدوس مطوّل على لوجو «حياتي».</small></span></label>
+      <div class="acct">
+        <button class="btn ghost sm" id="changePin" type="button">غيّر الرقم السري</button>
+        <button class="btn ghost sm" id="lockNow2" type="button">اقفل دلوقتي</button>
+      </div>
+      <p class="hint">بيتقفل لوحده لو سبته 5 دقايق، أو خرجت من التطبيق أكتر من دقيقة.</p>
     </section>
     <section class="panel">
       <div class="panel-head"><h2>حسابك</h2><span class="muted mono" id="acctName"></span></div>
@@ -1378,7 +1445,7 @@ function parseAsset(chunk, day){
 /* ---------- state ---------- */
 let LS_KEY='masrofi-local';
 const blankPrefs=()=>({budget:0, learned:{}, learnedInc:{}, opening:0, openAssets:{}});
-let S = {exp:{}, inc:{}, goals:[], moves:[], holdings:[], banks:[], ideas:[], sketches:{}, tasks:[], tlists:[], prefs:blankPrefs()};
+let S = {exp:{}, inc:{}, goals:[], moves:[], holdings:[], banks:[], ideas:[], sketches:{}, tasks:[], tlists:[], prefs:blankPrefs(),lock:{}};
 let R = null; // live rates {usd:{buy,sell}, gold:{k24,k21,k18,pound:{buy,sell}}, updatedAt, source}
 try{ R = JSON.parse(localStorage.getItem('masrofi-rates')||'null'); }catch(e){}
 let backend='local', COL=null;
@@ -1396,7 +1463,7 @@ const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 function loadLocal(){
   try{
     const raw=localStorage.getItem(LS_KEY);
-    if(raw){ const v=JSON.parse(raw); S={exp:v.exp||{},inc:v.inc||{},goals:v.goals||[],moves:v.moves||[],holdings:v.holdings||[],banks:v.banks||[],ideas:v.ideas||[],sketches:v.sketches||{},tasks:v.tasks||[],tlists:v.tlists||[],prefs:Object.assign(blankPrefs(),v.prefs||{})}; }
+    if(raw){ const v=JSON.parse(raw); S={exp:v.exp||{},inc:v.inc||{},goals:v.goals||[],moves:v.moves||[],holdings:v.holdings||[],banks:v.banks||[],ideas:v.ideas||[],sketches:v.sketches||{},tasks:v.tasks||[],tlists:v.tlists||[],prefs:Object.assign(blankPrefs(),v.prefs||{}),lock:v.lock||{}}; }
     if(raw) { try{ tab = localStorage.getItem('masrofi-tab') || 'home'; }catch(e){} return; }
     const old=localStorage.getItem('masrofi-v1'); // first version
     if(old){ const v=JSON.parse(old); S.exp=v.months||{}; Object.assign(S.prefs,{budget:v.prefs?.budget||0,learned:v.prefs?.learned||{}}); }
@@ -2040,13 +2107,15 @@ const APP_META={
   ideas:['أفكاري وأهدافي',()=>'طلّع أفكارك وحوّلها لأهداف'],
   calc:['حاسبات إنشائية',()=>'ECP 203 · ACI 318-19 / SBC 304']};
 function setApp(a){
-  if(!APP_META[a]) a='home'; appSec=a;
+  if(!APP_META[a]) a='home';
+  if(a==='money'&&!moneyOpen()){ showLock(); return; }
+  appSec=a; document.body.classList.remove('app-lock'); $('v-lock').classList.remove('on');
   Object.keys(APP_META).forEach(k=>document.body.classList.toggle('app-'+k,k===a));
   document.querySelectorAll('.sec-view').forEach(v=>v.classList.toggle('on',v.id==='v-'+(a==='home'?'dash':a)));
   document.querySelectorAll('.navbtn').forEach(b=>{ const on=b.dataset.app===a; b.classList.toggle('on',on); if(on) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
   $('pageTitle').textContent=APP_META[a][0]; $('pageSub').textContent=APP_META[a][1]();
   document.title = a==='home' ? 'حياتي' : APP_META[a][0]+' · حياتي';
-  try{ localStorage.setItem('hayati-app',a); }catch(e){}
+  try{ localStorage.setItem('hayati-app',a==='money'?'home':a); }catch(e){}
   window.scrollTo({top:0}); render(); if(a==='calc') renderCalc();
 }
 document.querySelectorAll('.navbtn').forEach(b=>b.addEventListener('click',()=>setApp(b.dataset.app)));
@@ -3397,6 +3466,7 @@ function renderDash(){
     ${todayList.length?`<div class="tlist">${todayList.map(trow).join('')}</div>`:`<div class="tempty sm"><b>${doneToday?'خلّصت كل حاجة':'يومك فاضي'}</b><span>${doneToday?'برافو.':'ضيف مهمة من تحت.'}</span></div>`}
     <form class="dq" id="dashQ"><input id="dashQIn" placeholder="مهمة سريعة… مثلاً: أكلم المقاول الساعة 4" aria-label="مهمة سريعة"><button class="btn sm" type="submit">أضف</button></form>
     <button type="button" class="link" data-goapp="tasks">كل المهام ←</button>`;
+  if(!moneyOpen()){ $('dashMoney').innerHTML=dashLockCard(); } else
   $('dashMoney').innerHTML=`<div class="dcard-h"><h3>${ic('cal')}فلوسك</h3><span class="muted" style="font-size:.8rem">${monthName(CUR_MONTH)}</span></div>
     <div class="dstat"><span>إجمالي فلوسك</span><b>${fmt(net)} <small>ج.م</small></b></div>
     <div class="dstat"><span>صرفت الشهر ده</span><b>${fmt(spent)} <small>ج.م</small></b></div>
@@ -3451,6 +3521,7 @@ function applyDoc(t,id,v){
   else if(id==='ideas') t.ideas=v.list||[];
   else if(id==='tasks') t.tasks=v.list||[];
   else if(id==='tlists') t.tlists=v.list||[];
+  else if(id==='lock') t.lock=v||{};
   else if(id.startsWith('sk-')){ const k=id.slice(3); if(v.deleted) delete t.sketches[k]; else t.sketches[k]=v; }
   else if(id.startsWith('m-')) t.exp[id.slice(2)]=v.items||[];
   else if(id.startsWith('i-')) t.inc[id.slice(2)]=v.items||[];
@@ -3459,7 +3530,7 @@ function docsOf(st){
   const d={};
   Object.keys(st.exp).forEach(k=>d['m-'+k]={items:st.exp[k]});
   Object.keys(st.inc).forEach(k=>d['i-'+k]={items:st.inc[k]});
-  d.goals={list:st.goals}; d.moves={list:st.moves}; d.holdings={list:st.holdings}; d.banks={list:st.banks}; d.ideas={list:st.ideas||[]}; d.tasks={list:st.tasks||[]}; if((st.tlists||[]).length) d.tlists={list:st.tlists}; Object.keys(st.sketches||{}).forEach(k=>{ d['sk-'+k]=st.sketches[k]; }); d.prefs=st.prefs;
+  d.goals={list:st.goals}; d.moves={list:st.moves}; d.holdings={list:st.holdings}; d.banks={list:st.banks}; d.ideas={list:st.ideas||[]}; d.tasks={list:st.tasks||[]}; if((st.tlists||[]).length) d.tlists={list:st.tlists}; Object.keys(st.sketches||{}).forEach(k=>{ d['sk-'+k]=st.sketches[k]; }); d.prefs=st.prefs; if(st.lock&&st.lock.hash) d.lock=st.lock;
   return d;
 }
 function pushAll(){ const d=docsOf(S); Object.keys(d).forEach(id=>writeRemote(id,d[id])); }
@@ -3470,10 +3541,10 @@ async function pull(){
   const {data,error}=await sb.from('masrofi_docs').select('doc_id,body').eq('user_id',USER.id);
   if(error){ setSync('error'); return; }
   if(!data.length){ if(hasData(S)) pushAll(); setSync('ok'); return; }
-  const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},tasks:[],tlists:[],prefs:blankPrefs()};
+  const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},tasks:[],tlists:[],prefs:blankPrefs(),lock:{}};
   data.forEach(r=>applyDoc(next,r.doc_id,r.body));
   dirty.forEach(id=>{ const d=docsOf(S); if(d[id]) applyDoc(next,id,d[id]); }); // keep edits that never reached the server
-  S=next; migrateAssets(); saveLocal(); render(); updatePreview();
+  S=next; migrateAssets(); saveLocal(); lockChanged(); render(); updatePreview();
   if(dirty.size){ const d=docsOf(S); [...dirty].forEach(id=>d[id]&&writeRemote(id,d[id])); }
   setSync('ok');
 }
@@ -3483,7 +3554,7 @@ function subscribe(){
     .on('postgres_changes',{event:'*',schema:'public',table:'masrofi_docs',filter:'user_id=eq.'+USER.id},p=>{
       const row=p.new; if(!row||!row.doc_id) return;
       if(Date.now()-(lastLocalWrite[row.doc_id]||0)<5000) return; // our own echo
-      applyDoc(S,row.doc_id,row.body); saveLocal(); render(); updatePreview();
+      applyDoc(S,row.doc_id,row.body); saveLocal(); if(row.doc_id==='lock') lockChanged(); render(); updatePreview();
     }).subscribe();
 }
 function showApp(on){ $('auth').hidden=on; $('appRoot').hidden=!on; }
@@ -3492,9 +3563,10 @@ async function handleSession(session){
   if(u && USER && u.id===USER.id) return;
   if(!u){ USER=null; if(channel){ sb.removeChannel(channel); channel=null; } showApp(false); return; }
   USER=u; LS_KEY='masrofi-'+u.id;
-  S={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},tasks:[],tlists:[],prefs:blankPrefs()};
+  S={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},tasks:[],tlists:[],prefs:blankPrefs(),lock:{}};
   loadLocal(); migrateAssets(); showApp(true); setTab(['home','exp','inc','sav','goals'].includes(tab)?tab:'home'); setApp(APP_META[location.hash.slice(1)]?location.hash.slice(1):appSec); updatePreview();
   $('acctName').textContent=displayName(u); $('sideUser').textContent=displayName(u); $('sideAvatar').textContent=(displayName(u)[0]||'?').toUpperCase();
+  lockChanged();
   await pull(); subscribe();
 }
 
@@ -3529,12 +3601,12 @@ $('authForm').addEventListener('submit',async e=>{
   }catch(err){ $('authErr').textContent=AUTH_ERR(err.message||String(err)); $('authErr').hidden=false; }
   $('authBtn').disabled=false;
 });
-$('logoutBtn').addEventListener('click',async()=>{ await sb?.auth.signOut(); });
+$('logoutBtn').addEventListener('click',async()=>{ lockNow(true); await sb?.auth.signOut(); });
 $('logoutBtn2').addEventListener('click',()=>$('logoutBtn').click());
 
 /* backup */
 $('exportBtn').addEventListener('click',()=>{
-  const blob=new Blob([JSON.stringify({app:'masrofi',version:1,exported:new Date().toISOString(),docs:docsOf(S)},null,1)],{type:'application/json'});
+  const blob=new Blob([JSON.stringify({app:'masrofi',version:1,exported:new Date().toISOString(),docs:(()=>{ const d=docsOf(S); delete d.lock; return d; })()},null,1)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`masrofi-backup-${TODAY}.json`; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
 });
 $('importBtn').addEventListener('click',()=>$('importFile').click());
@@ -3542,12 +3614,135 @@ $('importFile').addEventListener('change',async e=>{
   const f=e.target.files[0]; e.target.value=''; if(!f) return;
   try{
     const j=JSON.parse(await f.text()); if(!j||!j.docs) throw 0;
-    const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},tasks:[],tlists:[],prefs:blankPrefs()};
-    Object.keys(j.docs).forEach(id=>applyDoc(next,id,j.docs[id]));
+    const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},tasks:[],tlists:[],prefs:blankPrefs(),lock:{}};
+    Object.keys(j.docs).forEach(id=>{ if(id!=='lock') applyDoc(next,id,j.docs[id]); }); next.lock=S.lock;
     const prev=S; S=next; migrateAssets(); saveLocal(); pushAll(); render();
     showToast('اترفعت النسخة الاحتياطية', ()=>{ S=prev; saveLocal(); pushAll(); render(); });
   }catch(_){ showToast('الملف ده مش نسخة احتياطية من مصروفي.',null); }
 });
+
+/* ================= قفل مصروفي ================= */
+const LOCK_IDLE=5*60*1000, LOCK_AWAY=60*1000, PIN_LEN=4;
+let unlockedAt=0, lastAct=0, awayAt=0, pinBuf='', pinMode='enter', pinFirst='', pinFails=0, pinWaitUntil=0, pinBusy=false;
+try{ const v=JSON.parse(sessionStorage.getItem('hayati-unlock')||'null'); if(v&&Date.now()-v.t<LOCK_IDLE){ unlockedAt=v.t; lastAct=v.t; } }catch(e){}
+const hasPin=()=>!!(S.lock&&S.lock.hash);
+const moneyOpen=()=>hasPin()&&unlockedAt>0;
+async function pinHash(pin,salt){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+':'+pin+':hayati'));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function markAct(){ if(!unlockedAt) return; const now=Date.now(); if(now-lastAct<5000) return; lastAct=now; try{ sessionStorage.setItem('hayati-unlock',JSON.stringify({t:now})); }catch(e){} }
+function applyHide(){ document.body.classList.toggle('money-hidden',!!(S.lock&&S.lock.hide)&&!moneyOpen()); }
+function lockChanged(){
+  if(!hasPin()&&unlockedAt) { unlockedAt=0; }
+  applyHide(); syncLockPanel();
+  if(appSec==='money'&&!moneyOpen()) showLock();
+}
+function lockNow(silent){
+  unlockedAt=0; lastAct=0; try{ sessionStorage.removeItem('hayati-unlock'); }catch(e){}
+  applyHide();
+  if(USER){ renderDash(); if(appSec==='money') showLock(); else render(); }
+  if(!silent) showToast('اتقفل مصروفي',null);
+}
+function setPinMsg(t,err){ const p=$('lockMsg'); p.textContent=t; p.classList.toggle('err',!!err); }
+function drawDots(){ $('pinDots').querySelectorAll('i').forEach((d,i)=>d.classList.toggle('f',i<pinBuf.length)); }
+function showLock(mode){
+  pinMode = mode || (hasPin()?'enter':'new'); pinBuf=''; pinFirst='';
+  Object.keys(APP_META).forEach(k=>document.body.classList.remove('app-'+k));
+  document.body.classList.add('app-lock');
+  document.querySelectorAll('.sec-view').forEach(v=>v.classList.toggle('on',v.id==='v-lock'));
+  document.querySelectorAll('.navbtn').forEach(b=>{ b.classList.remove('on'); b.removeAttribute('aria-current'); });
+  $('pageTitle').textContent='مصروفي'; $('pageSub').textContent='القسم ده مقفول برقم سري'; document.title='حياتي';
+  $('forgotForm').hidden=true; $('pinForgot').hidden=pinMode!=='enter';
+  const T={enter:['مصروفي مقفول','اكتب الرقم السري'],new:['اعمل رقم سري لمصروفي','اختار 4 أرقام محدّش يعرفها غيرك'],change:['غيّر الرقم السري','اكتب الرقم السري الحالي الأول']};
+  $('lockTitle').textContent=T[pinMode][0]; setPinMsg(T[pinMode][1]); drawDots(); updateWait();
+  window.scrollTo({top:0});
+}
+function updateWait(){
+  const left=Math.ceil((pinWaitUntil-Date.now())/1000), on=left>0;
+  $('pinPad').querySelectorAll('button').forEach(b=>{ if(b.dataset.k!=='cancel') b.disabled=on; });
+  if(on){ setPinMsg(`محاولات كتير غلط. استنى ${left} ثانية`,true); setTimeout(updateWait,1000); }
+  else if(pinFails>=5){ pinFails=0; setPinMsg('جرّب تاني'); }
+}
+function pinShake(msg){ const d=$('pinDots'); d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake'); if(navigator.vibrate) navigator.vibrate(120); pinBuf=''; setTimeout(drawDots,200); setPinMsg(msg,true); }
+function openMoney(){
+  unlockedAt=Date.now(); lastAct=0; markAct(); pinFails=0; applyHide();
+  document.body.classList.remove('app-lock'); setApp('money');
+}
+async function pinDone(){
+  pinBusy=true; const pin=pinBuf;
+  try{
+    if(pinMode==='enter'||pinMode==='change'){
+      const ok=(await pinHash(pin,S.lock.salt))===S.lock.hash;
+      if(!ok){ pinFails++; if(pinFails>=5){ pinWaitUntil=Date.now()+30000; pinBuf=''; drawDots(); updateWait(); } else pinShake('الرقم غلط، جرّب تاني'); return; }
+      if(pinMode==='enter'){ openMoney(); return; }
+      pinMode='new'; pinBuf=''; drawDots(); $('lockTitle').textContent='الرقم السري الجديد'; setPinMsg('اختار 4 أرقام جديدة'); return;
+    }
+    if(pinMode==='new'){ pinFirst=pin; pinMode='confirm'; pinBuf=''; drawDots(); setPinMsg('اكتبه تاني للتأكيد'); return; }
+    if(pinMode==='confirm'){
+      if(pin!==pinFirst){ pinMode='new'; pinFirst=''; pinShake('مش زي اللي فات. اختار الرقم من الأول'); return; }
+      const salt=[...crypto.getRandomValues(new Uint8Array(12))].map(b=>b.toString(16).padStart(2,'0')).join('');
+      S.lock=Object.assign({},S.lock,{salt,hash:await pinHash(pin,salt),set:new Date().toISOString()});
+      writeDoc('lock',S.lock); showToast('اتحفظ الرقم السري',null); openMoney(); return;
+    }
+  } finally { pinBusy=false; }
+}
+function pinKey(k){
+  if(pinBusy||Date.now()<pinWaitUntil) return;
+  if(k==='cancel'){ setApp(moneyOpen()?'money':'home'); return; }
+  if(k==='del'){ pinBuf=pinBuf.slice(0,-1); drawDots(); return; }
+  if(!/^\d$/.test(k)||pinBuf.length>=PIN_LEN) return;
+  pinBuf+=k; drawDots(); if(pinBuf.length===PIN_LEN) setTimeout(pinDone,120);
+}
+$('pinPad').addEventListener('click',e=>{ const b=e.target.closest('button[data-k]'); if(b) pinKey(b.dataset.k); });
+document.addEventListener('keydown',e=>{
+  if(!document.body.classList.contains('app-lock')||e.target.closest('input,textarea')) return;
+  if(/^[0-9٠-٩]$/.test(e.key)){ pinKey(asciiDigits(e.key)); e.preventDefault(); }
+  else if(e.key==='Backspace'){ pinKey('del'); e.preventDefault(); }
+  else if(e.key==='Escape') pinKey('cancel');
+});
+$('pinForgot').addEventListener('click',()=>{ $('forgotForm').hidden=false; $('forgotPw').focus(); });
+$('forgotForm').addEventListener('submit',async e=>{
+  e.preventDefault(); const pw=$('forgotPw').value; if(!pw||!sb||!USER) return;
+  const {error}=await sb.auth.signInWithPassword({email:USER.email,password:pw});
+  $('forgotPw').value='';
+  if(error){ setPinMsg('الباسورد غلط',true); return; }
+  showLock('new');
+});
+/* settings */
+function syncLockPanel(){
+  if(!$('hideMoney')) return;
+  $('hideMoney').checked=!!(S.lock&&S.lock.hide);
+  $('lockState').textContent=hasPin()?'مقفول برقم سري':'';
+}
+$('hideMoney').addEventListener('change',e=>{
+  S.lock=Object.assign({},S.lock,{hide:e.target.checked}); writeDoc('lock',S.lock); applyHide();
+  showToast(e.target.checked?'هيختفي من القايمة لما يتقفل. افتحه بالدوسة المطوّلة على اللوجو.':'«مصروفي» هيفضل ظاهر في القايمة',null);
+});
+$('changePin').addEventListener('click',()=>{ appSec='money'; showLock('change'); });
+['lockNowBtn','lockNow2'].forEach(id=>$(id).addEventListener('click',()=>lockNow()));
+/* auto-lock */
+['pointerdown','keydown','scroll'].forEach(ev=>document.addEventListener(ev,markAct,{passive:true}));
+setInterval(()=>{ if(unlockedAt&&Date.now()-Math.max(lastAct,unlockedAt)>LOCK_IDLE) lockNow(true); },15000);
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){ awayAt=Date.now(); return; }
+  if(unlockedAt&&awayAt&&Date.now()-awayAt>LOCK_AWAY) lockNow(true);
+  awayAt=0;
+});
+/* secret door: long-press the logo */
+document.querySelectorAll('.side-brand svg,.mtop>svg').forEach(el=>{
+  let t=null; el.style.touchAction='none';
+  const go=()=>{ t=null; if(navigator.vibrate) navigator.vibrate(30); setApp('money'); };
+  el.addEventListener('pointerdown',()=>{ clearTimeout(t); t=setTimeout(go,700); });
+  ['pointerup','pointerleave','pointercancel'].forEach(ev=>el.addEventListener(ev,()=>{ clearTimeout(t); t=null; }));
+  el.addEventListener('contextmenu',e=>e.preventDefault());
+});
+function dashLockCard(){
+  return `<div class="dcard-h"><h3>${ic('cal')}فلوسك</h3></div>
+    <div class="dlock"><div class="lock-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></div>
+    <div><b>${hasPin()?'مقفولة':'مش مقفولة لسه'}</b><small>${hasPin()?'الأرقام مخفية لحد ما تفتح برقمك السري':'اعمل رقم سري عشان محدّش يشوف فلوسك'}</small></div></div>
+    <button type="button" class="btn ghost sm" data-goapp="money" style="justify-self:start">${hasPin()?'افتح':'اعمل رقم سري'}</button>`;
+}
 
 /* ---------- boot ---------- */
 syncAssetForm(); setMode('exp');
