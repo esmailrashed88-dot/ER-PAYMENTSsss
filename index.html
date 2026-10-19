@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#1C6A50">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>مصروفي</title>
+<title>حياتي</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231C6A50'/%3E%3Cpath d='M16 22h32v24H16z' fill='none' stroke='white' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='40' cy='34' r='3.5' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -296,6 +296,83 @@ h2,h3{margin:0;text-wrap:balance}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 [hidden]{display:none!important}
+:root{--scrim:rgba(12,22,17,.5)}
+.apps{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px}
+.apps button{display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 8px;font-weight:700;color:var(--muted);font-size:.92rem}
+.apps button svg{width:18px;height:18px;flex:none}
+.apps button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+body:not(.app-ideas) #v-ideas{display:none!important}
+body.app-ideas .money-only,body.app-ideas .view:not(#v-ideas){display:none!important}
+#v-ideas{grid-template-columns:minmax(0,1fr)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:.84rem;color:var(--muted);font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.chip[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.chip b{font-family:var(--f-mono);font-weight:600}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start;min-width:0}
+.board.single{grid-template-columns:minmax(0,1fr)}
+.col{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--sc);border-radius:14px;padding:12px;display:grid;gap:10px;min-width:0}
+.col-head{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.col-head h3{font-size:.98rem}
+.col-head small{color:var(--muted);font-size:.75rem;display:block;font-weight:400}
+.col-head .n{font-family:var(--f-mono);color:var(--muted)}
+.cards{display:grid;gap:8px}
+.board.single .cards{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.icard{display:grid;gap:6px;text-align:start;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;width:100%;color:var(--ink);font:inherit}
+.icard:hover{border-color:var(--accent)}
+.icard .tt{font-weight:600;overflow-wrap:anywhere;line-height:1.45}
+.icard .np{font-size:.8rem;color:var(--muted);overflow-wrap:anywhere}
+.icard .row{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;font-size:.76rem;color:var(--muted)}
+.ia{font-size:.72rem;font-weight:600;color:var(--ac);display:inline-flex;align-items:center;gap:5px}
+.ia::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--ac)}
+.due{font-size:.74rem;padding:1px 8px;border-radius:999px;background:var(--bg);color:var(--muted);white-space:nowrap}
+.due.late{background:var(--warn-soft);color:var(--warn)}
+.due.soon{background:var(--gold-soft);color:var(--gold)}
+.mini-bar{height:5px;border-radius:99px;background:var(--bg);overflow:hidden}
+.mini-bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.col-empty{font-size:.82rem;color:var(--muted);margin:0;padding:6px 2px}
+.next-step{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+.next-step:last-child{border-bottom:0}
+.next-step input,.step input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
+.next-step .tx{overflow-wrap:anywhere}
+.next-step small{display:block;color:var(--muted);font-size:.76rem}
+.next-step .open{border:0;background:none;color:var(--accent);font-size:.8rem;font-weight:600;padding:0}
+.sheet-bg{position:fixed;inset:0;z-index:30;background:var(--scrim);display:grid;place-items:end center}
+.sheet{width:100%;max-width:640px;max-height:92vh;overflow:auto;background:var(--surface);border-radius:18px 18px 0 0;padding:18px max(16px,env(safe-area-inset-left,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-right,0px));display:grid;gap:14px}
+@media (min-width:700px){.sheet-bg{place-items:center}.sheet{border-radius:18px}}
+.sheet-head{display:flex;gap:8px;align-items:start}
+.is-title{flex:1;min-width:0;font-family:var(--f-display);font-size:1.35rem;border:1px solid transparent;border-radius:8px;background:transparent;padding:2px 6px;color:var(--ink)}
+.is-title:hover,.is-title:focus{border-color:var(--line)}
+.stagebar{display:flex;gap:4px;flex-wrap:wrap}
+.stagebar button{flex:1;min-width:64px;border:0;border-radius:8px;padding:6px 4px;font-size:.8rem;font-weight:600;background:var(--bg);color:var(--muted)}
+.stagebar button.past{background:var(--accent-soft);color:var(--accent)}
+.stagebar button.cur{background:var(--accent);color:var(--accent-ink)}
+.is-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field textarea{padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);font-size:.95rem;width:100%;resize:vertical;line-height:1.7}
+.field .entry-wrap{display:block}
+.field .entry-wrap textarea{padding-left:50px}
+.mic.small{width:34px;height:34px;bottom:8px;left:8px}
+.steps-box{display:grid;gap:6px;background:var(--bg);border-radius:12px;padding:12px}
+.steps-box h3{font-size:.95rem}
+.step{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center}
+.step .st{border:1px solid transparent;border-radius:6px;background:transparent;padding:4px 6px;min-width:0;width:100%;color:var(--ink)}
+.step .st:hover,.step .st:focus{border-color:var(--line);background:var(--surface)}
+.step.done .st{text-decoration:line-through;color:var(--muted)}
+.step-add{display:flex;gap:6px}
+.step-add input{flex:1;min-width:0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.ready{display:grid;gap:6px;border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:.86rem}
+.ready ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.ready li button{border:0;border-radius:999px;padding:2px 10px;font-size:.8rem;background:var(--warn-soft);color:var(--warn)}
+.ready li.ok button{background:var(--accent-soft);color:var(--accent)}
+.sheet-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sheet-actions .danger{color:var(--warn);margin-inline-start:auto}
+.money-link{display:grid;gap:8px}
+.ml-on{display:grid;gap:6px;background:var(--gold-soft);border-radius:12px;padding:10px 12px;font-size:.86rem}
+.ml-on b{font-family:var(--f-mono)}
+@media (max-width:820px){
+  .board:not(.single){grid-template-columns:repeat(4,minmax(250px,82%));overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+  .board:not(.single) .col{scroll-snap-align:start}
+}
+@media (max-width:560px){.is-grid{grid-template-columns:1fr}.apps button{font-size:.84rem;padding:8px 6px}}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;padding-top:env(safe-area-inset-top,0px)}
 .auth{min-height:100vh;display:grid;place-items:center;padding-block:24px}
@@ -315,7 +392,7 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
 <body>
 <div class="auth" id="auth">
   <form class="auth-card" id="authForm">
-    <h1 class="brand">مصروفي</h1>
+    <h1 class="brand">حياتي</h1>
     <p class="muted" id="authSub" style="margin:0">سجّل دخولك عشان تشوف مصاريفك ومدخراتك.</p>
     <label class="field">اسم المستخدم أو الإيميل<input id="authUser" autocomplete="username" autocapitalize="off" spellcheck="false" required dir="ltr"></label>
     <label class="field">كلمة السر<input id="authPass" type="password" autocomplete="current-password" required minlength="6" dir="ltr"></label>
@@ -330,14 +407,18 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
 <div class="app" dir="rtl" lang="ar">
   <div class="head">
     <div class="top">
-      <h1 class="brand">مصروفي</h1>
-      <div class="top-actions"><nav class="monthnav" aria-label="تغيير الشهر" id="monthnav">
+      <h1 class="brand">حياتي</h1>
+      <div class="top-actions"><nav class="monthnav money-only" aria-label="تغيير الشهر" id="monthnav">
         <button id="prevM" aria-label="الشهر اللي فات">→</button>
         <span class="label" id="monthLabel"></span>
         <button id="nextM" aria-label="الشهر اللي جاي">←</button>
       </nav><button class="icon-btn" id="logoutBtn" type="button">خروج</button></div>
     </div>
-    <div class="tabs" role="tablist" aria-label="أقسام التطبيق">
+    <nav class="apps" aria-label="أقسام حياتي">
+      <button type="button" data-app="money" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7zm0 0 13-3v3M16 13.5h2"/></svg>مصروفي</button>
+      <button type="button" data-app="ideas" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg>أفكاري وأهدافي</button>
+    </nav>
+    <div class="tabs money-only" role="tablist" aria-label="أقسام مصروفي">
       <button role="tab" id="t-home" data-tab="home" aria-selected="true">الملخص</button>
       <button role="tab" id="t-exp" data-tab="exp" aria-selected="false">المصاريف</button>
       <button role="tab" id="t-inc" data-tab="inc" aria-selected="false">الدخل</button>
@@ -347,7 +428,7 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
   </div>
 
   <!-- shared composer -->
-  <section class="composer" id="composer" aria-label="تسجيل">
+  <section class="composer money-only" id="composer" aria-label="تسجيل">
     <div class="composer-top">
       <h2 id="composerTitle" style="font-size:1.05rem">سجّل حاجة جديدة</h2>
       <div class="modes" id="modes" role="group" aria-label="نوع العملية">
@@ -373,6 +454,31 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
       <button class="btn ghost sm" id="exampleBtn" type="button">جرّب مثال</button>
     </div>
   </section>
+
+  <!-- IDEAS -->
+  <div class="view" id="v-ideas" aria-label="أفكاري وأهدافي">
+    <section class="composer" aria-label="فكرة جديدة">
+      <div class="composer-top"><h2 style="font-size:1.05rem">إيه اللي في دماغك؟</h2></div>
+      <p class="hint">اكتب كل فكرة في سطر لوحدها، أو دوس المايك واتكلم. متحكمش عليها دلوقتي، اكتبها وبعدين رتّبها.</p>
+      <div class="entry-wrap">
+        <textarea id="ideaEntry" placeholder="أعمل كورس Revit أونلاين&#10;أدوّر على عميل جديد في السعودية&#10;أبدأ جيم 3 مرات في الأسبوع"></textarea>
+        <button type="button" class="mic" id="ideaMic" aria-label="اتكلم بدل ما تكتب"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 1 0-7 0v6A3.5 3.5 0 0 0 12 15Zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.91V20H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.59a6 6 0 0 0 5-5.91Z"/></svg></button>
+      </div>
+      <div class="composer-actions">
+        <button class="btn" id="ideaAdd" disabled>أضف</button>
+        <div class="chips" id="ideaAreas" role="group" aria-label="المجال"></div>
+      </div>
+    </section>
+
+    <div class="chips" id="ideaStages" role="group" aria-label="اعرض"></div>
+
+    <section class="panel" id="nextPanel">
+      <div class="panel-head"><h2>خطوتك الجاية</h2><span class="muted" style="font-size:.8rem">أول خطوة لسه مخلصتش في كل خطة وهدف</span></div>
+      <div id="nextSteps"></div>
+    </section>
+
+    <div class="board" id="board"></div>
+  </div>
 
   <!-- HOME -->
   <div class="view" id="v-home" role="tabpanel" aria-labelledby="t-home">
@@ -575,6 +681,29 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
   <p class="foot" id="foot">البيانات محفوظة على الجهاز ده.</p>
 </div>
 </div>
+<div class="sheet-bg" id="ideaSheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="تفاصيل الفكرة">
+    <div class="sheet-head"><input id="isTitle" class="is-title" aria-label="اسم الفكرة"><button class="del" id="isClose" type="button" aria-label="اقفل">×</button></div>
+    <div class="stagebar" id="isStages"></div>
+    <div class="is-grid">
+      <label class="field">المجال<select id="isArea"></select></label>
+      <label class="field">لحد إمتى؟<input type="date" id="isDeadline"></label>
+    </div>
+    <label class="field">دماغك فيها إيه؟
+      <span class="entry-wrap"><textarea id="isNotes" rows="4" placeholder="اكتب أي حاجة: إزاي، مين ممكن يساعد، محتاج إيه، إيه اللي مقلقك…"></textarea><button type="button" class="mic small" id="notesMic" aria-label="اتكلم بدل ما تكتب"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 1 0-7 0v6A3.5 3.5 0 0 0 12 15Zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.91V20H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.59a6 6 0 0 0 5-5.91Z"/></svg></button></span>
+    </label>
+    <label class="field">ليه عايز تعمل كده؟<textarea id="isWhy" rows="2" placeholder="الفايدة اللي هتطلع بيها"></textarea></label>
+    <label class="field">هتعرف إنك وصلت إزاي؟<input id="isOutcome" placeholder="مثلاً: عقد موقّع مع عميلين جداد"></label>
+    <div class="steps-box">
+      <div class="panel-head"><h3>الخطوات</h3><span id="isStepsProg" class="muted mono" style="font-size:.82rem"></span></div>
+      <div id="isSteps"></div>
+      <form id="isStepForm" class="step-add"><input id="isStepInput" placeholder="خطوة صغيرة تقدر تعملها…" aria-label="خطوة جديدة"><button class="btn sm" type="submit">أضف</button></form>
+    </div>
+    <div class="money-link" id="isMoney"></div>
+    <div class="ready" id="isReady"></div>
+    <div class="sheet-actions"><button class="btn" id="isNext" type="button"></button><button class="btn ghost sm" id="isPark" type="button"></button><button class="link danger" id="isDelete" type="button">امسح الفكرة</button></div>
+  </div>
+</div>
 <div class="toast" id="toast" hidden><span id="toastMsg"></span><button id="toastUndo">تراجع</button></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
@@ -759,7 +888,7 @@ function parseAsset(chunk, day){
 /* ---------- state ---------- */
 let LS_KEY='masrofi-local';
 const blankPrefs=()=>({budget:0, learned:{}, learnedInc:{}, opening:0, openAssets:{}});
-let S = {exp:{}, inc:{}, goals:[], moves:[], holdings:[], banks:[], prefs:blankPrefs()};
+let S = {exp:{}, inc:{}, goals:[], moves:[], holdings:[], banks:[], ideas:[], prefs:blankPrefs()};
 let R = null; // live rates {usd:{buy,sell}, gold:{k24,k21,k18,pound:{buy,sell}}, updatedAt, source}
 try{ R = JSON.parse(localStorage.getItem('masrofi-rates')||'null'); }catch(e){}
 let backend='local', COL=null;
@@ -777,7 +906,7 @@ const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 function loadLocal(){
   try{
     const raw=localStorage.getItem(LS_KEY);
-    if(raw){ const v=JSON.parse(raw); S={exp:v.exp||{},inc:v.inc||{},goals:v.goals||[],moves:v.moves||[],holdings:v.holdings||[],banks:v.banks||[],prefs:Object.assign(blankPrefs(),v.prefs||{})}; }
+    if(raw){ const v=JSON.parse(raw); S={exp:v.exp||{},inc:v.inc||{},goals:v.goals||[],moves:v.moves||[],holdings:v.holdings||[],banks:v.banks||[],ideas:v.ideas||[],prefs:Object.assign(blankPrefs(),v.prefs||{})}; }
     if(raw) { try{ tab = localStorage.getItem('masrofi-tab') || 'home'; }catch(e){} return; }
     const old=localStorage.getItem('masrofi-v1'); // first version
     if(old){ const v=JSON.parse(old); S.exp=v.months||{}; Object.assign(S.prefs,{budget:v.prefs?.budget||0,learned:v.prefs?.learned||{}}); }
@@ -798,6 +927,8 @@ const savePrefs = ()=>writeDoc('prefs', S.prefs);
 const saveMoves = ()=>writeDoc('moves', {list:S.moves});
 const saveHoldings = ()=>writeDoc('holdings', {list:S.holdings});
 const saveBanks = ()=>writeDoc('banks', {list:S.banks});
+const saveIdeas = ()=>{ clearTimeout(ideaSaveT); ideaSaveT=null; writeDoc('ideas', {list:S.ideas}); };
+let ideaSaveT=null;
 /* older versions kept quantity adjustments in prefs.openAssets; turn them into visible, editable entries */
 function migrateAssets(){ const oa=S.prefs.openAssets||{}; let ch=false; Object.keys(oa).forEach(c=>{ if(+oa[c]){ S.holdings.push({id:uid(),cur:c,qty:+oa[c],day:TODAY,note:'رصيد أولي'}); ch=true; } }); if(ch){ S.prefs.openAssets={}; saveHoldings(); savePrefs(); } }
 
@@ -965,6 +1096,7 @@ function goalPlan(g){
 }
 
 function render(){
+  renderIdeas();
   // header
   $('monthLabel').textContent = monthName(viewMonth);
   $('nextM').disabled = viewMonth >= CUR_MONTH;
@@ -1330,7 +1462,7 @@ async function fetchRates(force){
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 /* Phones (Android Chrome especially) resend everything said so far with each result,
    so we keep only final phrases, drop exact repeats, and listen one phrase at a time. */
-let rec=null, recOn=false, recBase='', recFinal=[], recIdle=null;
+let rec=null, recOn=false, recBase='', recFinal=[], recIdle=null, recT=null;
 function collapseRepeats(t){
   let w=t.split(/\s+/).filter(Boolean);
   for(let k=Math.floor(w.length/2);k>=1;k--){
@@ -1351,9 +1483,13 @@ function addFinal(t){
 function showRec(interim){
   const parts=[...recFinal]; const i=collapseRepeats((interim||'').trim());
   if(i && !norm(recFinal.join(' ')).endsWith(norm(i))) parts.push(i);
-  entry.value=recBase+parts.join('\n'); updatePreview();
+  recT.ta.value=recBase+parts.join('\n'); recT.after();
 }
-function stopRecUI(){ recOn=false; clearTimeout(recIdle); $('micBtn').classList.remove('rec'); $('micBtn').setAttribute('aria-label','اتكلم بدل ما تكتب'); showRec(''); }
+function noVoice(){
+  if(recT && recT.btn.id==='micBtn'){ $('voiceSteps').textContent=voiceSteps(); $('voiceTip').hidden=false; }
+  else showToast('المتصفح ده مش بيدعم التسجيل. '+voiceSteps(),null);
+}
+function stopRecUI(){ recOn=false; clearTimeout(recIdle); recT.btn.classList.remove('rec'); recT.btn.setAttribute('aria-label','اتكلم بدل ما تكتب'); showRec(''); }
 function listenOnce(){
   rec=new SR(); rec.lang='ar-EG'; rec.interimResults=true; rec.continuous=false; rec.maxAlternatives=1;
   rec.onresult=e=>{
@@ -1367,19 +1503,258 @@ function listenOnce(){
     if(e.error==='no-speech'||e.error==='aborted') return; // onend restarts or stops
     recOn=false;
     if(e.error==='not-allowed'||e.error==='service-not-allowed') showToast('اسمح للموقع يستخدم المايك من إعدادات المتصفح.',null);
-    else { $('voiceSteps').textContent=voiceSteps(); $('voiceTip').hidden=false; }
+    else noVoice();
   };
   rec.start();
 }
-$('micBtn').addEventListener('click',()=>{
-  if(!SR){ $('voiceSteps').textContent=voiceSteps(); $('voiceTip').hidden=false; entry.focus(); return; }
-  if(recOn){ recOn=false; try{ rec.stop(); }catch(_){ stopRecUI(); } return; }
-  recBase = entry.value.trim() ? entry.value.trimEnd()+'\n' : ''; recFinal=[];
-  try{ recOn=true; listenOnce(); $('micBtn').classList.add('rec'); $('micBtn').setAttribute('aria-label','وقّف التسجيل');
+function startRec(t){
+  if(recOn){ const same=recT && recT.btn===t.btn; recOn=false; try{ rec.stop(); }catch(_){ stopRecUI(); } if(same) return; }
+  recT=t;
+  if(!SR){ noVoice(); t.ta.focus(); return; }
+  recBase = t.ta.value.trim() ? t.ta.value.trimEnd()+'\n' : ''; recFinal=[];
+  try{ recOn=true; listenOnce(); t.btn.classList.add('rec'); t.btn.setAttribute('aria-label','وقّف التسجيل');
     recIdle=setTimeout(()=>{ if(recOn){ recOn=false; rec.stop(); } },12000);
-    showToast('بيسمعك… قول كل حاجة وسعرها، ودوس على المايك تاني لما تخلص',null); }
-  catch(e){ recOn=false; $('voiceSteps').textContent=voiceSteps(); $('voiceTip').hidden=false; }
+    showToast(t.msg,null); }
+  catch(e){ recOn=false; noVoice(); }
+}
+$('micBtn').addEventListener('click',()=>startRec({ta:entry,btn:$('micBtn'),after:updatePreview,msg:'بيسمعك… قول كل حاجة وسعرها، ودوس على المايك تاني لما تخلص'}));
+$('ideaMic').addEventListener('click',()=>startRec({ta:$('ideaEntry'),btn:$('ideaMic'),after:updateIdeaBtn,msg:'بيسمعك… قول كل فكرة واسكت ثانية بعدها، ودوس على المايك تاني لما تخلص'}));
+$('notesMic').addEventListener('click',()=>startRec({ta:$('isNotes'),btn:$('notesMic'),after:()=>{ const x=ideaById(openIdea); if(x){ x.notes=$('isNotes').value; touchIdea(x); } },msg:'بيسمعك… اتكلم عن الفكرة براحتك'}));
+
+/* ================= أفكاري وأهدافي ================= */
+const STAGES=[
+  {id:'idea', name:'فكرة',     hint:'لسه في دماغك',            color:'var(--muted)'},
+  {id:'think',name:'بفكر فيها',hint:'بتقلّبها وتجمع معلومات',   color:'var(--c-fun)'},
+  {id:'plan', name:'خطة',      hint:'ليها خطوات',              color:'var(--income)'},
+  {id:'goal', name:'هدف',      hint:'شغال عليه وليه معاد',      color:'var(--accent)'},
+  {id:'done', name:'اتحققت',   hint:'',                         color:'var(--gold)'},
+  {id:'park', name:'مؤجلة',    hint:'',                         color:'var(--muted)'}
+];
+const STAGE_BY=Object.fromEntries(STAGES.map(x=>[x.id,x]));
+const PIPE=['idea','think','plan','goal'];
+const AREAS=[
+  {id:'work',  name:'شغل',       color:'var(--c-transport)', kw:['شغل','مشروع','عميل','عملاء','شركه','sustra','سسترا','موظف','موظفين','اوراسكوم','عقد','تسويق','بيزنس','business','revit','bim','شوب']},
+  {id:'money', name:'فلوس',      color:'var(--gold)',        kw:['فلوس','استثمار','ادخار','تحويش','دهب','ذهب','دولار','عربيه','شقه','ارض','مرتب','دخل','اسهم','بورصه']},
+  {id:'learn', name:'تعلّم',     color:'var(--c-edu)',       kw:['كورس','اتعلم','كتاب','كتب','شهاده','دراسه','ماجستير','لغه','انجليزي','تدريب','اقرا']},
+  {id:'health',name:'صحة',       color:'var(--c-health)',    kw:['جيم','رياضه','مشي','جري','وزن','دايت','اكل صحي','نوم','دكتور','صحه','سباحه']},
+  {id:'family',name:'بيت وعيلة', color:'var(--c-gifts)',     kw:['البيت','بيت','الولاد','ولادي','مراتي','اهلي','عيله','ابويا','امي','اخويا','اختي','جواز','فرح','خطوبه']},
+  {id:'self',  name:'شخصي',      color:'var(--c-personal)',  kw:[]}
+];
+const AREA_BY=Object.fromEntries(AREAS.map(a=>[a.id,a]));
+let ideaFilter='all', openIdea=null, ideaArea='auto';
+let appSec='money'; try{ appSec=localStorage.getItem('hayati-app')||'money'; }catch(e){}
+
+function setApp(a){
+  appSec=a; document.body.classList.toggle('app-ideas',a==='ideas');
+  document.querySelectorAll('.apps button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.app===a)));
+  try{ localStorage.setItem('hayati-app',a); }catch(e){}
+  window.scrollTo({top:0}); render();
+}
+document.querySelectorAll('.apps button').forEach(b=>b.addEventListener('click',()=>setApp(b.dataset.app)));
+
+function guessArea(t){
+  const n=' '+root(norm(t))+' ';
+  for(const a of AREAS) for(const k of a.kw){ const kk=root(norm(k)); if(n.includes(' '+kk+' ')||(kk.length>=4&&n.includes(kk))) return a.id; }
+  return 'self';
+}
+function parseIdeas(text){
+  return text.split(/\n+/).map(l=>l.replace(/^\s*([-•*–]|\d+\s*[.)\-])\s*/,'').trim()).filter(l=>l.length>1).map(l=>{
+    let area=null;
+    l=l.replace(/#(\S+)/g,(m,tag)=>{ const t=norm(tag).replace(/_/g,' '); const a=AREAS.find(a=>norm(a.name)===t||a.id===tag.toLowerCase()||norm(a.name).startsWith(t)); if(a){ area=a.id; return ''; } return m; }).replace(/\s+/g,' ').trim();
+    return {title:l, area};
+  }).filter(x=>x.title);
+}
+const ideaById = id=>S.ideas.find(x=>x.id===id);
+function touchIdea(x){ x.updated=new Date().toISOString(); clearTimeout(ideaSaveT); ideaSaveT=setTimeout(saveIdeas,700); }
+function daysTo(d){ const [y,m,dd]=d.split('-').map(Number), [y0,m0,d0]=TODAY.split('-').map(Number); return Math.round((Date.UTC(y,m-1,dd)-Date.UTC(y0,m0-1,d0))/864e5); }
+function dueBadge(x){
+  if(!x.deadline || x.stage==='done' || x.stage==='park') return '';
+  const d=daysTo(x.deadline);
+  const t = d<0?`متأخر ${-d} يوم`: d===0?'النهارده': d===1?'بكره': d<=60?`فاضل ${d} يوم`: (()=>{ const [y,m,dd]=x.deadline.split('-').map(Number); return ar({day:'numeric',month:'short',year:'numeric'}).format(new Date(y,m-1,dd)); })();
+  return `<span class="due${d<0?' late':d<=7?' soon':''}">${t}</span>`;
+}
+function readiness(x){
+  return [
+    {k:'title',  ok:(x.title||'').trim().length>=3,     t:'اسم واضح',            f:'isTitle'},
+    {k:'why',    ok:!!(x.why||'').trim(),               t:'عارف ليه',            f:'isWhy'},
+    {k:'outcome',ok:!!(x.outcome||'').trim(),           t:'نتيجة تتقاس',         f:'isOutcome'},
+    {k:'steps',  ok:(x.steps||[]).length>=1,            t:'خطوات',               f:'isStepInput'},
+    {k:'deadline',ok:!!x.deadline,                      t:'معاد',                f:'isDeadline'}
+  ];
+}
+const isReady = x=>readiness(x).every(r=>r.ok);
+const stepsOf = x=>x.steps||[];
+
+/* ----- page ----- */
+function renderIdeas(){
+  if(!$('v-ideas')) return;
+  // area chips in capture
+  $('ideaAreas').innerHTML = [{id:'auto',name:'تلقائي'},...AREAS].map(a=>`<button type="button" class="chip" data-area="${a.id}" aria-pressed="${ideaArea===a.id}">${a.id!=='auto'?`<span class="ia" style="--ac:${a.color}"></span>`:''}${a.name}</button>`).join('');
+  // stage filter chips
+  const cnt=id=>S.ideas.filter(x=>x.stage===id).length;
+  const active=S.ideas.filter(x=>PIPE.includes(x.stage)).length;
+  $('ideaStages').innerHTML = `<button type="button" class="chip" data-stage="all" aria-pressed="${ideaFilter==='all'}">الكل <b>${active}</b></button>`+
+    STAGES.map(st=>`<button type="button" class="chip" data-stage="${st.id}" aria-pressed="${ideaFilter===st.id}"><span class="ia" style="--ac:${st.color}"></span>${st.name} <b>${cnt(st.id)}</b></button>`).join('');
+  // next steps
+  const withSteps=S.ideas.filter(x=>(x.stage==='goal'||x.stage==='plan') && stepsOf(x).some(st=>!st.done))
+    .sort((a,b)=>(a.stage==='goal'?0:1)-(b.stage==='goal'?0:1) || (a.deadline||'9999').localeCompare(b.deadline||'9999')).slice(0,7);
+  $('nextPanel').hidden = !S.ideas.some(x=>x.stage==='goal'||x.stage==='plan');
+  $('nextSteps').innerHTML = withSteps.length ? withSteps.map(x=>{ const st=stepsOf(x).find(z=>!z.done);
+      return `<div class="next-step" data-iid="${x.id}" data-sid="${st.id}"><input type="checkbox" aria-label="خلصت: ${esc(st.t)}"><div class="tx">${esc(st.t)}<small><span class="ia" style="--ac:${STAGE_BY[x.stage].color}">${STAGE_BY[x.stage].name}</span> · ${esc(x.title)}</small></div><span style="display:grid;gap:4px;justify-items:end">${dueBadge(x)}<button class="open" type="button" data-open="${x.id}">افتح</button></span></div>`; }).join('')
+    : '<p class="empty-note">كل خطواتك خلصت. افتح أي خطة أو هدف وضيف الخطوة الجاية.</p>';
+  // board
+  const board=$('board');
+  if(!S.ideas.length){
+    board.className='board single';
+    board.innerHTML='<div class="col" style="--sc:var(--accent)"><p class="empty-note">لسه مفيش أفكار. اكتب أي حاجة بتفكر فيها فوق، حتى لو لسه مش واضحة. وبعدين حرّكها خطوة خطوة: فكرة، بعدين بتفكر فيها، بعدين خطة ليها خطوات، لحد ما تبقى هدف ليه معاد ونتيجة تقدر تقيسها.</p></div>';
+    return;
+  }
+  const cols = ideaFilter==='all' ? PIPE : [ideaFilter];
+  board.className='board'+(cols.length===1?' single':'');
+  board.innerHTML = cols.map(sid=>{
+    const st=STAGE_BY[sid];
+    const list=S.ideas.filter(x=>x.stage===sid).sort((a,b)=> sid==='goal'||sid==='plan' ? (a.deadline||'9999').localeCompare(b.deadline||'9999') : (b.updated||'').localeCompare(a.updated||''));
+    return `<section class="col" style="--sc:${st.color}"><div class="col-head"><h3>${st.name}${st.hint?`<small>${st.hint}</small>`:''}</h3><span class="n">${list.length}</span></div>
+      <div class="cards">${list.length? list.map(ideaCard).join('') : '<p class="col-empty">مفيش هنا حاجة.</p>'}</div></section>`;
+  }).join('');
+}
+function ideaCard(x){
+  const a=AREA_BY[x.area]||AREA_BY.self, st=stepsOf(x), dn=st.filter(z=>z.done).length;
+  const note=(x.notes||'').trim(); const np=note? esc(note.length>90?note.slice(0,90)+'…':note):'';
+  return `<button type="button" class="icard" data-open="${x.id}">
+    <span class="row"><span class="ia" style="--ac:${a.color}">${a.name}</span>${dueBadge(x)}</span>
+    <span class="tt">${esc(x.title)}</span>
+    ${np?`<span class="np">${np}</span>`:''}
+    ${st.length?`<span class="mini-bar"><i style="width:${dn/st.length*100}%"></i></span><span class="row"><span>${dn} من ${st.length} خطوات</span>${x.stage==='goal'&&dn===st.length?'<span class="due soon">الخطوات خلصت</span>':''}</span>`:''}
+  </button>`;
+}
+function updateIdeaBtn(){ const n=parseIdeas($('ideaEntry').value).length; $('ideaAdd').disabled=!n; $('ideaAdd').textContent = !n?'أضف': n===1?'أضف الفكرة':`أضف ${n} أفكار`; }
+$('ideaEntry').addEventListener('input',updateIdeaBtn);
+$('ideaEntry').addEventListener('keydown',e=>{ if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){ e.preventDefault(); $('ideaAdd').click(); } });
+$('ideaAdd').addEventListener('click',()=>{
+  const list=parseIdeas($('ideaEntry').value); if(!list.length) return;
+  const now=new Date().toISOString();
+  list.slice().reverse().forEach(x=>S.ideas.unshift({id:uid(),title:x.title,area:x.area||(ideaArea==='auto'?guessArea(x.title):ideaArea),stage:'idea',notes:'',why:'',outcome:'',deadline:'',budget:0,steps:[],created:TODAY,updated:now}));
+  saveIdeas(); $('ideaEntry').value=''; updateIdeaBtn();
+  if(ideaFilter!=='all'&&ideaFilter!=='idea') ideaFilter='all';
+  render(); showToast(list.length===1?'اتضافت الفكرة':`اتضافت ${list.length} أفكار`,null);
 });
+$('ideaAreas').addEventListener('click',e=>{ const b=e.target.closest('[data-area]'); if(!b) return; ideaArea=b.dataset.area; renderIdeas(); });
+$('ideaStages').addEventListener('click',e=>{ const b=e.target.closest('[data-stage]'); if(!b) return; ideaFilter=b.dataset.stage; renderIdeas(); });
+$('v-ideas').addEventListener('click',e=>{ const b=e.target.closest('[data-open]'); if(b) openSheet(b.dataset.open); });
+$('nextSteps').addEventListener('change',e=>{
+  const row=e.target.closest('.next-step'); if(!row) return; const x=ideaById(row.dataset.iid); if(!x) return;
+  const st=stepsOf(x).find(z=>z.id===row.dataset.sid); if(!st) return; st.done=true; x.updated=new Date().toISOString(); saveIdeas(); render();
+  const left=stepsOf(x).filter(z=>!z.done).length;
+  showToast(left?`برافو! فاضل ${left} ${left===1?'خطوة':'خطوات'} في «${x.title}»`:`خلصت كل خطوات «${x.title}»`, ()=>{ st.done=false; saveIdeas(); render(); });
+});
+
+/* ----- detail sheet ----- */
+$('isArea').innerHTML = AREAS.map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
+function openSheet(id){
+  const x=ideaById(id); if(!x) return; openIdea=id; delArmIdea=false;
+  $('isTitle').value=x.title||''; $('isArea').value=x.area||'self'; $('isDeadline').value=x.deadline||'';
+  $('isNotes').value=x.notes||''; $('isWhy').value=x.why||''; $('isOutcome').value=x.outcome||'';
+  $('isDelete').textContent='امسح الفكرة';
+  renderSheet(x); $('ideaSheet').hidden=false; document.body.style.overflow='hidden';
+}
+function closeSheet(){
+  if(recOn && recT && recT.btn.id==='notesMic'){ recOn=false; try{ rec.stop(); }catch(_){ } }
+  $('ideaSheet').hidden=true; document.body.style.overflow=''; openIdea=null;
+  if(ideaSaveT) saveIdeas(); render();
+}
+function renderSheet(x){ renderStageBar(x); renderSteps(x); renderMoneyLink(x); renderReady(x); }
+function renderStageBar(x){
+  const idx=PIPE.indexOf(x.stage);
+  $('isStages').innerHTML = PIPE.map((sid,i)=>`<button type="button" data-set="${sid}" class="${x.stage==='done'||i<idx?'past':i===idx?'cur':''}">${STAGE_BY[sid].name}</button>`).join('')
+    + (x.stage==='done'?'<button type="button" class="cur" data-set="done">اتحققت</button>': x.stage==='park'?'<button type="button" class="cur" data-set="park">مؤجلة</button>':'');
+}
+function renderSteps(x){
+  const st=stepsOf(x), dn=st.filter(z=>z.done).length;
+  $('isStepsProg').textContent = st.length?`${dn} من ${st.length}`:'';
+  $('isSteps').innerHTML = st.length ? st.map(z=>`<div class="step${z.done?' done':''}" data-sid="${z.id}"><input type="checkbox" ${z.done?'checked':''} aria-label="خلصت"><input class="st" value="${esc(z.t)}" aria-label="الخطوة"><button class="del" type="button" data-sdel aria-label="امسح الخطوة">×</button></div>`).join('')
+    : '<p class="empty-note" style="font-size:.85rem">قسّمها لخطوات صغيرة، كل خطوة حاجة تقدر تعملها في يوم أو أسبوع.</p>';
+}
+function renderMoneyLink(x){
+  const g = x.moneyGoal && S.goals.find(g=>g.id===x.moneyGoal);
+  if(g){ const sv=goalSaved(g);
+    $('isMoney').innerHTML=`<div class="ml-on"><span>مربوطة بهدف تحويش «${esc(g.name)}» في مصروفي</span><b>${fmt(sv)} / ${fmt(g.target)} ج.م</b><div class="bar gold"><i style="width:${Math.min(100,sv/g.target*100)}%"></i></div><button class="link" type="button" data-money-goal style="justify-self:start">افتح هدف التحويش</button></div>`; return; }
+  $('isMoney').innerHTML=`<label class="field">محتاجة فلوس قد إيه؟ (اختياري)<input id="isBudget" type="number" inputmode="decimal" min="0" step="any" value="${x.budget||''}" placeholder="0"></label>`+
+    (x.budget>0?`<button class="btn ghost sm" id="isMakeGoal" type="button" style="justify-self:start">اعمل هدف تحويش بـ ${fmt(x.budget)} ج.م في مصروفي</button>`:'');
+}
+function renderReady(x){
+  const r=readiness(x), miss=r.filter(z=>!z.ok);
+  const showReady = !['done','park'].includes(x.stage);
+  $('isReady').hidden=!showReady;
+  if(showReady) $('isReady').innerHTML = `<span>${miss.length?'عشان تبقى هدف قابل للتحقيق محتاج:':'جاهزة تبقى هدف قابل للتحقيق.'}</span><ul>${r.map(z=>`<li class="${z.ok?'ok':''}"><button type="button" data-focus="${z.f}">${z.ok?'✓ ':''}${z.t}</button></li>`).join('')}</ul>`;
+  const nb=$('isNext'), pk=$('isPark');
+  const labels={idea:'ابدأ تفكر فيها',think:'حوّلها لخطة',plan:'حوّلها لهدف',goal:'اتحققت!',done:'افتحها تاني',park:'رجّعها'};
+  nb.textContent=labels[x.stage]; nb.disabled = x.stage==='plan' && miss.length>0;
+  nb.title = nb.disabled ? 'ناقص: '+miss.map(z=>z.t).join('، ') : '';
+  pk.hidden = x.stage==='park'||x.stage==='done'; pk.textContent='أجّلها';
+}
+function setStage(x,to){
+  if(to==='goal' && !isReady(x)){ showToast('ناقص: '+readiness(x).filter(z=>!z.ok).map(z=>z.t).join('، '),null); return false; }
+  if(to==='park') x.prevStage=x.stage;
+  if(to==='done') x.doneDay=TODAY; else delete x.doneDay;
+  x.stage=to; touchIdea(x); saveIdeas(); renderSheet(x); renderIdeas(); return true;
+}
+['isTitle','isNotes','isWhy','isOutcome'].forEach(id=>$(id).addEventListener('input',()=>{
+  const x=ideaById(openIdea); if(!x) return;
+  const f={isTitle:'title',isNotes:'notes',isWhy:'why',isOutcome:'outcome'}[id];
+  x[f]=$(id).value; touchIdea(x); renderReady(x);
+}));
+$('isTitle').addEventListener('change',()=>{ const x=ideaById(openIdea); if(x && !x.title.trim()){ x.title='فكرة'; $('isTitle').value=x.title; } });
+$('isArea').addEventListener('change',()=>{ const x=ideaById(openIdea); if(!x) return; x.area=$('isArea').value; touchIdea(x); });
+$('isDeadline').addEventListener('change',()=>{ const x=ideaById(openIdea); if(!x) return; x.deadline=$('isDeadline').value; touchIdea(x); renderReady(x);
+  const g=x.moneyGoal&&S.goals.find(g=>g.id===x.moneyGoal); if(g&&x.deadline){ g.deadline=x.deadline.slice(0,7); saveGoals(); } });
+$('isStages').addEventListener('click',e=>{ const b=e.target.closest('[data-set]'); const x=ideaById(openIdea); if(!b||!x||b.dataset.set===x.stage) return; setStage(x,b.dataset.set); });
+$('isNext').addEventListener('click',()=>{
+  const x=ideaById(openIdea); if(!x) return;
+  const to={idea:'think',think:'plan',plan:'goal',goal:'done',done:'goal',park:x.prevStage||'idea'}[x.stage];
+  if(!setStage(x,to)) return;
+  if(to==='plan' && !stepsOf(x).length) $('isStepInput').focus();
+  if(to==='done') showToast(`مبروك! «${x.title}» اتحققت`,null);
+});
+$('isPark').addEventListener('click',()=>{ const x=ideaById(openIdea); if(x){ setStage(x,'park'); showToast('اتأجلت. هتلاقيها في «مؤجلة».',null); } });
+$('isReady').addEventListener('click',e=>{ const b=e.target.closest('[data-focus]'); if(b) $(b.dataset.focus)?.focus(); });
+$('isStepForm').addEventListener('submit',e=>{
+  e.preventDefault(); const x=ideaById(openIdea); const t=$('isStepInput').value.trim(); if(!x||!t) return;
+  (x.steps ||= []).push({id:uid(),t,done:false}); $('isStepInput').value=''; touchIdea(x); saveIdeas(); renderSteps(x); renderReady(x); $('isStepInput').focus();
+});
+$('isSteps').addEventListener('change',e=>{
+  const row=e.target.closest('.step'); const x=ideaById(openIdea); if(!row||!x) return; const z=stepsOf(x).find(q=>q.id===row.dataset.sid); if(!z) return;
+  if(e.target.type==='checkbox') z.done=e.target.checked;
+  else { const v=e.target.value.trim(); if(!v){ e.target.value=z.t; return; } z.t=v; }
+  touchIdea(x); saveIdeas(); renderSteps(x); renderReady(x);
+});
+$('isSteps').addEventListener('click',e=>{
+  if(!e.target.closest('[data-sdel]')) return; const row=e.target.closest('.step'); const x=ideaById(openIdea); if(!x) return;
+  const i=stepsOf(x).findIndex(q=>q.id===row.dataset.sid); if(i<0) return; const [z]=x.steps.splice(i,1); touchIdea(x); saveIdeas(); renderSteps(x); renderReady(x);
+  showToast('اتمسحت الخطوة',()=>{ x.steps.splice(i,0,z); saveIdeas(); if(openIdea===x.id){ renderSteps(x); renderReady(x); } render(); });
+});
+$('isMoney').addEventListener('change',e=>{
+  if(e.target.id!=='isBudget') return; const x=ideaById(openIdea); if(!x) return;
+  const v=parseFloat(asciiDigits(e.target.value)); x.budget=v>0?v:0; touchIdea(x); renderMoneyLink(x);
+});
+$('isMoney').addEventListener('click',e=>{
+  const x=ideaById(openIdea); if(!x) return;
+  if(e.target.closest('#isMakeGoal')){
+    const g={id:uid(),name:x.title,target:x.budget,deadline:(x.deadline||'').slice(0,7),created:TODAY,status:'open',log:[]};
+    S.goals.push(g); x.moneyGoal=g.id; saveGoals(); touchIdea(x); saveIdeas(); renderMoneyLink(x);
+    showToast(`اتعمل هدف تحويش «${x.title}» في مصروفي`,null);
+  } else if(e.target.closest('[data-money-goal]')){ closeSheet(); setApp('money'); setTab('goals'); }
+});
+let delArmIdea=false;
+$('isDelete').addEventListener('click',()=>{
+  const x=ideaById(openIdea); if(!x) return;
+  if(!delArmIdea){ delArmIdea=true; $('isDelete').textContent='متأكد؟ دوس تاني'; setTimeout(()=>{ delArmIdea=false; $('isDelete').textContent='امسح الفكرة'; },3500); return; }
+  const i=S.ideas.indexOf(x); S.ideas.splice(i,1); saveIdeas(); closeSheet();
+  showToast(`اتمسحت «${x.title}»`,()=>{ S.ideas.splice(i,0,x); saveIdeas(); render(); });
+});
+$('isClose').addEventListener('click',closeSheet);
+$('ideaSheet').addEventListener('click',e=>{ if(e.target===$('ideaSheet')) closeSheet(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !$('ideaSheet').hidden) closeSheet(); });
 
 /* ---------- account & sync (Supabase) ---------- */
 const sb = (window.supabase && CFG.supabaseUrl && !/YOUR|xxxx/i.test(CFG.supabaseUrl)) ? window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey) : null;
@@ -1407,6 +1782,7 @@ function applyDoc(t,id,v){
   else if(id==='moves') t.moves=v.list||[];
   else if(id==='holdings') t.holdings=v.list||[];
   else if(id==='banks') t.banks=v.list||[];
+  else if(id==='ideas') t.ideas=v.list||[];
   else if(id.startsWith('m-')) t.exp[id.slice(2)]=v.items||[];
   else if(id.startsWith('i-')) t.inc[id.slice(2)]=v.items||[];
 }
@@ -1414,18 +1790,18 @@ function docsOf(st){
   const d={};
   Object.keys(st.exp).forEach(k=>d['m-'+k]={items:st.exp[k]});
   Object.keys(st.inc).forEach(k=>d['i-'+k]={items:st.inc[k]});
-  d.goals={list:st.goals}; d.moves={list:st.moves}; d.holdings={list:st.holdings}; d.banks={list:st.banks}; d.prefs=st.prefs;
+  d.goals={list:st.goals}; d.moves={list:st.moves}; d.holdings={list:st.holdings}; d.banks={list:st.banks}; d.ideas={list:st.ideas||[]}; d.prefs=st.prefs;
   return d;
 }
 function pushAll(){ const d=docsOf(S); Object.keys(d).forEach(id=>writeRemote(id,d[id])); }
-const hasData = st=>Object.keys(st.exp).length||Object.keys(st.inc).length||st.goals.length||st.holdings.length||st.banks.length||st.moves.length;
+const hasData = st=>Object.keys(st.exp).length||Object.keys(st.inc).length||st.goals.length||st.holdings.length||st.banks.length||st.moves.length||(st.ideas||[]).length;
 async function pull(){
   if(!sb||!USER||inflight>0) return;
   setSync('loading');
   const {data,error}=await sb.from('masrofi_docs').select('doc_id,body').eq('user_id',USER.id);
   if(error){ setSync('error'); return; }
   if(!data.length){ if(hasData(S)) pushAll(); setSync('ok'); return; }
-  const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],prefs:blankPrefs()};
+  const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],prefs:blankPrefs()};
   data.forEach(r=>applyDoc(next,r.doc_id,r.body));
   dirty.forEach(id=>{ const d=docsOf(S); if(d[id]) applyDoc(next,id,d[id]); }); // keep edits that never reached the server
   S=next; migrateAssets(); saveLocal(); render(); updatePreview();
@@ -1447,8 +1823,8 @@ async function handleSession(session){
   if(u && USER && u.id===USER.id) return;
   if(!u){ USER=null; if(channel){ sb.removeChannel(channel); channel=null; } showApp(false); return; }
   USER=u; LS_KEY='masrofi-'+u.id;
-  S={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],prefs:blankPrefs()};
-  loadLocal(); migrateAssets(); showApp(true); setTab(['home','exp','inc','sav','goals'].includes(tab)?tab:'home'); updatePreview();
+  S={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],prefs:blankPrefs()};
+  loadLocal(); migrateAssets(); showApp(true); setTab(['home','exp','inc','sav','goals'].includes(tab)?tab:'home'); setApp(location.hash==='#ideas'?'ideas':appSec); updatePreview();
   $('acctName').textContent=displayName(u);
   await pull(); subscribe();
 }
@@ -1496,7 +1872,7 @@ $('importFile').addEventListener('change',async e=>{
   const f=e.target.files[0]; e.target.value=''; if(!f) return;
   try{
     const j=JSON.parse(await f.text()); if(!j||!j.docs) throw 0;
-    const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],prefs:blankPrefs()};
+    const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],prefs:blankPrefs()};
     Object.keys(j.docs).forEach(id=>applyDoc(next,id,j.docs[id]));
     const prev=S; S=next; migrateAssets(); saveLocal(); pushAll(); render();
     showToast('اترفعت النسخة الاحتياطية', ()=>{ S=prev; saveLocal(); pushAll(); render(); });
