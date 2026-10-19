@@ -310,7 +310,7 @@ body.app-calc .money-only,body.app-calc .view:not(#v-calc){display:none!importan
 .seg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
 .seg button{border:0;background:transparent;border-radius:8px;padding:6px 14px;font-weight:700;font-size:.86rem;color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
-.ctabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--bg);border-radius:12px;padding:4px}
+.ctabs{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:4px;background:var(--bg);border-radius:12px;padding:4px}
 .ctabs button{border:0;background:transparent;border-radius:9px;padding:8px 4px;font-weight:700;font-size:.9rem;color:var(--muted)}
 .ctabs button[aria-selected="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .cwrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:18px;align-items:start}
@@ -346,6 +346,9 @@ body.app-calc .money-only,body.app-calc .view:not(#v-calc){display:none!importan
 .btable td{font-family:var(--f-mono)}
 .btable td.w{color:var(--muted)}
 .calc-disc{text-align:center;font-size:.78rem}
+.sends{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.send{font-size:.82rem}
+.cin .note{font-size:.78rem;color:var(--gold);background:var(--gold-soft);border-radius:8px;padding:6px 10px;margin:0}
 @media (max-width:820px){.cwrap{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:560px){.ctabs button{font-size:.8rem}.apps button{flex-direction:column;gap:3px;font-size:.78rem;line-height:1.25;text-align:center}}
 body.app-ideas .money-only,body.app-ideas .view:not(#v-ideas){display:none!important}
@@ -611,7 +614,7 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
       </div>
       <p class="hint" id="calcCodeNote"></p>
       <div class="ctabs" id="calcTabs" role="tablist" aria-label="العنصر">
-        <button type="button" role="tab" data-ctab="beam">كمرة</button><button type="button" role="tab" data-ctab="col">عمود</button><button type="button" role="tab" data-ctab="slab">بلاطة</button><button type="button" role="tab" data-ctab="bars">الحديد والوصلات</button>
+        <button type="button" role="tab" data-ctab="beam">كمرة</button><button type="button" role="tab" data-ctab="col">عمود</button><button type="button" role="tab" data-ctab="slab">بلاطة</button><button type="button" role="tab" data-ctab="bars">الحديد والوصلات</button><button type="button" role="tab" data-ctab="loads">الأحمال</button><button type="button" role="tab" data-ctab="size">التخانات والأبعاد</button><button type="button" role="tab" data-ctab="defl">الترخيم</button>
       </div>
     </section>
     <div class="cwrap">
@@ -2345,22 +2348,25 @@ const CDEF={code:'ECP',units:'SI',tab:'beam',
   col:{shape:'rect',b:300,h:600,D:500,n:8,db:16,type:'tied',loc:'int',Pu:0},
   slab:{t:150,cover:20,db:12,s:150,Mu:0},
   lap:{db:16,top:false},
-  conv:{As:1200}};
+  conv:{As:1200},
+  loads:{t:150,gc:25e-6,fin:1.5e-3,part:1.0e-3,ceil:0.5e-3,occ:'res',L:2e-3,type:'two',Ls:4000,Ll:6000,on:'long',sides:2,bw:250,bh:600,wallOn:true,wallT:200,wallH:3000,wallG:14e-6,span:6000,sup:'end'},
+  size:{el:'oneway',sup:'int',L:4000,Ls:5000,Ll:6000,pos:'int',drop:false,afm:3,ratio:0},
+  defl:{el:'beam',sup:'simple',L:6000,b:250,h:600,cover:25,sd:10,n:4,db:16,t:150,sdb:12,ss:150,wD:10,wL:6,qD:3e-3,qL:2e-3,self:true,gc:25e-6,psi:25,lim:'480'}};
 let CS=JSON.parse(JSON.stringify(CDEF));
 try{ const v=JSON.parse(localStorage.getItem('hayati-calc')||'null'); if(v){ for(const k in CDEF){ if(v[k]!==undefined) CS[k]= (typeof CDEF[k]==='object'&&!Array.isArray(CDEF[k])) ? Object.assign({},CDEF[k],v[k]) : v[k]; } CS.m.ACI=Object.assign({},CDEF.m.ACI,(v.m||{}).ACI); CS.m.ECP=Object.assign({},CDEF.m.ECP,(v.m||{}).ECP); } }catch(e){}
 const saveCalc=()=>{ try{ localStorage.setItem('hayati-calc',JSON.stringify(CS)); }catch(e){} };
 
 /* units: engine is N, mm, MPa. MKS uses cm, t, t.m, kg/cm² with 1 t = 10 kN and 1 kg/cm² = 0.1 MPa */
 const UN={
-  SI:{len:'mm',F:'kN',M:'kN.m',S:'MPa',A:'mm²',Am:'mm²/m',Mm:'kN.m/m',l:1,f:1e3,mo:1e6,s:1,a:1},
-  MKS:{len:'cm',F:'t',M:'t.m',S:'kg/cm²',A:'cm²',Am:'cm²/m',Mm:'t.m/m',l:10,f:1e4,mo:1e7,s:0.1,a:100}};
+  SI:{len:'mm',F:'kN',M:'kN.m',S:'MPa',A:'mm²',Am:'mm²/m',Mm:'kN.m/m',span:'m',q:'kN/m²',w:'kN/m',gam:'kN/m³',l:1,f:1e3,mo:1e6,s:1,a:1,qf:1e-3,wf:1,gf:1e-6},
+  MKS:{len:'cm',F:'t',M:'t.m',S:'kg/cm²',A:'cm²',Am:'cm²/m',Mm:'t.m/m',span:'m',q:'t/m²',w:'t/m',gam:'t/m³',l:10,f:1e4,mo:1e7,s:0.1,a:100,qf:1e-2,wf:10,gf:1e-5}};
 const U=()=>UN[CS.units];
-const cv={ len:v=>v/U().l, F:v=>v/U().f, M:v=>v/U().mo, S:v=>v/U().s, A:v=>v/U().a };      // engine → display
-const ci={ len:v=>v*U().l, F:v=>v*U().f, M:v=>v*U().mo, S:v=>v*U().s };                    // display → engine
+const cv={ len:v=>v/U().l, F:v=>v/U().f, M:v=>v/U().mo, S:v=>v/U().s, A:v=>v/U().a, span:v=>v/1000, q:v=>v/U().qf, w:v=>v/U().wf, gam:v=>v/U().gf };      // engine → display
+const ci={ len:v=>v*U().l, F:v=>v*U().f, M:v=>v*U().mo, S:v=>v*U().s, span:v=>v*1000, q:v=>v*U().qf, w:v=>v*U().wf, gam:v=>v*U().gf };                    // display → engine
 const nf2=new Intl.NumberFormat('en-US',{maximumFractionDigits:2}), nf1=new Intl.NumberFormat('en-US',{maximumFractionDigits:1}), nf0=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
 const fx=(v,k)=>{ if(!isFinite(v)) return '—'; const a=Math.abs(v); return (k===0||a>=1000?nf0:a>=10?nf1:nf2).format(v); };
 const ltr=t=>`<span dir="ltr" class="nu">${t}</span>`;
-const show={ len:v=>ltr(`${fx(cv.len(v))} ${U().len}`), F:v=>ltr(`${fx(cv.F(v))} ${U().F}`), M:v=>ltr(`${fx(cv.M(v))} ${U().M}`), S:v=>ltr(`${fx(cv.S(v))} ${U().S}`), A:v=>ltr(`${fx(cv.A(v))} ${U().A}`), Am:v=>ltr(`${fx(cv.A(v))} ${U().Am}`) };
+const show={ len:v=>ltr(`${fx(cv.len(v))} ${U().len}`), F:v=>ltr(`${fx(cv.F(v))} ${U().F}`), M:v=>ltr(`${fx(cv.M(v))} ${U().M}`), S:v=>ltr(`${fx(cv.S(v))} ${U().S}`), A:v=>ltr(`${fx(cv.A(v))} ${U().A}`), Am:v=>ltr(`${fx(cv.A(v))} ${U().Am}`), span:v=>ltr(`${fx(cv.span(v))} m`), q:v=>ltr(`${fx(cv.q(v))} ${U().q}`), w:v=>ltr(`${fx(cv.w(v))} ${U().w}`) };
 const pct=v=>`${(v*100).toFixed(2)}%`;
 const pill=(st,t)=>`<span class="pill ${st}">${t}</span>`;
 const PILL={ok:'تمام',warn:'انتبه',bad:'مش مقبول'};
@@ -2372,7 +2378,7 @@ function fieldHTML(group,key,label,kind,opt){
   if(kind==='db') return `<label class="field">${label}<select id="${id}" data-g="${group}" data-k="${key}" data-kind="n">${(opt||BARS).map(d=>`<option value="${d}"${+v===d?' selected':''}>Φ${d}</option>`).join('')}</select></label>`;
   if(kind==='sel') return `<label class="field">${label}<select id="${id}" data-g="${group}" data-k="${key}" data-kind="s">${opt.map(([val,t])=>`<option value="${val}"${v===val?' selected':''}>${t}</option>`).join('')}</select></label>`;
   const unit = kind==='n'?'': kind==='M'&&opt==='m'?U().Mm : U()[kind];
-  const disp = kind==='n'? v : (v? +(+cv[kind==='M'?'M':kind](v)).toFixed(4) : (v===0?'':v));
+  const disp = kind==='n'? v : (v? +(+cv[kind==='M'?'M':kind](v)).toFixed(3) : (v===0?'':v));
   return `<label class="field">${label}${unit?` <span class="u">${unit}</span>`:''}<input id="${id}" type="number" inputmode="decimal" step="any" min="0" data-g="${group}" data-k="${key}" data-kind="${kind}" value="${disp}" ${opt==='opt'||opt==='m'?'placeholder="اختياري"':''}></label>`;
 }
 function matFields(){
@@ -2561,11 +2567,29 @@ function renderCalc(full=true){
     inputs=`<div class="cgrid">${fieldHTML('slab','t','السُمك t','len')}${fieldHTML('slab','cover','الغطاء','len')}${fieldHTML('slab','db','القطر','db',[8,10,12,14,16,18,20])}${fieldHTML('slab','s','المسافة','len')}</div>
       <h4>المومنت لكل متر (اختياري)</h4><div class="cgrid">${fieldHTML('slab','Mu','Mu','M','m')}</div>`;
     res=calcSlab();
-  } else {
+  } else if(t==='bars'){
     const B=calcBars();
     inputs=`<h4>حوّل مساحة لأسياخ</h4><div class="cgrid">${fieldHTML('conv','As','المساحة المطلوبة','A')}</div><div class="conv-out">${B.conv}</div>
       <h4>أطوال التماسك والوصلات</h4><div class="cgrid">${fieldHTML('lap','db','القطر','db')}${CS.code==='ACI'?fieldHTML('lap','top','مكان السيخ','sel',[['false','سفلي / عادي'],['true','علوي (تحته أكتر من 300 مم خرسانة)']]):''}</div>`;
     res={html:B.lap+'<h4 style="margin-top:6px">جدول مساحات الحديد</h4>'+B.table,steps:[],svg:''};
+  } else if(t==='loads'){
+    const P=CS.loads, two=P.type==='two';
+    inputs=`<h4>البلاطة</h4><div class="cgrid">${fieldHTML('loads','t','سُمك البلاطة','len')}${fieldHTML('loads','gc','وزن الخرسانة γc','gam')}${fieldHTML('loads','fin','تشطيبات','q')}${fieldHTML('loads','part','قواطع (مكافئ)','q')}${fieldHTML('loads','ceil','سقف معلق وتكييف','q')}${fieldHTML('loads','occ','الاستخدام','sel',OCC)}${fieldHTML('loads','L','الحمل الحي','q')}</div>
+      <h4>الكمرة</h4><div class="cgrid">${fieldHTML('loads','type','نوع البلاطة','sel',[['two','اتجاهين (على 4 كمرات)'],['one','اتجاه واحد']])}${two?fieldHTML('loads','Ls','بحر البلاطة 1','span')+fieldHTML('loads','Ll','بحر البلاطة 2','span')+fieldHTML('loads','on','الكمرة على الضلع','sel',[['long','الطويل'],['short','القصير']]):fieldHTML('loads','Ls','بحر البلاطة العمودي على الكمرة','span')+fieldHTML('loads','span','بحر الكمرة','span')}${fieldHTML('loads','sides','بلاطات على','sel',[['2','الناحيتين'],['1','ناحية واحدة']])}${fieldHTML('loads','bw','عرض الكمرة','len')}${fieldHTML('loads','bh','عمق الكمرة','len')}${fieldHTML('loads','sup','نوع البحر','sel',SUPS)}</div>
+      <h4>حيطة على الكمرة</h4><div class="cgrid">${fieldHTML('loads','wallOn','فيه حيطة؟','sel',[['true','أيوه'],['false','لأ']])}${P.wallOn?fieldHTML('loads','wallT','سُمك الحيطة','len')+fieldHTML('loads','wallH','ارتفاعها','len')+fieldHTML('loads','wallG','وزن الطوب شامل البياض','gam'):''}</div>`;
+    res=calcLoads();
+  } else if(t==='size'){
+    const Z=CS.size, lin=Z.el==='oneway'||Z.el==='beam';
+    inputs=`<div class="cgrid">${fieldHTML('size','el','العنصر','sel',[['oneway','بلاطة اتجاه واحد'],['twoway','بلاطة على كمرات (اتجاهين)'],['flat','فلات سلاب'],['beam','كمرة']])}${lin?fieldHTML('size','sup','نوع البحر','sel',SUPS)+fieldHTML('size','L','البحر L','span'):fieldHTML('size','Ls','البحر 1 (صافي)','span')+fieldHTML('size','Ll','البحر 2 (صافي)','span')+fieldHTML('size','pos','مكان البلاطة','sel',[['int','داخلية'],['extEdge','طرفية بكمرة طرفية'],['ext','طرفية من غير كمرة']])}${Z.el==='flat'?fieldHTML('size','drop','Drop panels','sel',[['false','من غير'],['true','بـ drop panels']]):''}${Z.el==='twoway'&&CS.code==='ACI'?fieldHTML('size','afm','αfm (جساءة الكمرات)','n'):''}${fieldHTML('size','ratio','نسبة البحر للسُمك (اختياري)','n')}</div>
+      ${CS.code==='ECP'?'<p class="note">النسب دي من جدول الكود المصري زي ما أعرفها. لو مشروعك ليه معايير تانية اكتب النسبة في الخانة الأخيرة.</p>':''}`;
+    res=calcSize();
+  } else if(t==='defl'){
+    const X=CS.defl, slab=X.el==='slab';
+    inputs=`<div class="cgrid">${fieldHTML('defl','el','العنصر','sel',[['beam','كمرة'],['slab','بلاطة (شريحة 1 م)']])}${fieldHTML('defl','sup','نوع البحر','sel',SUPS)}${fieldHTML('defl','L','البحر L','span')}</div>
+      <h4>القطاع والحديد السفلي</h4><div class="cgrid">${slab?fieldHTML('defl','t','السُمك','len')+fieldHTML('defl','cover','الغطاء','len')+fieldHTML('defl','sdb','القطر','db',[8,10,12,14,16,18,20])+fieldHTML('defl','ss','المسافة','len'):fieldHTML('defl','b','العرض b','len')+fieldHTML('defl','h','الارتفاع h','len')+fieldHTML('defl','cover','الغطاء','len')+fieldHTML('defl','sd','قطر الكانة','db',[8,10,12])+fieldHTML('defl','n','عدد الأسياخ','n')+fieldHTML('defl','db','القطر','db')}</div>
+      <h4>أحمال التشغيل (من غير معاملات)</h4><div class="cgrid">${slab?fieldHTML('defl','qD','ميت إضافي','q')+fieldHTML('defl','qL','حي','q'):fieldHTML('defl','wD','ميت إضافي','w')+fieldHTML('defl','wL','حي','w')}${fieldHTML('defl','self','وزن العنصر نفسه','sel',[['true','ضيفه تلقائي'],['false','مضاف في الميت']])}${fieldHTML('defl','psi','% من الحي دايم','n')}${CS.code==='ACI'?fieldHTML('defl','lim','التشطيبات اللي تحته','sel',[['480','ممكن تتأذى (L/480)'],['240','مش هتتأذى (L/240)']]):''}</div>
+      ${CS.code==='ECP'?'<p class="note">في الكود المصري استخدمت Ec = 4400√fcu ومعامل طويل المدى 2 وحدود L/250 و L/500. راجعها على نسختك.</p>':''}`;
+    res=calcDefl();
   }
   if(full) $('calcInputs').innerHTML=`<div class="cgrid">${matFields()}</div>`+inputs;
   $('calcResults').innerHTML=res.html+(res.steps&&res.steps.length?stepsBox(res.steps):'');
@@ -2576,11 +2600,15 @@ function renderCalc(full=true){
 function calcEdit(e){
   const el=e.target; if(!el.dataset||!el.dataset.k) return;
   const g=el.dataset.g, k=el.dataset.k, kind=el.dataset.kind; let v;
-  if(kind==='s'){ v=el.value==='true'?true:el.value==='false'?false:el.value; }
+  if(kind==='s'){ v=el.value==='true'?true:el.value==='false'?false:(/^\d+$/.test(el.value)?+el.value:el.value); }
   else if(kind==='n'){ v=parseFloat(asciiDigits(el.value)); if(!(v>=0)) v=0; if(k==='n'||k==='legs') v=Math.max(1,Math.round(v)); }
   else { const x=parseFloat(asciiDigits(el.value)); v = isNaN(x)?0 : (kind==='A'? x*U().a : ci[kind](x)); }
   if(g==='m') CS.m[CS.code][k]=v; else CS[g][k]=v;
-  saveCalc(); renderCalc(k==='shape' && e.type==='change');
+  if(k==='occ' && v!=='custom') CS.loads.L=LIVE[CS.code][v]*1e-3;
+  if(g==='loads' && k==='L' && e.type==='input') CS.loads.occ='custom';
+  if(g==='size' && ['el','sup','pos','drop'].includes(k)) CS.size.ratio=0;
+  const structural = e.type==='change' && (k==='shape'||kind==='s');
+  saveCalc(); renderCalc(structural);
 }
 $('v-calc').addEventListener('input',calcEdit);
 $('v-calc').addEventListener('change',calcEdit);
@@ -2588,6 +2616,189 @@ $('calcCode').addEventListener('click',e=>{ const b=e.target.closest('[data-code
 $('calcUnits').addEventListener('click',e=>{ const b=e.target.closest('[data-units]'); if(!b) return; CS.units=b.dataset.units; saveCalc(); renderCalc(); });
 $('calcTabs').addEventListener('click',e=>{ const b=e.target.closest('[data-ctab]'); if(!b) return; CS.tab=b.dataset.ctab; saveCalc(); renderCalc(); });
 $('calcReset').addEventListener('click',()=>{ const keep={code:CS.code,units:CS.units,tab:CS.tab}; CS=JSON.parse(JSON.stringify(CDEF)); Object.assign(CS,keep); saveCalc(); renderCalc(); showToast('رجعت القيم الافتراضية',null); });
+
+/*CALC2-ENGINE-START*/
+/* loads, preliminary sizing, deflection — N, mm, MPa (N/mm²); line loads in N/mm (= kN/m) */
+const MCOEF={ // midspan M+, end moments (negative) as fractions of wL²; shear factor of wL
+  simple:{mp:1/8, m1:0, m2:0, v:0.5, vlab:'wL/2', lab:'بسيطة'},
+  end:{mp:1/14, m1:0, m2:-1/10, v:0.575, vlab:'1.15wL/2', lab:'طرفية مستمرة'},
+  int:{mp:1/16, m1:-1/11, m2:-1/11, v:0.5, vlab:'wL/2', lab:'داخلية مستمرة'},
+  cant:{mp:0, m1:-1/2, m2:0, v:1, vlab:'wL', lab:'كابولي'}
+};
+const LIVE={ // kN/m² — common values, editable
+  ECP:{res:2.0,office:2.5,corr:3.0,shop:4.0,park:3.0,assembly:5.0,roof:1.0,roofuse:2.0},
+  ACI:{res:1.92,office:2.4,corr:4.79,shop:4.79,park:1.92,assembly:4.79,roof:0.96,roofuse:4.79}
+};
+Object.assign(ENG,{
+  factor(code,D,L){ // returns {wu, how}
+    if(code==='ACI'){ const a=1.4*D, b=1.2*D+1.6*L; return {wu:Math.max(a,b), how:a>b?'1.4D':'1.2D + 1.6L'}; }
+    const a=1.4*D+1.6*L; if(L<=0.75*D){ const b=1.5*(D+L); if(b>a) return {wu:b,how:'1.5(D + L)  (L ≤ 0.75D)'}; }
+    return {wu:a,how:'1.4D + 1.6L'};
+  },
+  /* equivalent uniform load on a beam from a slab panel (per side) */
+  transfer(q,o){ // o: {type:'one'|'two', Ls, Ll, on:'long'|'short'}
+    if(o.type==='one') return {m:q*o.Ls/2, v:q*o.Ls/2, shape:'شريط عرضه L/2'};
+    const r=Math.min(1,o.Ls/o.Ll);
+    if(o.on==='short') return {m:q*o.Ls/3, v:q*o.Ls/4, shape:'مثلث'};
+    return {m:q*o.Ls/2*(1-r*r/3), v:q*o.Ls/2*(1-r/2), shape:'شبه منحرف'};
+  },
+  /* minimum thickness / depth */
+  minThk(code,fy,o){ // o: {el:'oneway'|'beam'|'twoway'|'flat', sup, L, Ls, Ll, pos:'int'|'ext'|'extEdge', drop, afm}
+    if(code==='ACI'){
+      const k=0.4+fy/700;
+      if(o.el==='oneway'){ const r={simple:20,end:24,int:28,cant:10}[o.sup]; return {h:o.L/r*k, ratio:r/k, base:r, ref:'ACI Table 7.3.1.1 × (0.4 + fy/700)', min:0}; }
+      if(o.el==='beam'){ const r={simple:16,end:18.5,int:21,cant:8}[o.sup]; return {h:o.L/r*k, ratio:r/k, base:r, ref:'ACI Table 9.3.1.1 × (0.4 + fy/700)', min:0}; }
+      const ln=Math.max(o.Ls,o.Ll), beta=Math.max(o.Ls,o.Ll)/Math.min(o.Ls,o.Ll);
+      if(o.el==='twoway'){
+        const af=o.afm;
+        if(af>2){ const h=ln*(0.8+fy/1400)/(36+9*beta); return {h:Math.max(h,90), raw:h, ratio:ln/h, ref:'ACI Table 8.3.1.2 (αfm > 2.0) ≥ 90 mm', min:90}; }
+        if(af>0.2){ const h=ln*(0.8+fy/1400)/(36+5*beta*(af-0.2)); return {h:Math.max(h,125), raw:h, ratio:ln/h, ref:'ACI Table 8.3.1.2 (0.2 < αfm ≤ 2.0) ≥ 125 mm', min:125}; }
+      }
+      // flat plate / slab, or two-way with αfm ≤ 0.2 → Table 8.3.1.1
+      const fyv=[280,420,550], col= o.pos==='ext' ? 0 : 1;
+      const T=o.drop? [[36,40],[33,36],[30,33]] : [[33,36],[30,33],[27,30]];
+      const f=Math.min(550,Math.max(280,fy)); let i=f<=420?0:1; const t=(f-fyv[i])/(fyv[i+1]-fyv[i]);
+      const r=T[i][col]+(T[i+1][col]-T[i][col])*t, mn=o.drop?100:125;
+      return {h:Math.max(ln/r,mn), raw:ln/r, ratio:r, ref:`ACI Table 8.3.1.1 (ln/${r.toFixed(1)}) ≥ ${mn} mm`, min:mn};
+    }
+    // ECP 203 — common span/thickness ratios (editable in the UI)
+    if(o.el==='oneway'){ const r={simple:25,end:30,int:36,cant:10}[o.sup]; return {h:Math.max(o.L/r,80), raw:o.L/r, ratio:r, ref:'ECP 203 جدول نسب البحر للسُمك (بلاطات مصمتة) ≥ 80 مم', min:80}; }
+    if(o.el==='beam'){ const r={simple:16,end:18,int:21,cant:5}[o.sup]; return {h:o.L/r, ratio:r, ref:'ECP 203 جدول نسب البحر للعمق (كمرات)', min:0}; }
+    const Ls=Math.min(o.Ls,o.Ll), Ln=Math.max(o.Ls,o.Ll);
+    if(o.el==='twoway'){ const r={ext:35,extEdge:40,int:45}[o.pos]; return {h:Math.max(Ls/r,80), raw:Ls/r, ratio:r, ref:'ECP 203 بلاطة على كمرات: البحر القصير ÷ النسبة ≥ 80 مم', min:80, onShort:true}; }
+    const r=o.drop?(o.pos==='int'?40:36):(o.pos==='int'?36:32); return {h:Math.max(Ln/r,150), raw:Ln/r, ratio:r, ref:'ECP 203 فلات سلاب: البحر الطويل ÷ النسبة ≥ 150 مم', min:150};
+  },
+  /* deflection of a rectangular section under uniform service load */
+  deflect(code,i){ // i: {fc,b,h,d,As,L,sup,wD,wL,psi}
+    const {b,h,d,As,L}=i, aci=code==='ACI';
+    const Ec=aci?4700*Math.sqrt(i.fc):4400*Math.sqrt(i.fc), fr=aci?0.62*Math.sqrt(i.fc):0.6*Math.sqrt(i.fc), n=200000/Ec;
+    const Ig=b*h**3/12, Mcr=fr*Ig/(h/2);
+    const nA=n*As, kd=(-nA+Math.sqrt(nA*nA+2*b*nA*d))/b, Icr=b*kd**3/3+nA*(d-kd)**2;
+    const C=MCOEF[i.sup];
+    const Ie=Ma=>{ if(Ma<=0) return Ig;
+      if(aci){ if(Ma<=2/3*Mcr) return Ig; return Math.min(Ig, Icr/(1-Math.pow(2/3*Mcr/Ma,2)*(1-Icr/Ig))); }
+      if(Ma<=Mcr) return Ig; const r3=Math.pow(Mcr/Ma,3); return Math.min(Ig, r3*Ig+(1-r3)*Icr); };
+    const at=w=>{ const Ma = i.sup==='cant' ? w*L*L/2 : C.mp*w*L*L; const I=Ie(Ma);
+      const D = i.sup==='cant' ? w*L**4/(8*Ec*I) : 5*L*L/(48*Ec*I)*(C.mp+0.1*(C.m1+C.m2))*w*L*L;
+      return {Ma,I,D}; };
+    const dD=at(i.wD), dDL=at(i.wD+i.wL), dS=at(i.wD+i.psi*i.wL);
+    const lam=2.0;                                           // ACI ξ = 2 (5 years+), ρ' = 0 ؛ ECP α = 2 − 1.2 As'/As (As' = 0)
+    const dL=dDL.D-dD.D, dLong=lam*dS.D;
+    const span = i.sup==='cant' ? 2*L : L;
+    return {Ec,fr,n,Ig,Icr,kd,Mcr,dD,dDL,dS,dL,lam,dLong,dTotal:dDL.D+dLong,dAfter:dLong+dL,span};
+  }
+});
+/*CALC2-ENGINE-END*/
+
+/* ================= الأحمال · التخانات · الترخيم ================= */
+let LAST={};   // last results, used by the "send to …" buttons
+const SUPS=[['simple','بسيطة'],['end','طرفية مستمرة'],['int','داخلية مستمرة'],['cant','كابولي']];
+const OCC=[['res','سكني'],['office','مكاتب'],['corr','ممرات وسلالم'],['shop','محلات'],['park','جراج عربيات'],['assembly','قاعات وتجمعات'],['roof','سطح مش مستخدم'],['roofuse','سطح مستخدم'],['custom','قيمة تانية']];
+const sendBtn=(to,label)=>`<button type="button" class="btn ghost sm send" data-send="${to}">${label}</button>`;
+const ratioTxt=(L,D)=>D>0?`L/${fx(L/D,0)}`:'—';
+
+function calcLoads(){
+  const P=CS.loads, aci=CS.code==='ACI';
+  if(P.occ!=='custom') P.L=LIVE[CS.code][P.occ]*1e-3;
+  const self=P.gc*P.t, D=self+P.fin+P.part+P.ceil, L=P.L, F=ENG.factor(CS.code,D,L);
+  const out=[];
+  out.push(rc('أحمال البلاطة الميتة D',show.q(D),`وزن البلاطة ${show.q(self)} + تشطيبات ${show.q(P.fin)} + قواطع ${show.q(P.part)} + سقف وتكييف ${show.q(P.ceil)}`));
+  out.push(rc('الحمل الحي L',show.q(L),P.occ==='custom'?'قيمة إنت كاتبها':`${OCC.find(o=>o[0]===P.occ)[1]} · قيمة شائعة في ${aci?'ASCE 7 / SBC 301':'ECP 201'}، راجعها`));
+  out.push(rc('الحمل التصميمي على البلاطة wu',show.q(F.wu),ltr(F.how),'ok'));
+  // beam
+  const two=P.type==='two', span= two ? (P.on==='long'?Math.max(P.Ls,P.Ll):Math.min(P.Ls,P.Ll)) : P.span;
+  const tr=ENG.transfer(1,{type:P.type,Ls:Math.min(P.Ls,P.Ll),Ll:Math.max(P.Ls,P.Ll),on:P.on});
+  const bself=P.gc*P.bw*Math.max(0,P.bh-P.t), wall=P.wallOn?P.wallG*P.wallT*P.wallH:0;
+  const DbM=D*tr.m*P.sides+bself+wall, LbM=L*tr.m*P.sides, DbV=D*tr.v*P.sides+bself+wall, LbV=L*tr.v*P.sides;
+  const FM=ENG.factor(CS.code,DbM,LbM), FV=ENG.factor(CS.code,DbV,LbV), C=MCOEF[P.sup];
+  const Mpos=C.mp*FM.wu*span*span, Mneg=Math.max(-C.m1,-C.m2)*FM.wu*span*span, Vu=C.v*FV.wu*span;
+  LAST.loads={DbM,LbM,bself,Mpos,Mneg,Vu,span};
+  out.push(rc(`الحمل على الكمرة (للعزوم) · ${tr.shape}`,`${show.w(FM.wu)}`,`ميت ${show.w(DbM)} (منه وزن الكمرة ${show.w(bself)}${wall?` وحيطة ${show.w(wall)}`:''}) · حي ${show.w(LbM)} · ${ltr(FM.how)}`));
+  if(two) out.push(rc('الحمل على الكمرة (للقص)',show.w(FV.wu),`ميت ${show.w(DbV)} · حي ${show.w(LbV)}`));
+  out.push(rc(`العزوم والقص · بحر ${show.span(span)} · ${C.lab}`,`${C.mp?ltr(`M+ = ${fx(cv.M(Mpos))} ${U().M}`):''}${C.mp&&Mneg?' · ':''}${Mneg?ltr(`M− = ${fx(cv.M(Mneg))} ${U().M}`):''}`,`${ltr(`Vu = ${fx(cv.F(Vu))} ${U().F}`)} · ${C.mp?ltr(`M+ = wL²/${fx(1/C.mp,0)}`):''}${Mneg?' · '+ltr(`M− = wL²/${fx(1/Math.max(-C.m1,-C.m2),0)}`):''} · ${ltr(`V = ${C.vlab}`)}<div class="sends">${sendBtn('beam','صمّم الكمرة بالقيم دي')}${sendBtn('defl','احسب الترخيم')}</div>`,'ok'));
+  const steps=[`وزن البلاطة = γc × t`,`D = وزن البلاطة + تشطيبات + قواطع + سقف`,
+    aci?`wu = max(1.4D , 1.2D + 1.6L)  (ACI 5.3.1)`:`wu = 1.4D + 1.6L ، ولو L ≤ 0.75D يتاخد 1.5(D + L) لو أكبر`,
+    two?`حمل مثلث على الكمرة القصيرة: للعزوم w·Ls/3 ، للقص w·Ls/4`:`بلاطة في اتجاه واحد: الكمرة بتشيل شريط عرضه L/2 من كل ناحية`,
+    two?`حمل شبه منحرف على الكمرة الطويلة: للعزوم (w·Ls/2)(1 − r²/3) ، للقص (w·Ls/2)(1 − r/2) ، r = Ls/Ll`:'',
+    `وزن الكمرة = γc × b × (h − t) ، الحيطة = γ × سُمك × ارتفاع`,
+    `معاملات العزوم والقص تقريبية (زي ACI 6.5): بحور متقاربة وحمل منتظم والحي ≤ 3 أضعاف الميت`].filter(Boolean);
+  // sketch: panel + tributary
+  const W=220, H=150, sc=Math.min(W/Math.max(P.Ls,P.Ll), H/Math.min(P.Ls,P.Ll))*0.9, a=Math.max(P.Ls,P.Ll)*sc, b=Math.min(P.Ls,P.Ll)*sc, ox=(W-a)/2+10, oy=10;
+  let trib='';
+  if(two){ const h2=b/2; trib = P.on==='long' ? `<polygon points="${ox},${oy} ${ox+a},${oy} ${ox+a-h2},${oy+h2} ${ox+h2},${oy+h2}" fill="var(--accent)" opacity=".25"/>` : `<polygon points="${ox},${oy} ${ox},${oy+b} ${ox+h2},${oy+h2}" fill="var(--accent)" opacity=".25"/>`; }
+  else trib=`<rect x="${ox}" y="${oy}" width="${a}" height="${b/2}" fill="var(--accent)" opacity=".25"/>`;
+  const beamLine = two&&P.on==='short' ? `<line x1="${ox}" y1="${oy}" x2="${ox}" y2="${oy+b}" stroke="var(--warn)" stroke-width="5"/>` : `<line x1="${ox}" y1="${oy}" x2="${ox+a}" y2="${oy}" stroke="var(--warn)" stroke-width="5"/>`;
+  const svg=`<svg viewBox="0 0 ${W+20} ${b+40}" role="img" aria-label="توزيع الحمل على الكمرة"><rect x="${ox}" y="${oy}" width="${a}" height="${b}" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>${trib}${beamLine}<text x="${ox+a/2}" y="${oy+b+18}" text-anchor="middle" font-size="11" fill="var(--muted)">${two?`${fx(cv.span(Math.max(P.Ls,P.Ll)))} × ${fx(cv.span(Math.min(P.Ls,P.Ll)))} m`:'بلاطة اتجاه واحد'} · الكمرة باللون البرتقاني</text></svg>`;
+  return {html:out.join(''),steps,svg};
+}
+
+function calcSize(){
+  const Z=CS.size, m=CS.m[CS.code], aci=CS.code==='ACI';
+  const o={el:Z.el,sup:Z.sup,L:Z.L,Ls:Z.Ls,Ll:Z.Ll,pos:Z.pos,drop:Z.drop,afm:Z.afm};
+  const r=ENG.minThk(CS.code,m.fy,o);
+  const refSpan = (Z.el==='oneway'||Z.el==='beam') ? Z.L : (r.onShort?Math.min(Z.Ls,Z.Ll):Math.max(Z.Ls,Z.Ll));
+  let h=r.h, how=r.ref;
+  if(Z.ratio>0){ h=Math.max(refSpan/Z.ratio, r.min||0); how=`نسبتك: ${refSpan===Z.L?'L':'البحر'}/${Z.ratio}`; }
+  const isBeam=Z.el==='beam', step=isBeam?50:10, hr=Math.ceil(h/step-1e-9)*step;
+  const out=[];
+  out.push(rc(isBeam?'أقل عمق للكمرة h':'أقل سُمك للبلاطة',show.len(h),`${/[\u0600-\u06FF]/.test(how)?how:ltr(how)} · ${ltr(ratioTxt(refSpan,h))}`));
+  out.push(rc('المقترح',show.len(hr),isBeam?`عرض مقترح ${show.len(Math.max(aci?250:200,Math.ceil(hr/2/50)*50))} (عادة h/2 لـ h/3، أو عرض الحيطة)`:'مقرّب لأقرب 10 مم','ok'));
+  out.push(rc('يعني إيه؟', aci?'لو التخانة ≥ القيمة دي':'لو التخانة ≥ القيمة دي', aci?'الكود بيسمح ما تحسبش الترخيم (لو مفيش قواطع أو تشطيبات ممكن تتأذى من الترخيم الكبير). لو أقل، لازم تحسب الترخيم.':'ممكن تستغنى عن حساب الترخيم في الغالب. لو أقل، احسبه من تبويب «الترخيم».'));
+  LAST.size={h:hr,b:Math.max(aci?250:200,Math.ceil(hr/2/50)*50),isBeam,el:Z.el,L:refSpan};
+  out.push(`<div class="sends">${isBeam?sendBtn('size-beam','استخدم الأبعاد في الكمرة'):sendBtn('size-slab','استخدم السُمك في البلاطة')}${sendBtn('size-defl','احسب الترخيم بالأبعاد دي')}</div>`);
+  const steps=aci?[`كمرات: L/16 ، L/18.5 ، L/21 ، L/8 · بلاطات اتجاه واحد: L/20 ، L/24 ، L/28 ، L/10`,`لو fy ≠ 420 نضرب في (0.4 + fy/700) = ${(0.4+m.fy/700).toFixed(3)}`,`فلات سلاب (Table 8.3.1.1): ln/30 إلى ln/36 حسب fy والمكان والـ drop panel ، ≥ 125 مم (أو 100 مع drop)`,`بلاطة على كمرات (Table 8.3.1.2): h = ln(0.8 + fy/1400)/(36 + 9β) لو αfm > 2 ، ≥ 90 مم`]
+    :[`بلاطات مصمتة اتجاه واحد: L/25 ، L/30 ، L/36 ، كابولي L/10`,`كمرات: L/16 ، L/18 ، L/21 ، كابولي L/5`,`بلاطة على كمرات (اتجاهين): البحر القصير / 35 ، 40 ، 45`,`فلات سلاب: البحر الطويل / 32 (طرفي) أو 36 (داخلي) ، مع drop: 36 / 40 ، ≥ 150 مم`,`النسب دي قابلة للتعديل من خانة «نسبة البحر للسُمك» لو مشروعك له معايير مختلفة`];
+  return {html:out.join(''),steps,svg:''};
+}
+
+const cmpS=(a,b)=>ltr(`${fx(cv.len(a))} ≤ ${fx(cv.len(b))} ${U().len}`);
+function calcDefl(){
+  const X=CS.defl, m=CS.m[CS.code], aci=CS.code==='ACI', slab=X.el==='slab';
+  const b=slab?1000:X.b, h=slab?X.t:X.h, d=slab?X.t-X.cover-X.sdb/2:X.h-X.cover-X.sd-X.db/2, As=slab?barA(X.sdb)*1000/X.ss:X.n*barA(X.db);
+  if(!(d>0)||!(As>0)||!(X.L>0)) return {html:'<p class="empty-note">راجع الأبعاد والحديد والبحر.</p>',steps:[],svg:''};
+  const self=X.self?X.gc*b*h:0;
+  const wD=(slab?X.qD*1000:X.wD)+self, wL=slab?X.qL*1000:X.wL;
+  const r=ENG.deflect(CS.code,{fc:m.fc,b,h,d,As,L:X.L,sup:X.sup,wD,wL,psi:X.psi/100});
+  const span=r.span, out=[];
+  const lim=(den)=>span/den, st=(v,den)=>v<=lim(den)+1e-9?'ok':'bad';
+  out.push(rc('خواص القطاع',ltr(`Ie = ${fx(r.dDL.I/1e6)}×10⁶ mm⁴`),`${ltr(`Ec = ${fx(r.Ec)} MPa`)} · ${ltr(`Ig = ${fx(r.Ig/1e6)}×10⁶`)} · ${ltr(`Icr = ${fx(r.Icr/1e6)}×10⁶ mm⁴`)} · ${ltr(`Mcr = ${fx(cv.M(r.Mcr))} ${U().M}`)} · ${ltr(`Ma(D+L) = ${fx(cv.M(r.dDL.Ma))} ${U().M}`)}${r.dDL.Ma<=(aci?2/3:1)*r.Mcr?' · القطاع مش متشرخ':''}`));
+  out.push(rc('الترخيم اللحظي',`${show.len(r.dDL.D)} <small>${ltr('('+ratioTxt(span,r.dDL.D)+')')}</small>`,`من الميت ${show.len(r.dD.D)} · من الحي لوحده ${show.len(r.dL)}`));
+  out.push(rc('الترخيم طويل المدى (إضافي)',`${show.len(r.dLong)}`,`${r.lam} × ترخيم الأحمال الدايمة (الميت + ${X.psi}% من الحي) = ${ltr(`${r.lam} × ${fx(cv.len(r.dS.D))} ${U().len}`)}`));
+  if(aci){
+    out.push(rc(`ترخيم الحي ${ltr('≤ L/360')}`,cmpS(r.dL,lim(360)),'Table 24.2.2 · أرضيات',st(r.dL,360)));
+    const den=+X.lim; out.push(rc(`بعد تركيب التشطيبات ${ltr('≤ L/'+den)}`,cmpS(r.dAfter,lim(den)),`طويل المدى + الحي · ${den===480?'فيه عناصر ممكن تتأذى (حيطان/سيراميك)':'مفيش عناصر ممكن تتأذى'}`,st(r.dAfter,den)));
+  } else {
+    out.push(rc(`الترخيم الكلي ${ltr('≤ L/250')}`,cmpS(r.dTotal,lim(250)),'اللحظي + طويل المدى',st(r.dTotal,250)));
+    out.push(rc(`بعد بناء القواطع ${ltr('≤ L/500')}`,cmpS(r.dAfter,lim(500)),'طويل المدى + الحي',st(r.dAfter,500)));
+  }
+  LAST.defl=r;
+  const steps=[`d = ${fx(cv.len(d))} ${U().len} ، As = ${show.A(As)} ، b = ${fx(cv.len(b))}`,
+    aci?`Ec = 4700√f'c ، fr = 0.62√f'c ، Mcr = fr·Ig/yt`:`Ec = 4400√fcu ، fctr = 0.6√fcu ، Mcr = fctr·Ig/yt`,
+    `n = Es/Ec = ${r.n.toFixed(2)} ، kd من b(kd)²/2 = nAs(d − kd) → kd = ${fx(cv.len(r.kd))} ، Icr = b(kd)³/3 + nAs(d − kd)²`,
+    aci?`Ie = Icr / [1 − ((2/3)Mcr/Ma)²(1 − Icr/Ig)] لو Ma > (2/3)Mcr (ACI 318-19 Table 24.2.3.5)`:`Ie = (Mcr/Ma)³Ig + [1 − (Mcr/Ma)³]Icr ≤ Ig`,
+    X.sup==='cant'?`Δ = wL⁴/(8·Ec·Ie) ، والحد بيتحسب على 2L للكابولي`:`Δ = 5L²/(48·Ec·Ie) × [M+ + 0.1(M1 + M2)] ، Ie عند منتصف البحر`,
+    aci?`طويل المدى: λΔ = ξ/(1 + 50ρ′) = 2.0 (ξ = 2 لـ 5 سنين، من غير حديد ضغط)`:`طويل المدى: α = 2 − 1.2 As′/As = 2.0 (من غير حديد ضغط)`,
+    `وزن العنصر نفسه ${X.self?`مضاف تلقائي = ${show.w(self)}`:'مش مضاف'}`];
+  // sketch: beam with supports and exaggerated deflected shape
+  const W=240, y0=40, x0=15, x1=x0+W-30, sag=Math.min(28,8+r.dDL.D/span*4000);
+  let shape, sup='';
+  const tri=x=>`<polygon points="${x},${y0+3} ${x-7},${y0+15} ${x+7},${y0+15}" fill="var(--muted)"/>`, fix=x=>`<rect x="${x-(x<100?6:0)}" y="${y0-14}" width="6" height="28" fill="var(--muted)"/>`;
+  if(X.sup==='cant'){ shape=`M${x0},${y0} Q ${(x0+x1)/2},${y0} ${x1},${y0+sag}`; sup=fix(x0); }
+  else { shape=`M${x0},${y0} Q ${(x0+x1)/2},${y0+2*sag} ${x1},${y0}`; sup = X.sup==='simple'?tri(x0)+tri(x1): X.sup==='end'?tri(x0)+fix(x1):fix(x0)+fix(x1); }
+  const svg=`<svg viewBox="0 0 ${W} 90" role="img" aria-label="شكل الترخيم"><line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y0}" stroke="var(--line)" stroke-width="6"/><path d="${shape}" fill="none" stroke="var(--warn)" stroke-width="2.5" stroke-dasharray="5 3"/>${sup}<text x="${(x0+x1)/2}" y="${y0+(X.sup==='cant'?sag:sag)+22}" text-anchor="middle" font-size="11" fill="var(--warn)">Δ = ${fx(cv.len(r.dDL.D))} ${U().len}</text></svg>`;
+  return {html:out.join(''),steps,svg};
+}
+
+/* send results between tools */
+$('v-calc').addEventListener('click',e=>{
+  const b=e.target.closest('[data-send]'); if(!b) return; const to=b.dataset.send;
+  if(to==='beam' && LAST.loads){ const L=LAST.loads; Object.assign(CS.beam,{b:CS.loads.bw,h:CS.loads.bh,Mu:Math.max(L.Mpos,L.Mneg),Vu:L.Vu}); CS.tab='beam'; }
+  if(to==='defl' && LAST.loads){ const L=LAST.loads; Object.assign(CS.defl,{el:'beam',sup:CS.loads.sup,L:L.span,b:CS.loads.bw,h:CS.loads.bh,wD:L.DbM,wL:L.LbM,self:false}); CS.tab='defl'; }
+  if(to==='size-beam' && LAST.size){ Object.assign(CS.beam,{h:LAST.size.h,b:LAST.size.b}); CS.tab='beam'; }
+  if(to==='size-slab' && LAST.size){ CS.slab.t=LAST.size.h; CS.loads.t=LAST.size.h; CS.tab='slab'; }
+  if(to==='size-defl' && LAST.size){ const z=LAST.size; if(z.isBeam) Object.assign(CS.defl,{el:'beam',h:z.h,b:z.b,L:z.L,sup:CS.size.sup,self:true}); else Object.assign(CS.defl,{el:'slab',t:z.h,L:z.L,sup:CS.size.el==='oneway'?CS.size.sup:'int',self:true}); CS.tab='defl'; }
+  saveCalc(); renderCalc(); window.scrollTo({top:0,behavior:'smooth'}); showToast('اتنقلت القيم',null);
+});
 
 /* ---------- account & sync (Supabase) ---------- */
 const sb = (window.supabase && CFG.supabaseUrl && !/YOUR|xxxx/i.test(CFG.supabaseUrl)) ? window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey) : null;
