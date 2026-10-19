@@ -302,6 +302,52 @@ h2,h3{margin:0;text-wrap:balance}
 .apps button svg{width:18px;height:18px;flex:none}
 .apps button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 body:not(.app-ideas) #v-ideas{display:none!important}
+body:not(.app-calc) #v-calc{display:none!important}
+body.app-calc .money-only,body.app-calc .view:not(#v-calc){display:none!important}
+#v-calc{grid-template-columns:minmax(0,1fr)}
+.calc-head{gap:10px}
+.calc-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.seg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;border-radius:8px;padding:6px 14px;font-weight:700;font-size:.86rem;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.ctabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--bg);border-radius:12px;padding:4px}
+.ctabs button{border:0;background:transparent;border-radius:9px;padding:8px 4px;font-weight:700;font-size:.9rem;color:var(--muted)}
+.ctabs button[aria-selected="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.cwrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:18px;align-items:start}
+.cin h4{margin:4px 0 0;font-size:.88rem;color:var(--muted);font-weight:700}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.field .u{font-size:.72rem;color:var(--muted);font-family:var(--f-mono)}
+.field input[type=number]{font-family:var(--f-mono);direction:ltr;text-align:right}
+.xsec{display:grid;place-items:center;padding-top:6px;border-top:1px dashed var(--line)}
+.xsec svg{width:100%;max-width:280px;height:auto;display:block}
+.res{display:grid;gap:10px;min-width:0}
+.rcard{background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid var(--line);border-radius:12px;padding:11px 14px;display:grid;gap:3px;min-width:0}
+.rcard.ok{border-inline-start-color:var(--accent)}.rcard.warn{border-inline-start-color:var(--gold)}.rcard.bad{border-inline-start-color:var(--warn)}
+.rcard .k{font-size:.84rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.rcard .v{font-family:var(--f-mono);font-size:1.3rem;font-weight:600;overflow-wrap:anywhere}
+.nu{unicode-bidi:isolate;white-space:nowrap}
+.rcard .v small{font-size:.8rem;color:var(--muted);font-weight:500}
+.rcard .sub{font-size:.8rem;color:var(--muted);overflow-wrap:anywhere;line-height:1.7}
+.pill{font-size:.72rem;font-weight:700;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.pill.ok{background:var(--accent-soft);color:var(--accent)}.pill.warn{background:var(--gold-soft);color:var(--gold)}.pill.bad{background:var(--warn-soft);color:var(--warn)}
+.bopts{display:inline-flex;flex-wrap:wrap;gap:6px;vertical-align:middle}
+.bopt{display:inline-grid;font-family:var(--f-mono);font-weight:600;font-size:.88rem;background:var(--bg);color:var(--ink);border-radius:8px;padding:3px 9px;line-height:1.35}
+.bopt small{font-size:.7rem;color:var(--muted);font-weight:500}
+.bopt.nofit{opacity:.7}
+.conv-out{margin-top:4px}
+.csteps{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:10px 14px;font-size:.84rem}
+.csteps summary{cursor:pointer;font-weight:700;color:var(--accent)}
+.csteps ol{margin:8px 0 0;padding-inline-start:20px;display:grid;gap:4px;color:var(--muted)}
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.btable{border-collapse:collapse;width:100%;font-size:.8rem;font-variant-numeric:tabular-nums;direction:ltr}
+.btable th,.btable td{padding:5px 7px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+.btable thead th{background:var(--bg);color:var(--muted);font-weight:600}
+.btable tbody th{font-family:var(--f-mono);color:var(--accent)}
+.btable td{font-family:var(--f-mono)}
+.btable td.w{color:var(--muted)}
+.calc-disc{text-align:center;font-size:.78rem}
+@media (max-width:820px){.cwrap{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.ctabs button{font-size:.8rem}.apps button{flex-direction:column;gap:3px;font-size:.78rem;line-height:1.25;text-align:center}}
 body.app-ideas .money-only,body.app-ideas .view:not(#v-ideas){display:none!important}
 #v-ideas{grid-template-columns:minmax(0,1fr)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
@@ -471,6 +517,7 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
     <nav class="apps" aria-label="أقسام حياتي">
       <button type="button" data-app="money" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7zm0 0 13-3v3M16 13.5h2"/></svg>مصروفي</button>
       <button type="button" data-app="ideas" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg>أفكاري وأهدافي</button>
+      <button type="button" data-app="calc" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 5h16M4 19h16M12 5v14M8 5v2M16 5v2M8 19v-2M16 19v-2"/></svg>حاسبات إنشائية</button>
     </nav>
     <div class="tabs money-only" role="tablist" aria-label="أقسام مصروفي">
       <button role="tab" id="t-home" data-tab="home" aria-selected="true">الملخص</button>
@@ -553,6 +600,25 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
       <div class="panel-head"><h2>كراستي</h2><span class="muted" style="font-size:.8rem">كل اللي كتبته أو رسمته بالقلم</span></div>
       <div class="gallery" id="gallery"></div>
     </section>
+  </div>
+
+  <!-- CALC -->
+  <div class="view" id="v-calc" aria-label="حاسبات إنشائية">
+    <section class="panel calc-head">
+      <div class="calc-top">
+        <div class="seg" id="calcCode" role="group" aria-label="الكود"><button type="button" data-code="ECP">الكود المصري</button><button type="button" data-code="ACI">ACI / SBC</button></div>
+        <div class="seg" id="calcUnits" role="group" aria-label="الوحدات"><button type="button" data-units="SI">kN · mm</button><button type="button" data-units="MKS">t · cm</button></div>
+      </div>
+      <p class="hint" id="calcCodeNote"></p>
+      <div class="ctabs" id="calcTabs" role="tablist" aria-label="العنصر">
+        <button type="button" role="tab" data-ctab="beam">كمرة</button><button type="button" role="tab" data-ctab="col">عمود</button><button type="button" role="tab" data-ctab="slab">بلاطة</button><button type="button" role="tab" data-ctab="bars">الحديد والوصلات</button>
+      </div>
+    </section>
+    <div class="cwrap">
+      <section class="panel cin"><div class="panel-head"><h2>المدخلات</h2><button class="link" id="calcReset" type="button">رجّع الافتراضي</button></div><div id="calcInputs"></div><div class="xsec" id="calcSketch"></div></section>
+      <section class="res" id="calcResults" aria-live="polite"></section>
+    </div>
+    <p class="hint calc-disc">أداة مساعدة للمراجعة السريعة في الشوب دروينج. التصميم النهائي واعتماده مسؤولية المهندس المصمم. وحدات الطن: 1 t = 10 kN و 1 kg/cm² = 0.1 MPa.</p>
   </div>
 
   <!-- HOME -->
@@ -1648,10 +1714,10 @@ let ideaFilter='all', openIdea=null, ideaArea='auto';
 let appSec='money'; try{ appSec=localStorage.getItem('hayati-app')||'money'; }catch(e){}
 
 function setApp(a){
-  appSec=a; document.body.classList.toggle('app-ideas',a==='ideas');
+  appSec=a; document.body.classList.toggle('app-ideas',a==='ideas'); document.body.classList.toggle('app-calc',a==='calc');
   document.querySelectorAll('.apps button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.app===a)));
   try{ localStorage.setItem('hayati-app',a); }catch(e){}
-  window.scrollTo({top:0}); render();
+  window.scrollTo({top:0}); render(); if(a==='calc') renderCalc();
 }
 document.querySelectorAll('.apps button').forEach(b=>b.addEventListener('click',()=>setApp(b.dataset.app)));
 
@@ -2143,6 +2209,386 @@ $('ideaEntry').addEventListener('input',()=>{ dumpLast=Date.now(); dumpNudge='';
 
 $('ideaEntry').dataset.ph=$('ideaEntry').placeholder;
 
+/*CALC-ENGINE-START*/
+/* All engine math in N, mm, MPa. Results carry SI numbers; the UI converts for display. */
+const BARS=[8,10,12,14,16,18,20,22,25,28,32,36,40];
+const barA=d=>Math.PI*d*d/4;
+const ENG={
+  /* ---------- ACI 318-19 ---------- */
+  aci:{
+    beta1:fc=> fc<=28?0.85:Math.max(0.65,0.85-0.05*(fc-28)/7),
+    flexure(i){ // i: {fc,fy,b,d,As}
+      const {fc,fy,b,d}=i, b1=ENG.aci.beta1(fc), ety=fy/200000;
+      const phiOf=et=> et>=ety+0.003?0.9: et<=ety?0.65: 0.65+0.25*(et-ety)/0.003;
+      const flex=As=>{ const a=As*fy/(0.85*fc*b), c=a/b1, et=c>0?0.003*(d-c)/c:1, phi=phiOf(et), Mn=As*fy*(d-a/2); return {a,c,et,phi,Mn,phiMn:phi*Mn}; };
+      const AsMin=Math.max(0.25*Math.sqrt(fc)/fy,1.4/fy)*b*d;                 // 9.6.1.2
+      const cLim=3/7*d, AsMax=0.85*fc*b*b1*cLim/fy;                             // εt ≥ 0.004 (9.3.3.1 / 7.3.3.1)
+      const cTc=0.003/(0.006+ety)*d, AsTc=0.85*fc*b*b1*cTc/fy;                  // εt = εty+0.003 (Table 21.2.2)
+      let Mmax=0, AsAtMax=AsTc; for(let k=0;k<=80;k++){ const As=AsTc+(AsMax-AsTc)*k/80, m=flex(As).phiMn; if(m>Mmax){ Mmax=m; AsAtMax=As; } }
+      const reqFor=Mu=>{
+        if(!(Mu>0)) return null; if(Mmax<Mu) return {over:true};
+        let prev=0, hit=null; const N=400;
+        for(let k=1;k<=N;k++){ const As=AsAtMax*k/N; if(flex(As).phiMn>=Mu){ hit=As; break; } prev=As; }
+        let lo=prev, hi=hit; for(let k=0;k<50;k++){ const m=(lo+hi)/2; if(flex(m).phiMn>=Mu) hi=m; else lo=m; }
+        const AsReq=hi, AsDes=Math.max(AsReq, Math.min(AsMin,4/3*AsReq));        // 9.6.1.3
+        return {AsReq,AsDes,minGoverns:AsDes>AsReq+1e-6};
+      };
+      return {b1,ety,AsMin,AsMax,AsTc,Mmax,flex,reqFor,phiOf};
+    },
+    shear(i){ // {fc,fyt,b,d,legs,sd,s,As,Vu}
+      const {fc,b,d}=i, fyt=Math.min(i.fyt,420), sq=Math.min(Math.sqrt(fc),8.3);
+      const Av=i.legs*barA(i.sd), AvMinS=Math.max(0.062*sq*b/fyt,0.35*b/fyt);      // 9.6.3.4
+      const hasMin=i.s>0 && Av/i.s>=AvMinS-1e-9;
+      const lamS=Math.min(1,Math.sqrt(2/(1+d/254))), rhoW=Math.max(i.As,0)/(b*d);
+      const VcA=0.17*sq*b*d;                                                      // 22.5.5.1(a)
+      const VcC=0.66*lamS*Math.cbrt(rhoW)*sq*b*d;                                  // 22.5.5.1(c)
+      const Vc=hasMin?VcA:VcC;
+      const VsLim=0.66*sq*b*d;                                                    // 22.5.1.2
+      const VsRaw=i.s>0?Av*fyt*d/i.s:0, Vs=Math.min(VsRaw,VsLim);
+      const phi=0.75, phiVn=phi*(Vc+Vs), phiVnMax=phi*(VcA+VsLim);
+      const sMax=(VsRaw>0.33*sq*b*d)?Math.min(d/4,300):Math.min(d/2,600);         // 9.7.6.2.2
+      let req=null;
+      if(i.Vu>0){
+        if(i.Vu>phiVnMax+1e-6) req={over:true};
+        else { const VsReq=i.Vu/phi-VcA; const sReq=VsReq>0?Av*fyt*d/VsReq:Infinity;
+          const lim=(VsReq>0.33*sq*b*d)?Math.min(d/4,300):Math.min(d/2,600);
+          const s=Math.min(sReq,lim,Av/AvMinS); req={VsReq:Math.max(0,VsReq),s,sReq,lim,sMinSteel:Av/AvMinS}; }
+      }
+      return {fyt,sq,Av,AvMinS,hasMin,lamS,Vc,VcA,VcC,Vs,VsLim,phiVn,phiVnMax,sMax,req,phi};
+    },
+    column(i){ // {fc,fy,Ag,As,type,Pu}
+      const {fc,fy,Ag,As}=i, spiral=i.type==='spiral', phi=spiral?0.75:0.65, al=spiral?0.85:0.80;
+      const P0=0.85*fc*(Ag-As)+fy*As, phiPn=phi*al*P0;                           // 22.4.2
+      const min=0.01*Ag, max=0.08*Ag;                                             // 10.6.1.1
+      let req=null;
+      if(i.Pu>0){ const AsReq=(i.Pu/(phi*al)-0.85*fc*Ag)/(fy-0.85*fc); const AsDes=Math.max(AsReq,min);
+        const AgFor=r=>i.Pu/(phi*al*(0.85*fc*(1-r)+fy*r));
+        req={AsReq,AsDes,over:AsDes>max,AgAt1:AgFor(0.01),AgAt2:AgFor(0.02)}; }
+      return {phi,al,P0,phiPn,min,max,req};
+    },
+    slabMin:(b,t)=>0.0018*b*t,                                                    // 7.6.1.1
+    slabSmax:t=>Math.min(3*t,450),                                                // 7.7.2.3
+    lap(i){ // {fc,fy,db,top}
+      const sq=Math.min(Math.sqrt(i.fc),8.3), psiT=i.top?1.3:1, psiG=i.fy<=420?1:(i.fy<=550?1.15:1.3);
+      const k=i.db<=19?2.1:1.7;
+      const ld=Math.max(i.fy*psiT*psiG/(k*sq)*i.db,300);                          // 25.4.2.3
+      const lapT=Math.max(1.3*ld,300);                                            // 25.5.2 class B
+      const ldc=Math.max(0.24*i.fy/sq*i.db,0.043*i.fy*i.db,200);                  // 25.4.9.2
+      const lapC=Math.max(i.fy<=420?0.071*i.fy*i.db:(0.13*i.fy-24)*i.db,300);     // 25.5.5.1
+      return {ld,lapT,ldc,lapC,psiT,psiG,k};
+    }
+  },
+  /* ---------- ECP 203 (limit states) ---------- */
+  ecp:{
+    flexure(i){ // {fc:fcu, fy, b, d}
+      const {fc,fy,b,d}=i, fyd=fy/1.15, fcd=0.67*fc/1.5;
+      const cmaxR=(2/3)*600/(600+fyd), cmax=cmaxR*d, amax=0.8*cmax;
+      const AsMax=fcd*b*amax/fyd, MuMax=fcd*b*amax*(d-amax/2);
+      const mu1=0.225*Math.sqrt(fc)/fy, floor=fy<260?0.0025:0.0015;
+      const AsMinOf=AsReq=>Math.max(Math.min(mu1*b*d,1.3*AsReq),floor*b*d);
+      const AsMin=Math.max(mu1,floor)*b*d;
+      const flex=As=>{ const a=As*fyd/(fcd*b), c=a/0.8, over=c>cmax+1e-9; return {a,c,over,cd:c/d,Mu: over?MuMax:As*fyd*(d-a/2)}; };
+      const reqFor=Mu=>{
+        if(!(Mu>0)) return null; const disc=d*d-2*Mu/(fcd*b);
+        if(disc<0) return {over:true}; const a=d-Math.sqrt(disc); if(a>amax+1e-9) return {over:true};
+        const AsReq=fcd*b*a/fyd, AsDes=Math.max(AsReq,AsMinOf(AsReq)); return {AsReq,AsDes,a,minGoverns:AsDes>AsReq+1e-6};
+      };
+      return {fyd,fcd,cmaxR,cmax,amax,AsMax,MuMax,mu1,floor,AsMin,AsMinOf,flex,reqFor};
+    },
+    shear(i){ // {fc:fcu,fyt,b,d,legs,sd,s,Vu}
+      const {fc,b,d}=i, fyst=i.fyt, qcu=0.24*Math.sqrt(fc/1.5), qumax=Math.min(0.7*Math.sqrt(fc/1.5),4.4);
+      const Ast=i.legs*barA(i.sd), muSt=Math.max(0.4/fyst, fyst<260?0.0015:0.0010);
+      const hasMin=i.s>0 && Ast>=muSt*b*i.s-1e-9;
+      const qsu=i.s>0?Ast*(fyst/1.15)/(b*i.s):0;
+      const qcap=Math.min(qumax, hasMin?Math.max(qcu,qcu/2+qsu):qcu/2+qsu);
+      const Qcap=qcap*b*d, Qmax=qumax*b*d;
+      let req=null;
+      if(i.Vu>0){ const qu=i.Vu/(b*d);
+        if(qu>qumax+1e-9) req={over:true,qu};
+        else { const qs=qu<=qcu?0:qu-qcu/2; const sReq=qs>0?Ast*(fyst/1.15)/(qs*b):Infinity;
+          const sMin=Ast/(muSt*b); req={qu,qs,s:Math.min(sReq,sMin,200),sReq,sMin}; } }
+      return {qcu,qumax,Ast,muSt,hasMin,qsu,qcap,Qcap,Qmax,sMax:200,req};
+    },
+    column(i){ // {fc:fcu,fy,Ag,As,loc,Pu}
+      const {fc,fy,Ag,As}=i, Pu=0.35*fc*Ag+0.67*fy*As;
+      const min=0.008*Ag, maxR={int:0.04,edge:0.05,corner:0.06}[i.loc||'int'], max=maxR*Ag;
+      let req=null;
+      if(i.Pu>0){ const AsReq=(i.Pu-0.35*fc*Ag)/(0.67*fy), AsDes=Math.max(AsReq,min);
+        const AgFor=r=>i.Pu/(0.35*fc+0.67*fy*r); req={AsReq,AsDes,over:AsDes>max,AgAt1:AgFor(0.01),AgAt2:AgFor(0.02)}; }
+      return {Pu,min,max,maxR,req};
+    },
+    slabMin:(b,t,d,fy)=>Math.max(0.6/fy*b*d,(fy<260?0.0025:0.0015)*b*t),
+    slabSmax:()=>200
+  },
+  /* bar options for an area; fits = clear spacing check in one layer */
+  barOptions(As, opt){ // opt: {width(clear inside stirrups) , minN, list}
+    const out=[];
+    for(const db of (opt.list||[12,14,16,18,20,22,25,28,32])){
+      const n=Math.max(opt.minN||2,Math.ceil(As/barA(db)-1e-9)); const A=n*barA(db);
+      const gap=Math.max(25,db); const fits=opt.width? (opt.width-n*db)>=(n-1)*gap : true;
+      out.push({db,n,A,excess:A/As-1,fits});
+    }
+    return out.sort((a,b)=>(b.fits-a.fits)||(a.excess-b.excess)).slice(0,4);
+  },
+  slabOptions(AsPerM, sMax){
+    const out=[];
+    for(const db of [8,10,12,14,16]){ let s=Math.floor(barA(db)*1000/AsPerM/25)*25; s=Math.min(s,sMax); if(s<75) continue; out.push({db,s,A:barA(db)*1000/s}); }
+    return out.slice(0,4);
+  }
+};
+/*CALC-ENGINE-END*/
+
+/* ================= حاسبات إنشائية ================= */
+const CDEF={code:'ECP',units:'SI',tab:'beam',
+  m:{ACI:{fc:28,fy:420,fyt:420},ECP:{fc:30,fy:360,fyt:360}},
+  beam:{b:250,h:600,cover:25,sd:10,n:4,db:16,legs:2,s:150,Mu:0,Vu:0},
+  col:{shape:'rect',b:300,h:600,D:500,n:8,db:16,type:'tied',loc:'int',Pu:0},
+  slab:{t:150,cover:20,db:12,s:150,Mu:0},
+  lap:{db:16,top:false},
+  conv:{As:1200}};
+let CS=JSON.parse(JSON.stringify(CDEF));
+try{ const v=JSON.parse(localStorage.getItem('hayati-calc')||'null'); if(v){ for(const k in CDEF){ if(v[k]!==undefined) CS[k]= (typeof CDEF[k]==='object'&&!Array.isArray(CDEF[k])) ? Object.assign({},CDEF[k],v[k]) : v[k]; } CS.m.ACI=Object.assign({},CDEF.m.ACI,(v.m||{}).ACI); CS.m.ECP=Object.assign({},CDEF.m.ECP,(v.m||{}).ECP); } }catch(e){}
+const saveCalc=()=>{ try{ localStorage.setItem('hayati-calc',JSON.stringify(CS)); }catch(e){} };
+
+/* units: engine is N, mm, MPa. MKS uses cm, t, t.m, kg/cm² with 1 t = 10 kN and 1 kg/cm² = 0.1 MPa */
+const UN={
+  SI:{len:'mm',F:'kN',M:'kN.m',S:'MPa',A:'mm²',Am:'mm²/m',Mm:'kN.m/m',l:1,f:1e3,mo:1e6,s:1,a:1},
+  MKS:{len:'cm',F:'t',M:'t.m',S:'kg/cm²',A:'cm²',Am:'cm²/m',Mm:'t.m/m',l:10,f:1e4,mo:1e7,s:0.1,a:100}};
+const U=()=>UN[CS.units];
+const cv={ len:v=>v/U().l, F:v=>v/U().f, M:v=>v/U().mo, S:v=>v/U().s, A:v=>v/U().a };      // engine → display
+const ci={ len:v=>v*U().l, F:v=>v*U().f, M:v=>v*U().mo, S:v=>v*U().s };                    // display → engine
+const nf2=new Intl.NumberFormat('en-US',{maximumFractionDigits:2}), nf1=new Intl.NumberFormat('en-US',{maximumFractionDigits:1}), nf0=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
+const fx=(v,k)=>{ if(!isFinite(v)) return '—'; const a=Math.abs(v); return (k===0||a>=1000?nf0:a>=10?nf1:nf2).format(v); };
+const ltr=t=>`<span dir="ltr" class="nu">${t}</span>`;
+const show={ len:v=>ltr(`${fx(cv.len(v))} ${U().len}`), F:v=>ltr(`${fx(cv.F(v))} ${U().F}`), M:v=>ltr(`${fx(cv.M(v))} ${U().M}`), S:v=>ltr(`${fx(cv.S(v))} ${U().S}`), A:v=>ltr(`${fx(cv.A(v))} ${U().A}`), Am:v=>ltr(`${fx(cv.A(v))} ${U().Am}`) };
+const pct=v=>`${(v*100).toFixed(2)}%`;
+const pill=(st,t)=>`<span class="pill ${st}">${t}</span>`;
+const PILL={ok:'تمام',warn:'انتبه',bad:'مش مقبول'};
+
+/* field descriptor: [key, label, kind(len|F|M|S|n|db|sel), opts] */
+function fieldHTML(group,key,label,kind,opt){
+  const v=group==='m'?CS.m[CS.code][key]:CS[group][key];
+  const id=`c-${group}-${key}`;
+  if(kind==='db') return `<label class="field">${label}<select id="${id}" data-g="${group}" data-k="${key}" data-kind="n">${(opt||BARS).map(d=>`<option value="${d}"${+v===d?' selected':''}>Φ${d}</option>`).join('')}</select></label>`;
+  if(kind==='sel') return `<label class="field">${label}<select id="${id}" data-g="${group}" data-k="${key}" data-kind="s">${opt.map(([val,t])=>`<option value="${val}"${v===val?' selected':''}>${t}</option>`).join('')}</select></label>`;
+  const unit = kind==='n'?'': kind==='M'&&opt==='m'?U().Mm : U()[kind];
+  const disp = kind==='n'? v : (v? +(+cv[kind==='M'?'M':kind](v)).toFixed(4) : (v===0?'':v));
+  return `<label class="field">${label}${unit?` <span class="u">${unit}</span>`:''}<input id="${id}" type="number" inputmode="decimal" step="any" min="0" data-g="${group}" data-k="${key}" data-kind="${kind}" value="${disp}" ${opt==='opt'||opt==='m'?'placeholder="اختياري"':''}></label>`;
+}
+function matFields(){
+  const aci=CS.code==='ACI';
+  return fieldHTML('m','fc',aci?"f'c (أسطوانة)":'fcu (مكعب)','S')+fieldHTML('m','fy','fy حديد رئيسي','S')+fieldHTML('m','fyt','fy كانات','S');
+}
+
+/* ----- cross-section sketches ----- */
+function svgBeam(b,h,cover,sd,n,db,c){
+  const W=200, sc=Math.min(W/b,240/h), w=b*sc, hh=h*sc, ox=20, oy=14, cv0=(cover+sd)*sc;
+  const r=Math.max(2.5,db/2*sc), yb=oy+hh-cv0-r, x0=ox+cv0+r, x1=ox+w-cv0-r;
+  let bars=''; for(let k=0;k<n;k++){ const x=n===1?(x0+x1)/2:x0+(x1-x0)*k/(n-1); bars+=`<circle cx="${x}" cy="${yb}" r="${r}" fill="var(--ink)"/>`; }
+  const na = c>0 && c<h ? `<line x1="${ox-8}" x2="${ox+w+8}" y1="${oy+c*sc}" y2="${oy+c*sc}" stroke="var(--warn)" stroke-dasharray="4 3"/><text x="${ox+w+10}" y="${oy+c*sc+4}" font-size="10" fill="var(--warn)">c</text><rect x="${ox}" y="${oy}" width="${w}" height="${Math.min(c*sc,hh)}" fill="var(--warn)" opacity=".12"/>`:'';
+  return `<svg viewBox="0 0 ${W+60} ${hh+40}" role="img" aria-label="قطاع الكمرة"><rect x="${ox}" y="${oy}" width="${w}" height="${hh}" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>${na}<rect x="${ox+cover*sc}" y="${oy+cover*sc}" width="${w-2*cover*sc}" height="${hh-2*cover*sc}" rx="4" fill="none" stroke="var(--accent)" stroke-width="${Math.max(1,sd*sc)}"/>${bars}<text x="${ox+w/2}" y="${oy+hh+18}" text-anchor="middle" font-size="11" fill="var(--muted)">${fx(cv.len(b))}</text><text x="${ox-6}" y="${oy+hh/2}" text-anchor="end" font-size="11" fill="var(--muted)" transform="rotate(-90 ${ox-6} ${oy+hh/2})">${fx(cv.len(h))}</text></svg>`;
+}
+function svgCol(c,n,db){
+  const W=200, cover=40, pts=[]; let shape='';
+  if(c.shape==='circ'){ const R=90, cx=110, cy=100, rr=(c.D/2-cover-db/2)*(R/(c.D/2));
+    shape=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/><circle cx="${cx}" cy="${cy}" r="${rr+db/2*(R/(c.D/2))+3}" fill="none" stroke="var(--accent)" stroke-width="2"/>`;
+    for(let k=0;k<n;k++){ const t=2*Math.PI*k/n; pts.push([cx+rr*Math.cos(t),cy+rr*Math.sin(t)]); }
+    var r=Math.max(2.5,db/2*(R/(c.D/2))); var H=200;
+  } else {
+    const sc=Math.min(W/c.b,200/c.h), w=c.b*sc, h=c.h*sc, ox=20, oy=10, cv0=cover*sc; var r=Math.max(2.5,db/2*sc); var H=h+20;
+    shape=`<rect x="${ox}" y="${oy}" width="${w}" height="${h}" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/><rect x="${ox+cv0-r-2}" y="${oy+cv0-r-2}" width="${w-2*cv0+2*r+4}" height="${h-2*cv0+2*r+4}" rx="4" fill="none" stroke="var(--accent)" stroke-width="2"/>`;
+    const x0=ox+cv0, x1=ox+w-cv0, y0=oy+cv0, y1=oy+h-cv0, per=2*((x1-x0)+(y1-y0));
+    const N=Math.max(4,n); const at=d=>{ const a=x1-x0,b2=y1-y0; if(d<a) return [x0+d,y0]; d-=a; if(d<b2) return [x1,y0+d]; d-=b2; if(d<a) return [x1-d,y1]; d-=a; return [x0,y1-d]; };
+    // corners first, then spread the rest along the long sides
+    pts.push([x0,y0],[x1,y0],[x1,y1],[x0,y1]); const rest=N-4; const longX=(x1-x0)>=(y1-y0);
+    const perSide=[Math.ceil(rest/2),Math.floor(rest/2)];
+    perSide.forEach((m,si)=>{ for(let k=1;k<=m;k++){ const t=k/(m+1); if(longX) pts.push([x0+(x1-x0)*t, si?y1:y0]); else pts.push([si?x1:x0, y0+(y1-y0)*t]); } });
+  }
+  return `<svg viewBox="0 0 ${W+40} ${H}" role="img" aria-label="قطاع العمود">${shape}${pts.slice(0,Math.max(n,c.shape==='circ'?n:4)).map(([x,y])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="var(--ink)"/>`).join('')}</svg>`;
+}
+
+/* ----- result card helpers ----- */
+const rc=(k,v,sub,st,lbl)=>`<div class="rcard${st?' '+st:''}"><div class="k"><span>${k}</span>${st?pill(st,lbl||PILL[st]):''}</div><div class="v">${v}</div>${sub?`<div class="sub">${sub}</div>`:''}</div>`;
+const stepsBox=lines=>`<details class="csteps"><summary>إزاي اتحسبت؟</summary><ol>${lines.map(l=>`<li>${l}</li>`).join('')}</ol></details>`;
+const barOpts=(As,width)=>ENG.barOptions(As,{width}).map(o=>`<span class="bopt${o.fits?'':' nofit'}">${o.n}Φ${o.db}<small>${show.A(o.A)}${o.fits?'':' · طبقتين'}</small></span>`).join('');
+
+/* ----- beam ----- */
+function calcBeam(){
+  const m=CS.m[CS.code], B=CS.beam, aci=CS.code==='ACI';
+  const d=B.h-B.cover-B.sd-B.db/2, As=B.n*barA(B.db), clearW=B.b-2*(B.cover+B.sd);
+  const out=[]; let steps=[], cNA=0;
+  if(d<=0){ return `<p class="empty-note">الأبعاد مش منطقية: الارتفاع الفعّال d طلع بالسالب.</p>`; }
+  if(aci){
+    const F=ENG.aci.flexure({fc:m.fc,fy:m.fy,b:B.b,d}), cap=F.flex(As); cNA=cap.c;
+    const stMin=As>=F.AsMin-1e-6?'ok':'warn', stMax=cap.et>=0.004?'ok':'bad';
+    out.push(rc('أقل حديد As,min',show.A(F.AsMin),`ρmin = ${pct(F.AsMin/(B.b*d))} · ACI 9.6.1.2`));
+    out.push(rc('أقصى حديد (εt = 0.004)',show.A(F.AsMax),`ρmax = ${pct(F.AsMax/(B.b*d))} · لحد φ = 0.90: ${show.A(F.AsTc)}`));
+    out.push(rc('أقصى مومنت للقطاع φMn,max',show.M(F.Mmax),'من غير حديد ضغط'));
+    out.push(rc(`مقاومة الحديد الموجود ${B.n}Φ${B.db}`,show.M(cap.phiMn),`As = ${show.A(As)} · ρ = ${pct(As/(B.b*d))} · εt = ${cap.et.toFixed(4)} · φ = ${cap.phi.toFixed(2)}${As<F.AsMin?' · أقل من الحد الأدنى':''}${cap.et<0.004?' · زيادة عن الأقصى':''}`, stMax==='bad'?'bad':stMin));
+    if(B.Mu>0){ const r=F.reqFor(B.Mu);
+      out.push(r.over? rc(`الحديد المطلوب لـ Mu = ${show.M(B.Mu)}`,'القطاع مش كفاية','محتاج حديد ضغط أو تكبير القطاع','bad')
+        : rc(`الحديد المطلوب لـ Mu = ${show.M(B.Mu)}`,show.A(r.AsDes),`${r.minGoverns?'الحد الأدنى هو اللي حاكم · ':''}اقتراح: <span class="bopts">${barOpts(r.AsDes,clearW)}</span>`, As>=r.AsDes-1e-6?'ok':'bad', As>=r.AsDes-1e-6?'الموجود كفاية':'الموجود مش كفاية')); }
+    const S=ENG.aci.shear({fc:m.fc,fyt:m.fyt,b:B.b,d,legs:B.legs,sd:B.sd,s:B.s,As,Vu:B.Vu});
+    out.push(rc(`مقاومة القص بالكانات ${B.legs} فرع Φ${B.sd} كل ${fx(cv.len(B.s))}`,show.F(S.phiVn),`φVc = ${show.F(0.75*S.Vc)} · φVs = ${show.F(0.75*S.Vs)} · أقصى للقطاع ${show.F(S.phiVnMax)}`, S.hasMin && B.s<=S.sMax+1e-6?'ok':'warn'));
+    out.push(rc('أقل كانات وأقصى مسافة',`Av,min/s = ${fx(cv.A(S.AvMinS*1000))} ${U().Am}`,`أقصى مسافة ${show.len(S.sMax)}${S.hasMin?'':' · الكانات أقل من الحد الأدنى'}`));
+    if(B.Vu>0){ const r=S.req; out.push(r.over? rc(`الكانات المطلوبة لـ Vu = ${show.F(B.Vu)}`,'القطاع مش كفاية للقص','كبّر العرض أو العمق','bad')
+        : rc(`الكانات المطلوبة لـ Vu = ${show.F(B.Vu)}`,`${B.legs} فرع Φ${B.sd} كل ${show.len(Math.floor(r.s/25)*25)}`,`Vs المطلوب = ${show.F(r.VsReq)} · المسافة الموجودة ${show.len(B.s)}`, B.s<=r.s+1e-6?'ok':'bad', B.s<=r.s+1e-6?'الموجود كفاية':'المسافة كبيرة')); }
+    steps=[`d = h − cover − Φstirrup − Φ/2 = ${fx(cv.len(d))} ${U().len}`,
+      `β1 = ${F.b1.toFixed(3)} ، εty = fy/Es = ${F.ety.toFixed(5)}`,
+      `As,min = max(0.25√f'c/fy , 1.4/fy)·b·d`,
+      `As,max عند c = 3d/7 (εt = 0.004): As = 0.85 f'c b β1 c / fy`,
+      `a = As fy / (0.85 f'c b) = ${fx(cv.len(cap.a))} ، c = a/β1 = ${fx(cv.len(cap.c))}`,
+      `εt = 0.003 (d − c)/c = ${cap.et.toFixed(4)} → φ = ${cap.phi.toFixed(3)}`,
+      `φMn = φ As fy (d − a/2) = ${show.M(cap.phiMn)}`,
+      `Vc = 0.17√f'c b d (لما الكانات ≥ الحد الأدنى)، غير كده 0.66 λs ρw^⅓ √f'c b d`,
+      `Vs = Av fyt d / s ≤ 0.66√f'c b d ، φ = 0.75 ، fyt ≤ 420 MPa`,
+      `Av,min/s = max(0.062√f'c , 0.35)·b/fyt ، s ≤ d/2 ≤ 600 (أو d/4 ≤ 300 لو Vs > 0.33√f'c b d)`];
+  } else {
+    const F=ENG.ecp.flexure({fc:m.fc,fy:m.fy,b:B.b,d}), cap=F.flex(As); cNA=cap.c;
+    const AsMinHere=As>0?F.AsMin:F.AsMin;
+    out.push(rc('أقل حديد As,min',show.A(F.AsMin),`أصغر من (0.225√fcu/fy·b·d = ${show.A(F.mu1*B.b*d)}) و (1.3 As المطلوب)، ومش أقل من ${(F.floor*100).toFixed(2)}% b·d`));
+    out.push(rc('أقصى حديد (c = cmax)',show.A(F.AsMax),`μmax = ${pct(F.AsMax/(B.b*d))} · cmax/d = ${F.cmaxR.toFixed(3)}`));
+    out.push(rc('أقصى مومنت للقطاع Mu,max',show.M(F.MuMax),'من غير حديد ضغط'));
+    const st= cap.over?'bad': As<F.floor*B.b*d?'warn':'ok';
+    out.push(rc(`مقاومة الحديد الموجود ${B.n}Φ${B.db}`,show.M(cap.Mu),`As = ${show.A(As)} · μ = ${pct(As/(B.b*d))} · c/d = ${cap.cd.toFixed(3)}${cap.over?' · أكبر من cmax: الحديد زيادة عن الأقصى':''}`,st));
+    if(B.Mu>0){ const r=F.reqFor(B.Mu);
+      out.push(r.over? rc(`الحديد المطلوب لـ Mu = ${show.M(B.Mu)}`,'القطاع مش كفاية','محتاج حديد ضغط أو تكبير القطاع','bad')
+        : rc(`الحديد المطلوب لـ Mu = ${show.M(B.Mu)}`,show.A(r.AsDes),`${r.minGoverns?'الحد الأدنى هو اللي حاكم · ':''}اقتراح: <span class="bopts">${barOpts(r.AsDes,clearW)}</span>`, As>=r.AsDes-1e-6?'ok':'bad', As>=r.AsDes-1e-6?'الموجود كفاية':'الموجود مش كفاية')); }
+    const S=ENG.ecp.shear({fc:m.fc,fyt:m.fyt,b:B.b,d,legs:B.legs,sd:B.sd,s:B.s,Vu:B.Vu});
+    out.push(rc(`مقاومة القص بالكانات ${B.legs} فرع Φ${B.sd} كل ${fx(cv.len(B.s))}`,show.F(S.Qcap),`qcu = ${fx(cv.S(S.qcu))} · qsu = ${fx(cv.S(S.qsu))} · qu,max = ${fx(cv.S(S.qumax))} ${U().S} · أقصى للقطاع ${show.F(S.Qmax)}`, S.hasMin && B.s<=200?'ok':'warn'));
+    out.push(rc('أقل كانات وأقصى مسافة',`μst,min = ${pct(S.muSt)}`,`Ast,min = ${show.A(S.muSt*B.b*B.s)} لكل ${show.len(B.s)} · أقصى مسافة ${show.len(200)} (5 كانات في المتر على الأقل)${S.hasMin?'':' · الكانات أقل من الحد الأدنى'}`));
+    if(B.Vu>0){ const r=S.req; out.push(r.over? rc(`الكانات المطلوبة لـ Qu = ${show.F(B.Vu)}`,'القطاع مش كفاية للقص',`qu = ${fx(cv.S(r.qu))} أكبر من qu,max`,'bad')
+        : rc(`الكانات المطلوبة لـ Qu = ${show.F(B.Vu)}`,`${B.legs} فرع Φ${B.sd} كل ${show.len(Math.floor(r.s/25)*25)}`,`qu = ${fx(cv.S(r.qu))} ${U().S} · ${r.qs>0?`qsu = qu − qcu/2 = ${fx(cv.S(r.qs))}`:'qu ≤ qcu: أقل كانات تكفي'}`, B.s<=r.s+1e-6?'ok':'bad', B.s<=r.s+1e-6?'الموجود كفاية':'المسافة كبيرة')); }
+    steps=[`d = h − cover − Φstirrup − Φ/2 = ${fx(cv.len(d))} ${U().len}`,
+      `γc = 1.5 ، γs = 1.15 ، بلوك الضغط 0.67fcu/γc على عمق a = 0.8c`,
+      `cmax/d = (2/3)·600/(600 + fy/γs) = ${F.cmaxR.toFixed(3)}`,
+      `a = As (fy/γs) / (0.67 fcu/γc · b) = ${fx(cv.len(cap.a))} ، c/d = ${cap.cd.toFixed(3)}`,
+      `Mu = As (fy/γs)(d − a/2) = ${show.M(cap.Mu)}`,
+      `As,min = أصغر من (0.225√fcu/fy·b·d , 1.3 As) ≥ ${(F.floor*100).toFixed(2)}% b·d`,
+      `qcu = 0.24√(fcu/γc) ، qu,max = 0.7√(fcu/γc) ≤ 4.4 N/mm²`,
+      `qsu = qu − qcu/2 ، Ast = qsu·b·s / (fyst/γs)`,
+      `μst,min = 0.4/fyst ≥ ${(S.muSt*100).toFixed(2)}% ، s ≤ 200 mm`];
+  }
+  return {html:out.join(''), steps, svg:svgBeam(B.b,B.h,B.cover,B.sd,B.n,B.db,cNA), d};
+}
+
+/* ----- column ----- */
+function calcCol(){
+  const m=CS.m[CS.code], C=CS.col, aci=CS.code==='ACI';
+  const Ag=C.shape==='circ'?Math.PI*C.D*C.D/4:C.b*C.h, As=C.n*barA(C.db), least=C.shape==='circ'?C.D:Math.min(C.b,C.h);
+  const out=[]; let steps;
+  if(aci){
+    const R=ENG.aci.column({fc:m.fc,fy:m.fy,Ag,As,type:C.type,Pu:C.Pu});
+    const rho=As/Ag, st= rho<0.01-1e-9?'bad': rho>0.08?'bad': rho>0.04?'warn':'ok';
+    out.push(rc('أقل حديد (1%)',show.A(R.min),'ACI 10.6.1.1'));
+    out.push(rc('أقصى حديد (8%)',show.A(R.max),'عملياً بلاش أكتر من 4% عشان الوصلات'));
+    out.push(rc(`الحمل الأقصى φPn,max بـ ${C.n}Φ${C.db}`,show.F(R.phiPn),`ρ = ${pct(rho)} · ${C.type==='spiral'?'سبايرال φ = 0.75 × 0.85':'كانات φ = 0.65 × 0.80'}`,st));
+    if(C.Pu>0){ const r=R.req; out.push(rc(`الحديد المطلوب لـ Pu = ${show.F(C.Pu)}`, r.over?'القطاع صغير':show.A(r.AsDes), r.over?`محتاج مساحة خرسانة حوالي ${show.A(r.AgAt2)} عند 2%`:`مساحة الخرسانة الكفاية عند 1%: ${show.A(r.AgAt1)} · اقتراح: <span class="bopts">${ENG.barOptions(r.AsDes,{minN:C.shape==='circ'?6:4,list:[16,18,20,22,25,28,32]}).filter(o=>o.n<=20).map(o=>`<span class="bopt">${Math.ceil(o.n/2)*2}Φ${o.db}</span>`).join('')}</span>`, r.over?'bad': As>=r.AsDes-1e-6?'ok':'bad', As>=r.AsDes-1e-6?'الموجود كفاية':'الموجود مش كفاية')); }
+    const tie=C.db<=32?10:12; out.push(rc('الكانات',`Φ${tie} كل ${show.len(Math.min(16*C.db,48*tie,least))}`,'أقصى مسافة = أصغر من (16Φ رئيسي ، 48Φ كانة ، أصغر بُعد) · ACI 25.7.2'));
+    steps=[`Ag = ${show.A(Ag)} ، Ast = ${show.A(As)}`,`P0 = 0.85 f'c (Ag − Ast) + fy Ast = ${show.F(R.P0)}`,`φPn,max = φ·α·P0 = ${R.phi} × ${R.al} × P0`,`Ast المطلوب = (Pu/(φα) − 0.85 f'c Ag) / (fy − 0.85 f'c) ≥ 1% Ag`];
+  } else {
+    const R=ENG.ecp.column({fc:m.fc,fy:m.fy,Ag,As,loc:C.loc,Pu:C.Pu});
+    const rho=As/Ag, st= rho<0.008-1e-9?'warn': rho>R.maxR?'bad':'ok';
+    out.push(rc('أقل حديد (0.8%)',show.A(R.min),'من مساحة الخرسانة المطلوبة'));
+    out.push(rc(`أقصى حديد (${(R.maxR*100).toFixed(0)}%)`,show.A(R.max),'4% داخلي · 5% طرفي · 6% ركن'));
+    out.push(rc(`الحمل الأقصى Pu بـ ${C.n}Φ${C.db}`,show.F(R.Pu),`μ = ${pct(rho)} · عمود قصير عليه حمل محوري`,st));
+    if(C.Pu>0){ const r=R.req; out.push(rc(`الحديد المطلوب لـ Pu = ${show.F(C.Pu)}`, r.over?'القطاع صغير':show.A(r.AsDes), r.over?`محتاج مساحة خرسانة حوالي ${show.A(r.AgAt2)} عند 2%`:`مساحة الخرسانة الكفاية عند 1%: ${show.A(r.AgAt1)} · اقتراح: <span class="bopts">${ENG.barOptions(r.AsDes,{minN:C.shape==='circ'?6:4,list:[14,16,18,20,22,25,28,32]}).filter(o=>o.n<=20).map(o=>`<span class="bopt">${Math.ceil(o.n/2)*2}Φ${o.db}</span>`).join('')}</span>`, r.over?'bad': As>=r.AsDes-1e-6?'ok':'bad', As>=r.AsDes-1e-6?'الموجود كفاية':'الموجود مش كفاية')); }
+    const tie=Math.max(8,Math.ceil(C.db/4)); out.push(rc('الكانات',`Φ${tie} كل ${show.len(Math.min(200,15*C.db))}`,'قطر ≥ 8 مم و ≥ ربع قطر الرئيسي · المسافة ≤ 200 مم و ≤ 15Φ'));
+    steps=[`Ac = ${show.A(Ag)} ، As = ${show.A(As)}`,`Pu = 0.35 fcu Ac + 0.67 fy As = ${show.F(R.Pu)}`,`As المطلوب = (Pu − 0.35 fcu Ac) / (0.67 fy) ≥ 0.8% Ac`];
+  }
+  return {html:out.join(''), steps, svg:svgCol(C,C.n,C.db)};
+}
+
+/* ----- slab (per meter width) ----- */
+function calcSlab(){
+  const m=CS.m[CS.code], L=CS.slab, aci=CS.code==='ACI', b=1000;
+  const d=L.t-L.cover-L.db/2, As=barA(L.db)*1000/L.s;
+  if(d<=0||!(L.s>0)) return {html:'<p class="empty-note">راجع السُمك والغطاء والمسافة.</p>',steps:[],svg:''};
+  const out=[]; let steps;
+  const AsMin=aci?ENG.aci.slabMin(b,L.t):ENG.ecp.slabMin(b,L.t,d,m.fy), sMax=aci?ENG.aci.slabSmax(L.t):200;
+  const F=aci?ENG.aci.flexure({fc:m.fc,fy:m.fy,b,d}):ENG.ecp.flexure({fc:m.fc,fy:m.fy,b,d});
+  const cap=F.flex(As), M=aci?cap.phiMn:cap.Mu, over=aci?cap.et<0.004:cap.over;
+  out.push(rc('أقل حديد في المتر',show.Am(AsMin),aci?`0.0018 · b · h (ACI 7.6.1.1)`:`أكبر من (0.6/fy · b · d) و (${m.fy<260?'0.25':'0.15'}% b · t)`));
+  out.push(rc('أقصى مسافة بين الأسياخ',show.len(sMax),aci?'أصغر من 3h و 450 مم (ACI 7.7.2.3)':'200 مم للحديد الرئيسي (5 أسياخ في المتر على الأقل)'));
+  out.push(rc(`مقاومة Φ${L.db} كل ${fx(cv.len(L.s))}`,`${fx(cv.M(M))} ${U().Mm}`,`As = ${show.Am(As)}${As<AsMin-1e-6?' · أقل من الحد الأدنى':''}${L.s>sMax?' · المسافة أكبر من المسموح':''}`, over?'bad':(As<AsMin-1e-6||L.s>sMax)?'warn':'ok'));
+  out.push(rc('اختيارات للحد الأدنى',`<span class="bopts">${ENG.slabOptions(AsMin,sMax).map(o=>`<span class="bopt">Φ${o.db} @ ${fx(cv.len(o.s))}<small>${show.Am(o.A)}</small></span>`).join('')}</span>`,''));
+  if(L.Mu>0){ const r=F.reqFor(L.Mu); const need=r&&!r.over?Math.max(r.AsReq,AsMin):0;
+    out.push(r.over? rc(`الحديد المطلوب لـ Mu = ${fx(cv.M(L.Mu))} ${U().Mm}`,'السُمك مش كفاية','زوّد سُمك البلاطة','bad')
+      : rc(`الحديد المطلوب لـ Mu = ${fx(cv.M(L.Mu))} ${U().Mm}`,show.Am(need),`<span class="bopts">${ENG.slabOptions(need,sMax).map(o=>`<span class="bopt">Φ${o.db} @ ${fx(cv.len(o.s))}</span>`).join('')}</span>`, As>=need-1e-6?'ok':'bad', As>=need-1e-6?'الموجود كفاية':'الموجود مش كفاية')); }
+  steps=[`عرض شريحة 1 متر ، d = t − cover − Φ/2 = ${fx(cv.len(d))} ${U().len}`,`As = A(Φ) × 1000 / s = ${show.Am(As)}`, aci?`φMn بنفس معادلات الكمرة مع εt ≥ 0.004 (ACI 7.3.3.1)`:`Mu بنفس معادلات الكمرة (ECP) مع c ≤ cmax`];
+  const W=220, sc=W/1000*0.9, hh=Math.max(20,L.t*sc*1.6); let dots=''; const n=Math.min(12,Math.round(1000/L.s));
+  for(let k=0;k<n;k++){ dots+=`<circle cx="${14+(k+.5)*(W-8)/n}" cy="${6+hh-(L.cover+L.db/2)*sc*1.6}" r="${Math.max(2.5,L.db/2*sc*1.6)}" fill="var(--ink)"/>`; }
+  const svg=`<svg viewBox="0 0 ${W+20} ${hh+30}" role="img" aria-label="شريحة البلاطة"><rect x="10" y="6" width="${W}" height="${hh}" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>${dots}<text x="${W/2+10}" y="${hh+22}" text-anchor="middle" font-size="11" fill="var(--muted)">1 m · t = ${fx(cv.len(L.t))} ${U().len}</text></svg>`;
+  return {html:out.join(''), steps, svg};
+}
+
+/* ----- bars & laps ----- */
+function calcBars(){
+  const m=CS.m[CS.code], aci=CS.code==='ACI';
+  const rows=BARS.map(d=>`<tr><th>Φ${d}</th>${[1,2,3,4,5,6,7,8,9,10].map(n=>`<td>${fx(cv.A(n*barA(d)))}</td>`).join('')}<td class="w">${(d*d/162).toFixed(3)}</td></tr>`).join('');
+  const table=`<div class="tscroll"><table class="btable"><thead><tr><th>القطر</th>${[1,2,3,4,5,6,7,8,9,10].map(n=>`<th>${n}</th>`).join('')}<th>kg/m</th></tr></thead><tbody>${rows}</tbody></table></div><p class="hint">المساحات بالـ ${U().A}. الوزن = Φ² ÷ 162.</p>`;
+  const As=CS.conv.As;
+  const conv=`<div class="bopts">${ENG.barOptions(As,{list:[10,12,14,16,18,20,22,25,28,32]}).map(o=>`<span class="bopt">${o.n}Φ${o.db}<small>${show.A(o.A)}</small></span>`).join('')}</div><div class="bopts" style="margin-top:6px">${ENG.slabOptions(As,300).map(o=>`<span class="bopt">Φ${o.db} @ ${fx(cv.len(o.s))}<small>${show.Am(o.A)}</small></span>`).join('')}</div>`;
+  let lap;
+  if(aci){ const L=ENG.aci.lap({fc:m.fc,fy:m.fy,db:CS.lap.db,top:CS.lap.top}); const db=CS.lap.db;
+    lap=rc('طول التماسك في الشد ld',`${show.len(L.ld)} <small>(${Math.ceil(L.ld/db)}Φ)</small>`,`ACI 25.4.2.3 · ψt = ${L.psiT} · ψg = ${L.psiG} · بفرض غطاء ومسافة ≥ Φ`)+
+        rc('وصلة الشد (Class B)',`${show.len(L.lapT)} <small>(${Math.ceil(L.lapT/db)}Φ)</small>`,'1.3 ld · ACI 25.5.2')+
+        rc('طول التماسك في الضغط',`${show.len(L.ldc)} <small>(${Math.ceil(L.ldc/db)}Φ)</small>`,'ACI 25.4.9.2')+
+        rc('وصلة الضغط',`${show.len(L.lapC)} <small>(${Math.ceil(L.lapC/db)}Φ)</small>`,'ACI 25.5.5.1');
+  } else lap=`<p class="empty-note">أطوال التماسك والوصلات بالكود المصري هتتضاف بعد ما تبعتلي المعاملات من نسختك من الكود (fbu و α و β و η)، عشان تطلع مظبوطة. لحد كده تقدر تبدّل لـ ACI.</p>`;
+  return {table,conv,lap};
+}
+
+/* ----- render ----- */
+function renderCalc(full=true){
+  if(!$('v-calc')) return;
+  document.querySelectorAll('#calcCode button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.code===CS.code)));
+  document.querySelectorAll('#calcUnits button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.units===CS.units)));
+  document.querySelectorAll('#calcTabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.ctab===CS.tab)));
+  $('calcCodeNote').innerHTML = CS.code==='ACI' ? 'ACI 318-19 (والكود السعودي SBC 304 مبني عليه) · f\'c مقاومة أسطوانة' : 'ECP 203 (حالات الحدود) · fcu مقاومة مكعب';
+  const t=CS.tab; let inputs='', res;
+  if(t==='beam'){
+    inputs=`<div class="cgrid">${fieldHTML('beam','b','العرض b','len')}${fieldHTML('beam','h','الارتفاع h','len')}${fieldHTML('beam','cover','الغطاء','len')}${fieldHTML('beam','n','عدد الأسياخ','n')}${fieldHTML('beam','db','القطر','db')}</div>
+      <h4>الكانات</h4><div class="cgrid">${fieldHTML('beam','sd','القطر','db',[8,10,12,14,16])}${fieldHTML('beam','legs','عدد الفروع','n')}${fieldHTML('beam','s','المسافة','len')}</div>
+      <h4>الأحمال (اختياري)</h4><div class="cgrid">${fieldHTML('beam','Mu','Mu','M','opt')}${fieldHTML('beam','Vu',CS.code==='ACI'?'Vu':'Qu','F','opt')}</div>`;
+    res=calcBeam();
+  } else if(t==='col'){
+    const C=CS.col;
+    inputs=`<div class="cgrid">${fieldHTML('col','shape','الشكل','sel',[['rect','مستطيل'],['circ','دايري']])}${C.shape==='circ'?fieldHTML('col','D','القطر D','len'):fieldHTML('col','b','العرض b','len')+fieldHTML('col','h','الطول h','len')}${fieldHTML('col','n','عدد الأسياخ','n')}${fieldHTML('col','db','القطر','db')}${CS.code==='ACI'?fieldHTML('col','type','التسليح العرضي','sel',[['tied','كانات'],['spiral','سبايرال']]):fieldHTML('col','loc','مكان العمود','sel',[['int','داخلي'],['edge','طرفي'],['corner','ركن']])}</div>
+      <h4>الحمل (اختياري)</h4><div class="cgrid">${fieldHTML('col','Pu','Pu','F','opt')}</div>`;
+    res=calcCol();
+  } else if(t==='slab'){
+    inputs=`<div class="cgrid">${fieldHTML('slab','t','السُمك t','len')}${fieldHTML('slab','cover','الغطاء','len')}${fieldHTML('slab','db','القطر','db',[8,10,12,14,16,18,20])}${fieldHTML('slab','s','المسافة','len')}</div>
+      <h4>المومنت لكل متر (اختياري)</h4><div class="cgrid">${fieldHTML('slab','Mu','Mu','M','m')}</div>`;
+    res=calcSlab();
+  } else {
+    const B=calcBars();
+    inputs=`<h4>حوّل مساحة لأسياخ</h4><div class="cgrid">${fieldHTML('conv','As','المساحة المطلوبة','A')}</div><div class="conv-out">${B.conv}</div>
+      <h4>أطوال التماسك والوصلات</h4><div class="cgrid">${fieldHTML('lap','db','القطر','db')}${CS.code==='ACI'?fieldHTML('lap','top','مكان السيخ','sel',[['false','سفلي / عادي'],['true','علوي (تحته أكتر من 300 مم خرسانة)']]):''}</div>`;
+    res={html:B.lap+'<h4 style="margin-top:6px">جدول مساحات الحديد</h4>'+B.table,steps:[],svg:''};
+  }
+  if(full) $('calcInputs').innerHTML=`<div class="cgrid">${matFields()}</div>`+inputs;
+  $('calcResults').innerHTML=res.html+(res.steps&&res.steps.length?stepsBox(res.steps):'');
+  $('calcSketch').innerHTML=res.svg||'';
+  $('calcSketch').hidden=!res.svg;
+}
+/* field edits: results update live while typing; inputs re-render only when the form itself changes */
+function calcEdit(e){
+  const el=e.target; if(!el.dataset||!el.dataset.k) return;
+  const g=el.dataset.g, k=el.dataset.k, kind=el.dataset.kind; let v;
+  if(kind==='s'){ v=el.value==='true'?true:el.value==='false'?false:el.value; }
+  else if(kind==='n'){ v=parseFloat(asciiDigits(el.value)); if(!(v>=0)) v=0; if(k==='n'||k==='legs') v=Math.max(1,Math.round(v)); }
+  else { const x=parseFloat(asciiDigits(el.value)); v = isNaN(x)?0 : (kind==='A'? x*U().a : ci[kind](x)); }
+  if(g==='m') CS.m[CS.code][k]=v; else CS[g][k]=v;
+  saveCalc(); renderCalc(k==='shape' && e.type==='change');
+}
+$('v-calc').addEventListener('input',calcEdit);
+$('v-calc').addEventListener('change',calcEdit);
+$('calcCode').addEventListener('click',e=>{ const b=e.target.closest('[data-code]'); if(!b) return; CS.code=b.dataset.code; saveCalc(); renderCalc(); });
+$('calcUnits').addEventListener('click',e=>{ const b=e.target.closest('[data-units]'); if(!b) return; CS.units=b.dataset.units; saveCalc(); renderCalc(); });
+$('calcTabs').addEventListener('click',e=>{ const b=e.target.closest('[data-ctab]'); if(!b) return; CS.tab=b.dataset.ctab; saveCalc(); renderCalc(); });
+$('calcReset').addEventListener('click',()=>{ const keep={code:CS.code,units:CS.units,tab:CS.tab}; CS=JSON.parse(JSON.stringify(CDEF)); Object.assign(CS,keep); saveCalc(); renderCalc(); showToast('رجعت القيم الافتراضية',null); });
+
 /* ---------- account & sync (Supabase) ---------- */
 const sb = (window.supabase && CFG.supabaseUrl && !/YOUR|xxxx/i.test(CFG.supabaseUrl)) ? window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey) : null;
 let USER=null, channel=null, inflight=0;
@@ -2212,7 +2658,7 @@ async function handleSession(session){
   if(!u){ USER=null; if(channel){ sb.removeChannel(channel); channel=null; } showApp(false); return; }
   USER=u; LS_KEY='masrofi-'+u.id;
   S={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},prefs:blankPrefs()};
-  loadLocal(); migrateAssets(); showApp(true); setTab(['home','exp','inc','sav','goals'].includes(tab)?tab:'home'); setApp(location.hash==='#ideas'?'ideas':appSec); updatePreview();
+  loadLocal(); migrateAssets(); showApp(true); setTab(['home','exp','inc','sav','goals'].includes(tab)?tab:'home'); setApp(location.hash==='#ideas'?'ideas':location.hash==='#calc'?'calc':appSec); updatePreview();
   $('acctName').textContent=displayName(u);
   await pull(); subscribe();
 }
