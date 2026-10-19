@@ -317,8 +317,62 @@ body.app-ideas .money-only,body.app-ideas .view:not(#v-ideas){display:none!impor
 .col-head .n{font-family:var(--f-mono);color:var(--muted)}
 .cards{display:grid;gap:8px}
 .board.single .cards{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-.icard{display:grid;gap:6px;text-align:start;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;width:100%;color:var(--ink);font:inherit}
-.icard:hover{border-color:var(--accent)}
+.icard{position:relative;display:grid;gap:6px;text-align:start;background:var(--paper);background:color-mix(in srgb,var(--ac) 14%,var(--paper));border:0;border-radius:4px 4px 14px 4px;padding:16px 12px 10px;width:100%;color:var(--ink);font:inherit;box-shadow:0 1px 0 rgba(0,0,0,.05),0 8px 16px -10px rgba(0,0,0,.35);transform:rotate(var(--rot,0deg));transition:transform .15s ease,box-shadow .15s ease}
+.icard::before{content:"";position:absolute;top:-7px;left:50%;width:54px;height:16px;margin-left:-27px;background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.04);transform:rotate(-3deg);border-radius:2px}
+.cards .icard:nth-child(3n+1){--rot:-.8deg}.cards .icard:nth-child(3n+2){--rot:.6deg}
+.icard:hover,.icard:focus-visible{transform:rotate(0) translateY(-2px);box-shadow:0 1px 0 rgba(0,0,0,.05),0 14px 22px -12px rgba(0,0,0,.4)}
+.icard .tt{font-size:1.02rem}
+.icard canvas{width:100%;height:84px;border-radius:6px;display:block;background:#FFFDF7}
+body.app-ideas{background-image:radial-gradient(var(--line) 1.1px,transparent 1.3px);background-size:22px 22px}
+.notebook{background-color:var(--paper);background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--line) 31px 32px);line-height:32px !important;padding-top:2px !important;min-height:162px}
+.cap-tools{display:flex;gap:8px;flex-wrap:wrap}
+.tool{display:inline-flex;gap:8px;align-items:center;border:1.5px dashed var(--line);background:var(--paper);border-radius:12px;padding:8px 14px;font-weight:700;color:var(--ink);font-size:.9rem}
+.tool svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.tool:hover{border-color:var(--accent);color:var(--accent)}
+.tool.draw{background:var(--ink);color:var(--bg);border:1.5px solid var(--ink)}
+.tool.draw:hover{color:var(--bg);filter:brightness(1.15)}
+.tool.on{border-style:solid;border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.spark{display:grid;gap:8px;background:var(--gold-soft);border-radius:14px;padding:14px 16px}
+.spark-k{font-size:.75rem;font-weight:700;color:var(--gold);letter-spacing:.02em}
+.spark-q{font-family:var(--f-display);font-size:clamp(1.15rem,3.4vw,1.45rem);line-height:1.55;margin:0;color:var(--ink);text-wrap:balance}
+.spark.pop .spark-q{animation:pop .35s ease}
+.spark-act{display:flex;gap:8px;flex-wrap:wrap}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.dump{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 12px;align-items:center;background:var(--accent-soft);border-radius:12px;padding:10px 14px}
+.dump-time{font-family:var(--f-mono);font-size:1.35rem;font-weight:600;color:var(--accent);direction:ltr}
+.dump-bar{height:7px;border-radius:99px;background:var(--surface);overflow:hidden;display:block}
+.dump-bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .5s linear}
+.dump-count{grid-column:1/-1;font-size:.86rem;color:var(--accent)}
+.flash-btn{animation:flash 0.6s ease 4}
+@keyframes flash{50%{box-shadow:0 0 0 6px var(--accent-soft)}}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.gtile{display:grid;gap:6px;align-content:start;text-align:start;background:transparent;border:0;padding:0;color:var(--ink);font:inherit;min-width:0}
+.gtile canvas,.gtile .newbox{width:100%;aspect-ratio:4/3;border-radius:10px;display:block;background:#FFFDF7;box-shadow:0 1px 0 rgba(0,0,0,.06),0 8px 16px -10px rgba(0,0,0,.35);transition:transform .15s}
+.gtile:hover canvas{transform:translateY(-2px)}
+.gtile .newbox{display:grid;place-content:center;justify-items:center;gap:6px;background:var(--paper);border:2px dashed var(--line);box-shadow:none;color:var(--muted);font-weight:700}
+.gtile .newbox svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.gtile:hover .newbox{border-color:var(--accent);color:var(--accent)}
+.gtile .gt{font-weight:600;font-size:.88rem;overflow-wrap:anywhere}
+.gtile.mini{width:120px}
+.sheet-sketches{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pad{position:fixed;inset:0;z-index:40;background:var(--bg);display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.pad-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;background:var(--surface);border-bottom:1px solid var(--line)}
+.pad-bar #padTitle{flex:1 1 140px;min-width:0;border:1px solid var(--line);border-radius:9px;padding:6px 10px;background:var(--paper);color:var(--ink);font-weight:600}
+.pad-group{display:flex;gap:3px;align-items:center;padding:3px;background:var(--bg);border-radius:10px}
+.pbtn{width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--ink);display:grid;place-items:center}
+.pbtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pbtn[aria-pressed="true"]{background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.2);color:var(--accent)}
+.pbtn:disabled{opacity:.3;cursor:default}
+.szd{display:block;width:var(--d);height:var(--d);border-radius:50%;background:currentColor}
+.sw{width:28px;height:28px;border-radius:50%;border:3px solid var(--surface);box-shadow:0 0 0 1px var(--line);background:var(--sw);margin:0 2px}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
+.pad-stage{position:relative;overflow:hidden;display:grid;place-items:center;padding:8px}
+.pad-page{position:relative;box-shadow:0 2px 14px rgba(0,0,0,.2);border-radius:4px;overflow:hidden;background:#FFFDF7}
+.pad-page canvas{position:absolute;inset:0;touch-action:none;-webkit-user-select:none;user-select:none}
+#padLive{cursor:crosshair}
+.pad-tip{margin:0;text-align:center;font-size:.8rem;color:var(--muted);padding:4px 12px 8px}
+@media (prefers-reduced-motion:reduce){.icard{transform:none}.spark.pop .spark-q{animation:none}}
+[hidden]{display:none!important}
 .icard .tt{font-weight:600;overflow-wrap:anywhere;line-height:1.45}
 .icard .np{font-size:.8rem;color:var(--muted);overflow-wrap:anywhere}
 .icard .row{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;font-size:.76rem;color:var(--muted)}
@@ -459,9 +513,25 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
   <div class="view" id="v-ideas" aria-label="أفكاري وأهدافي">
     <section class="composer" aria-label="فكرة جديدة">
       <div class="composer-top"><h2 style="font-size:1.05rem">إيه اللي في دماغك؟</h2></div>
-      <p class="hint">اكتب كل فكرة في سطر لوحدها، أو دوس المايك واتكلم. متحكمش عليها دلوقتي، اكتبها وبعدين رتّبها.</p>
+      <p class="hint">اكتب كل فكرة في سطر لوحدها، أو اتكلم، أو ارسمها بالقلم. متحكمش عليها دلوقتي، طلّعها الأول وبعدين رتّبها.</p>
+      <div class="cap-tools">
+        <button type="button" class="tool draw" id="toolDraw"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/></svg>ارسم بالقلم</button>
+        <button type="button" class="tool" id="toolSpark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>شرارة</button>
+        <button type="button" class="tool" id="toolDump"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4l3 2M9 2h6M12 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/></svg>تفريغ دماغ ٥ دقايق</button>
+      </div>
+      <div class="spark" id="spark" hidden>
+        <span class="spark-k">سؤال يحرّك دماغك</span>
+        <p class="spark-q" id="sparkQ"></p>
+        <div class="spark-act"><button type="button" class="btn sm" id="sparkAns">جاوب عليه</button><button type="button" class="btn ghost sm" id="sparkNext">سؤال تاني</button></div>
+      </div>
+      <div class="dump" id="dump" hidden>
+        <span class="dump-time" id="dumpTime">5:00</span>
+        <span class="dump-bar"><i id="dumpBar"></i></span>
+        <button type="button" class="link" id="dumpStop">وقّف</button>
+        <span class="dump-count" id="dumpCount"></span>
+      </div>
       <div class="entry-wrap">
-        <textarea id="ideaEntry" placeholder="أعمل كورس Revit أونلاين&#10;أدوّر على عميل جديد في السعودية&#10;أبدأ جيم 3 مرات في الأسبوع"></textarea>
+        <textarea id="ideaEntry" class="notebook" placeholder="أعمل كورس Revit أونلاين&#10;أدوّر على عميل جديد في السعودية&#10;أبدأ جيم 3 مرات في الأسبوع"></textarea>
         <button type="button" class="mic" id="ideaMic" aria-label="اتكلم بدل ما تكتب"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 1 0-7 0v6A3.5 3.5 0 0 0 12 15Zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.91V20H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.59a6 6 0 0 0 5-5.91Z"/></svg></button>
       </div>
       <div class="composer-actions">
@@ -478,6 +548,11 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
     </section>
 
     <div class="board" id="board"></div>
+
+    <section class="panel" id="sketchPanel">
+      <div class="panel-head"><h2>كراستي</h2><span class="muted" style="font-size:.8rem">كل اللي كتبته أو رسمته بالقلم</span></div>
+      <div class="gallery" id="gallery"></div>
+    </section>
   </div>
 
   <!-- HOME -->
@@ -692,6 +767,7 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
     <label class="field">دماغك فيها إيه؟
       <span class="entry-wrap"><textarea id="isNotes" rows="4" placeholder="اكتب أي حاجة: إزاي، مين ممكن يساعد، محتاج إيه، إيه اللي مقلقك…"></textarea><button type="button" class="mic small" id="notesMic" aria-label="اتكلم بدل ما تكتب"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 1 0-7 0v6A3.5 3.5 0 0 0 12 15Zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.91V20H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.59a6 6 0 0 0 5-5.91Z"/></svg></button></span>
     </label>
+    <div class="sheet-sketches" id="isSketches" aria-label="رسومات الفكرة"></div>
     <label class="field">ليه عايز تعمل كده؟<textarea id="isWhy" rows="2" placeholder="الفايدة اللي هتطلع بيها"></textarea></label>
     <label class="field">هتعرف إنك وصلت إزاي؟<input id="isOutcome" placeholder="مثلاً: عقد موقّع مع عميلين جداد"></label>
     <div class="steps-box">
@@ -703,6 +779,33 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px)}
     <div class="ready" id="isReady"></div>
     <div class="sheet-actions"><button class="btn" id="isNext" type="button"></button><button class="btn ghost sm" id="isPark" type="button"></button><button class="link danger" id="isDelete" type="button">امسح الفكرة</button></div>
   </div>
+</div>
+<div class="pad" id="pad" hidden role="dialog" aria-label="ارسم بالقلم">
+  <div class="pad-bar">
+    <button type="button" class="btn sm" id="padClose">تم</button>
+    <input id="padTitle" placeholder="اسم الرسمة" aria-label="اسم الرسمة">
+    <div class="pad-group" role="group" aria-label="الأداة">
+      <button type="button" class="pbtn" data-tool="pen" aria-label="قلم"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/></svg></button>
+      <button type="button" class="pbtn" data-tool="hl" aria-label="هايلايتر"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 15l-3 3h5l1-1M9 15l6-9 3 3-6 9-3-3z"/></svg></button>
+      <button type="button" class="pbtn" data-tool="eraser" aria-label="أستيكة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 20h12M5 15l8-8 5 5-6 6H8l-3-3z"/></svg></button>
+    </div>
+    <div class="pad-group" id="padColors" role="group" aria-label="اللون"></div>
+    <div class="pad-group" id="padSizes" role="group" aria-label="السُمك">
+      <button type="button" class="pbtn" data-size="2" aria-label="رفيع"><i class="szd" style="--d:4px"></i></button>
+      <button type="button" class="pbtn" data-size="4" aria-label="متوسط"><i class="szd" style="--d:8px"></i></button>
+      <button type="button" class="pbtn" data-size="8" aria-label="تقيل"><i class="szd" style="--d:13px"></i></button>
+    </div>
+    <div class="pad-group" role="group" aria-label="تعديل">
+      <button type="button" class="pbtn" id="padUndo" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>
+      <button type="button" class="pbtn" id="padRedo" aria-label="إعادة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14l5-5-5-5M20 9H10a6 6 0 0 0 0 12h3"/></svg></button>
+      <button type="button" class="pbtn" id="padClear" aria-label="امسح الصفحة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button>
+    </div>
+    <button type="button" class="btn ghost sm" id="padPaper">الورقة: سطور</button>
+    <button type="button" class="btn ghost sm" id="padIdea">حوّلها لفكرة</button>
+    <button type="button" class="link danger" id="padDel">امسح الرسمة</button>
+  </div>
+  <div class="pad-stage" id="padStage"><div class="pad-page" id="padPage"><canvas id="padBase"></canvas><canvas id="padLive"></canvas></div></div>
+  <p class="pad-tip" id="padTip">اكتب أو ارسم بالقلم أو بصباعك. لما تستخدم قلم، لمس إيدك على الشاشة مش هيرسم.</p>
 </div>
 <div class="toast" id="toast" hidden><span id="toastMsg"></span><button id="toastUndo">تراجع</button></div>
 
@@ -888,7 +991,7 @@ function parseAsset(chunk, day){
 /* ---------- state ---------- */
 let LS_KEY='masrofi-local';
 const blankPrefs=()=>({budget:0, learned:{}, learnedInc:{}, opening:0, openAssets:{}});
-let S = {exp:{}, inc:{}, goals:[], moves:[], holdings:[], banks:[], ideas:[], prefs:blankPrefs()};
+let S = {exp:{}, inc:{}, goals:[], moves:[], holdings:[], banks:[], ideas:[], sketches:{}, prefs:blankPrefs()};
 let R = null; // live rates {usd:{buy,sell}, gold:{k24,k21,k18,pound:{buy,sell}}, updatedAt, source}
 try{ R = JSON.parse(localStorage.getItem('masrofi-rates')||'null'); }catch(e){}
 let backend='local', COL=null;
@@ -906,7 +1009,7 @@ const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 function loadLocal(){
   try{
     const raw=localStorage.getItem(LS_KEY);
-    if(raw){ const v=JSON.parse(raw); S={exp:v.exp||{},inc:v.inc||{},goals:v.goals||[],moves:v.moves||[],holdings:v.holdings||[],banks:v.banks||[],ideas:v.ideas||[],prefs:Object.assign(blankPrefs(),v.prefs||{})}; }
+    if(raw){ const v=JSON.parse(raw); S={exp:v.exp||{},inc:v.inc||{},goals:v.goals||[],moves:v.moves||[],holdings:v.holdings||[],banks:v.banks||[],ideas:v.ideas||[],sketches:v.sketches||{},prefs:Object.assign(blankPrefs(),v.prefs||{})}; }
     if(raw) { try{ tab = localStorage.getItem('masrofi-tab') || 'home'; }catch(e){} return; }
     const old=localStorage.getItem('masrofi-v1'); // first version
     if(old){ const v=JSON.parse(old); S.exp=v.months||{}; Object.assign(S.prefs,{budget:v.prefs?.budget||0,learned:v.prefs?.learned||{}}); }
@@ -1602,11 +1705,12 @@ function renderIdeas(){
   $('nextSteps').innerHTML = withSteps.length ? withSteps.map(x=>{ const st=stepsOf(x).find(z=>!z.done);
       return `<div class="next-step" data-iid="${x.id}" data-sid="${st.id}"><input type="checkbox" aria-label="خلصت: ${esc(st.t)}"><div class="tx">${esc(st.t)}<small><span class="ia" style="--ac:${STAGE_BY[x.stage].color}">${STAGE_BY[x.stage].name}</span> · ${esc(x.title)}</small></div><span style="display:grid;gap:4px;justify-items:end">${dueBadge(x)}<button class="open" type="button" data-open="${x.id}">افتح</button></span></div>`; }).join('')
     : '<p class="empty-note">كل خطواتك خلصت. افتح أي خطة أو هدف وضيف الخطوة الجاية.</p>';
+  renderGallery(); drawThumbs($('gallery'));
   // board
   const board=$('board');
   if(!S.ideas.length){
     board.className='board single';
-    board.innerHTML='<div class="col" style="--sc:var(--accent)"><p class="empty-note">لسه مفيش أفكار. اكتب أي حاجة بتفكر فيها فوق، حتى لو لسه مش واضحة. وبعدين حرّكها خطوة خطوة: فكرة، بعدين بتفكر فيها، بعدين خطة ليها خطوات، لحد ما تبقى هدف ليه معاد ونتيجة تقدر تقيسها.</p></div>';
+    board.innerHTML='<div class="col" style="--sc:var(--accent)"><p class="empty-note">لسه مفيش أفكار. اكتب أو ارسم أي حاجة بتفكر فيها، حتى لو لسه مش واضحة. ولو دماغك واقفة، دوس «شرارة». وبعدين حرّكها خطوة خطوة: فكرة، بعدين بتفكر فيها، بعدين خطة ليها خطوات، لحد ما تبقى هدف ليه معاد ونتيجة تقدر تقيسها.</p></div>';
     return;
   }
   const cols = ideaFilter==='all' ? PIPE : [ideaFilter];
@@ -1617,12 +1721,15 @@ function renderIdeas(){
     return `<section class="col" style="--sc:${st.color}"><div class="col-head"><h3>${st.name}${st.hint?`<small>${st.hint}</small>`:''}</h3><span class="n">${list.length}</span></div>
       <div class="cards">${list.length? list.map(ideaCard).join('') : '<p class="col-empty">مفيش هنا حاجة.</p>'}</div></section>`;
   }).join('');
+  drawThumbs(board);
 }
 function ideaCard(x){
   const a=AREA_BY[x.area]||AREA_BY.self, st=stepsOf(x), dn=st.filter(z=>z.done).length;
   const note=(x.notes||'').trim(); const np=note? esc(note.length>90?note.slice(0,90)+'…':note):'';
-  return `<button type="button" class="icard" data-open="${x.id}">
+  const sk=sketchesOf(x.id)[0];
+  return `<button type="button" class="icard" data-open="${x.id}" style="--ac:${a.color}">
     <span class="row"><span class="ia" style="--ac:${a.color}">${a.name}</span>${dueBadge(x)}</span>
+    ${sk?`<canvas data-thumb="${sk.id}" data-fit="width" aria-hidden="true"></canvas>`:''}
     <span class="tt">${esc(x.title)}</span>
     ${np?`<span class="np">${np}</span>`:''}
     ${st.length?`<span class="mini-bar"><i style="width:${dn/st.length*100}%"></i></span><span class="row"><span>${dn} من ${st.length} خطوات</span>${x.stage==='goal'&&dn===st.length?'<span class="due soon">الخطوات خلصت</span>':''}</span>`:''}
@@ -1634,7 +1741,8 @@ $('ideaEntry').addEventListener('keydown',e=>{ if(e.key==='Enter'&&(e.ctrlKey||e
 $('ideaAdd').addEventListener('click',()=>{
   const list=parseIdeas($('ideaEntry').value); if(!list.length) return;
   const now=new Date().toISOString();
-  list.slice().reverse().forEach(x=>S.ideas.unshift({id:uid(),title:x.title,area:x.area||(ideaArea==='auto'?guessArea(x.title):ideaArea),stage:'idea',notes:'',why:'',outcome:'',deadline:'',budget:0,steps:[],created:TODAY,updated:now}));
+  const spk=pendingSpark; pendingSpark=''; $('ideaEntry').placeholder=$('ideaEntry').dataset.ph||$('ideaEntry').placeholder;
+  list.slice().reverse().forEach(x=>S.ideas.unshift({id:uid(),title:x.title,area:x.area||(ideaArea==='auto'?guessArea(x.title):ideaArea),stage:'idea',notes:spk?'الشرارة: '+spk:'',why:'',outcome:'',deadline:'',budget:0,steps:[],created:TODAY,updated:now}));
   saveIdeas(); $('ideaEntry').value=''; updateIdeaBtn();
   if(ideaFilter!=='all'&&ideaFilter!=='idea') ideaFilter='all';
   render(); showToast(list.length===1?'اتضافت الفكرة':`اتضافت ${list.length} أفكار`,null);
@@ -1663,7 +1771,7 @@ function closeSheet(){
   $('ideaSheet').hidden=true; document.body.style.overflow=''; openIdea=null;
   if(ideaSaveT) saveIdeas(); render();
 }
-function renderSheet(x){ renderStageBar(x); renderSteps(x); renderMoneyLink(x); renderReady(x); }
+function renderSheet(x){ renderStageBar(x); renderSteps(x); renderMoneyLink(x); renderReady(x); renderSheetSketches(x); }
 function renderStageBar(x){
   const idx=PIPE.indexOf(x.stage);
   $('isStages').innerHTML = PIPE.map((sid,i)=>`<button type="button" data-set="${sid}" class="${x.stage==='done'||i<idx?'past':i===idx?'cur':''}">${STAGE_BY[sid].name}</button>`).join('')
@@ -1756,6 +1864,285 @@ $('isClose').addEventListener('click',closeSheet);
 $('ideaSheet').addEventListener('click',e=>{ if(e.target===$('ideaSheet')) closeSheet(); });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !$('ideaSheet').hidden) closeSheet(); });
 
+/* ================= كراستي: pen / stylus sketch pad ================= */
+const PAPER='#FFFDF7';
+const INKS=['#1d2420','#2457c5','#1c7a55','#d1432f','#8a4bd0','#e07b14'];
+const HLS=['#ffd43b','#7ee0a1','#7cc4ff','#ff9ec4'];
+const PAPERS=[['lines','سطور'],['dots','نقط'],['plain','سادة']];
+const PAD={sk:null,isNew:false,tool:'pen',color:INKS[0],hl:HLS[0],size:4,k:1,dpr:1,cur:null,pid:null,penSeen:false,undo:[],redo:[],saveT:null,raf:0,delArm:false};
+
+function drawPaper(ctx,sk,k){
+  const W=1000*k, H=sk.h*k;
+  ctx.fillStyle=PAPER; ctx.fillRect(0,0,W,H);
+  if(sk.bg==='lines'){ ctx.strokeStyle='#dbe4ee'; ctx.lineWidth=Math.max(1,1.2*k); for(let y=64;y<sk.h;y+=44){ ctx.beginPath(); ctx.moveTo(0,y*k); ctx.lineTo(W,y*k); ctx.stroke(); } }
+  else if(sk.bg==='dots'){ ctx.fillStyle='#cfd7d2'; const r=Math.max(.8,2*k); for(let y=34;y<sk.h;y+=34) for(let x=34;x<1000;x+=34){ ctx.beginPath(); ctx.arc(x*k,y*k,r,0,6.3); ctx.fill(); } }
+}
+function drawStroke(ctx,st,k){
+  const f=st.p, n=f.length/3; if(!n) return;
+  const X=i=>f[i*3]*k, Y=i=>f[i*3+1]*k, P=i=>(f[i*3+2]||50)/100;
+  ctx.save(); ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle=st.c; ctx.fillStyle=st.c;
+  if(st.t==='hl'){
+    ctx.globalAlpha=.34; ctx.globalCompositeOperation='multiply'; ctx.lineWidth=st.s*3.6*k;
+    ctx.beginPath(); ctx.moveTo(X(0),Y(0)); if(n===1) ctx.lineTo(X(0)+.01,Y(0)); for(let i=1;i<n;i++) ctx.lineTo(X(i),Y(i)); ctx.stroke(); ctx.restore(); return;
+  }
+  const W=i=>Math.max(.5*k, st.s*k*(.35+P(i)*1.3));
+  if(n===1){ ctx.beginPath(); ctx.arc(X(0),Y(0),W(0)/2,0,6.3); ctx.fill(); ctx.restore(); return; }
+  let mx=X(0), my=Y(0);
+  for(let i=1;i<n-1;i++){ const nx=(X(i)+X(i+1))/2, ny=(Y(i)+Y(i+1))/2; ctx.lineWidth=W(i); ctx.beginPath(); ctx.moveTo(mx,my); ctx.quadraticCurveTo(X(i),Y(i),nx,ny); ctx.stroke(); mx=nx; my=ny; }
+  ctx.lineWidth=W(n-1); ctx.beginPath(); ctx.moveTo(mx,my); ctx.lineTo(X(n-1),Y(n-1)); ctx.stroke();
+  ctx.restore();
+}
+/* fit: 'width' shows the top of the page across the whole box; 'contain' shows the whole page */
+function drawThumb(c,sk,fit){
+  const ctx=c.getContext&&c.getContext('2d'); if(!ctx) return;
+  const dpr=window.devicePixelRatio||1, cw=c.clientWidth||160, ch=c.clientHeight||120;
+  c.width=Math.round(cw*dpr); c.height=Math.round(ch*dpr);
+  ctx.fillStyle=PAPER; ctx.fillRect(0,0,c.width,c.height);
+  let k, ox=0, oy=0;
+  if(fit==='contain'){ k=Math.min(c.width/1000, c.height/sk.h); ox=(c.width-1000*k)/2; oy=(c.height-sk.h*k)/2; }
+  else k=c.width/1000;
+  ctx.save(); ctx.translate(ox,oy); drawPaper(ctx,sk,k); (sk.strokes||[]).forEach(s=>drawStroke(ctx,s,k)); ctx.restore();
+}
+function drawThumbs(root){ root.querySelectorAll('canvas[data-thumb]').forEach(c=>{ const sk=S.sketches[c.dataset.thumb]; if(sk) drawThumb(c,sk,c.dataset.fit||'width'); }); }
+const sketchList = ()=>Object.values(S.sketches||{}).filter(s=>s&&!s.deleted).sort((a,b)=>(b.updated||'').localeCompare(a.updated||''));
+const sketchesOf = id=>sketchList().filter(s=>s.ideaId===id);
+function saveSketch(){
+  const sk=PAD.sk; if(!sk) return; clearTimeout(PAD.saveT); PAD.saveT=null;
+  if(PAD.isNew && !sk.strokes.length && !sk.title) return;
+  PAD.isNew=false; sk.updated=new Date().toISOString(); S.sketches[sk.id]=sk; writeDoc('sk-'+sk.id, sk);
+}
+function padChanged(){ $('padTip').hidden=true; clearTimeout(PAD.saveT); PAD.saveT=setTimeout(saveSketch,900); padUI(); }
+
+/* ----- open / close ----- */
+function openPad(id, ideaId){
+  if(recOn){ recOn=false; try{ rec.stop(); }catch(_){ } }
+  $('pad').hidden=false; document.body.style.overflow='hidden';
+  if(id && S.sketches[id]){ PAD.sk=S.sketches[id]; PAD.isNew=false; }
+  else {
+    const st=$('padStage'), aw=Math.max(300,st.clientWidth-16), ah=Math.max(300,st.clientHeight-16);
+    PAD.sk={id:uid(),title:'',h:Math.min(1800,Math.max(560,Math.round(1000*ah/aw))),bg:'lines',strokes:[],ideaId:ideaId||'',created:TODAY,updated:''};
+    PAD.isNew=true;
+  }
+  PAD.undo=[]; PAD.redo=[]; PAD.cur=null; PAD.pid=null; PAD.delArm=false;
+  $('padTitle').value=PAD.sk.title||''; $('padTip').hidden=!!PAD.sk.strokes.length; $('padDel').textContent='امسح الرسمة';
+  layoutPad(); padUI();
+}
+function closePad(){
+  saveSketch(); $('pad').hidden=true; PAD.sk=null;
+  document.body.style.overflow = $('ideaSheet').hidden ? '' : 'hidden';
+  render(); const x=openIdea&&ideaById(openIdea); if(x) renderSheetSketches(x);
+}
+function layoutPad(){
+  const sk=PAD.sk; if(!sk) return; const st=$('padStage');
+  const aw=Math.max(200,st.clientWidth-16), ah=Math.max(200,st.clientHeight-16);
+  PAD.k=Math.min(aw/1000, ah/sk.h); PAD.dpr=window.devicePixelRatio||1;
+  const cw=Math.floor(1000*PAD.k), ch=Math.floor(sk.h*PAD.k);
+  $('padPage').style.width=cw+'px'; $('padPage').style.height=ch+'px';
+  for(const c of [$('padBase'),$('padLive')]){ c.style.width=cw+'px'; c.style.height=ch+'px'; c.width=Math.round(cw*PAD.dpr); c.height=Math.round(ch*PAD.dpr); }
+  redrawBase(); clearLive();
+}
+const baseCtx=()=>{ const c=$('padBase'); return c.getContext&&c.getContext('2d'); };
+const liveCtx=()=>{ const c=$('padLive'); return c.getContext&&c.getContext('2d'); };
+function redrawBase(){ const ctx=baseCtx(); if(!ctx||!PAD.sk) return; const k=PAD.k*PAD.dpr; ctx.setTransform(1,0,0,1,0,0); drawPaper(ctx,PAD.sk,k); PAD.sk.strokes.forEach(s=>drawStroke(ctx,s,k)); }
+function clearLive(){ const ctx=liveCtx(); if(ctx) ctx.clearRect(0,0,$('padLive').width,$('padLive').height); }
+function drawLive(){ PAD.raf=0; const ctx=liveCtx(); if(!ctx) return; clearLive(); if(PAD.cur&&PAD.cur.p) drawStroke(ctx,PAD.cur,PAD.k*PAD.dpr); }
+function showEraser(x,y){ const ctx=liveCtx(); if(!ctx) return; clearLive(); const k=PAD.k*PAD.dpr; ctx.strokeStyle='#888'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(x*k,y*k,16*k,0,6.3); ctx.stroke(); }
+
+/* ----- toolbar ----- */
+function padUI(){
+  document.querySelectorAll('#pad [data-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.tool===PAD.tool)));
+  const cols = PAD.tool==='hl'?HLS:INKS, curc = PAD.tool==='hl'?PAD.hl:PAD.color;
+  $('padColors').innerHTML = cols.map(c=>`<button type="button" class="sw" style="--sw:${c}" data-color="${c}" aria-label="لون" aria-pressed="${c===curc}"></button>`).join('');
+  $('padColors').hidden = PAD.tool==='eraser';
+  document.querySelectorAll('#pad [data-size]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.size===PAD.size)));
+  $('padSizes').hidden = PAD.tool==='eraser';
+  $('padPaper').textContent = 'الورقة: '+(PAPERS.find(p=>p[0]===PAD.sk?.bg)||PAPERS[0])[1];
+  $('padUndo').disabled=!PAD.undo.length; $('padRedo').disabled=!PAD.redo.length; $('padClear').disabled=!(PAD.sk&&PAD.sk.strokes.length);
+  const x = PAD.sk && PAD.sk.ideaId && ideaById(PAD.sk.ideaId);
+  $('padIdea').textContent = x ? 'افتح الفكرة' : 'حوّلها لفكرة';
+}
+$('pad').addEventListener('click',e=>{
+  const t=e.target.closest('[data-tool],[data-color],[data-size]'); if(!t) return;
+  if(t.dataset.tool) PAD.tool=t.dataset.tool;
+  if(t.dataset.color){ if(PAD.tool==='hl') PAD.hl=t.dataset.color; else PAD.color=t.dataset.color; }
+  if(t.dataset.size) PAD.size=+t.dataset.size;
+  padUI();
+});
+$('padPaper').addEventListener('click',()=>{ const i=PAPERS.findIndex(p=>p[0]===PAD.sk.bg); PAD.sk.bg=PAPERS[(i+1)%PAPERS.length][0]; redrawBase(); padChanged(); });
+$('padTitle').addEventListener('input',()=>{ PAD.sk.title=$('padTitle').value; padChanged(); });
+function padUndo(){ const a=PAD.undo.pop(); if(!a) return; const s=PAD.sk.strokes;
+  if(a.a==='add') s.splice(s.lastIndexOf(a.st),1);
+  else if(a.a==='erase') a.items.slice().reverse().forEach(it=>s.splice(it.i,0,it.st));
+  else if(a.a==='clear') PAD.sk.strokes=a.prev.slice();
+  PAD.redo.push(a); redrawBase(); padChanged(); }
+function padRedo(){ const a=PAD.redo.pop(); if(!a) return; const s=PAD.sk.strokes;
+  if(a.a==='add') s.push(a.st);
+  else if(a.a==='erase') a.items.forEach(it=>{ const j=s.indexOf(it.st); if(j>=0) s.splice(j,1); });
+  else if(a.a==='clear') PAD.sk.strokes=[];
+  PAD.undo.push(a); redrawBase(); padChanged(); }
+$('padUndo').addEventListener('click',padUndo);
+$('padRedo').addEventListener('click',padRedo);
+$('padClear').addEventListener('click',()=>{ if(!PAD.sk.strokes.length) return; PAD.undo.push({a:'clear',prev:PAD.sk.strokes.slice()}); PAD.redo=[]; PAD.sk.strokes=[]; redrawBase(); padChanged(); showToast('اتمسحت الصفحة',padUndo); });
+$('padClose').addEventListener('click',closePad);
+$('padIdea').addEventListener('click',()=>{
+  const sk=PAD.sk; let x=sk.ideaId&&ideaById(sk.ideaId);
+  if(x){ closePad(); openSheet(x.id); return; }
+  const title=(sk.title||'').trim()||('رسمة '+shortDay(TODAY));
+  x={id:uid(),title,area:guessArea(title),stage:'idea',notes:'',why:'',outcome:'',deadline:'',budget:0,steps:[],created:TODAY,updated:new Date().toISOString()};
+  S.ideas.unshift(x); sk.ideaId=x.id; if(!sk.title){ sk.title=title; $('padTitle').value=title; }
+  saveIdeas(); saveSketch(); padUI(); showToast(`اتعملت فكرة «${title}» والرسمة متعلقة بيها`,null);
+});
+$('padDel').addEventListener('click',()=>{
+  if(!PAD.delArm){ PAD.delArm=true; $('padDel').textContent='متأكد؟ دوس تاني'; setTimeout(()=>{ PAD.delArm=false; if(PAD.sk) $('padDel').textContent='امسح الرسمة'; },3500); return; }
+  const sk=PAD.sk; clearTimeout(PAD.saveT);
+  if(!PAD.isNew){ delete S.sketches[sk.id]; writeDoc('sk-'+sk.id,{deleted:true}); }
+  PAD.isNew=true; sk.strokes=[]; sk.title=''; closePad();
+  showToast('اتمسحت الرسمة',null);
+});
+document.addEventListener('keydown',e=>{
+  if($('pad').hidden) return;
+  if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='z'){ e.preventDefault(); e.shiftKey?padRedo():padUndo(); }
+  else if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='y'){ e.preventDefault(); padRedo(); }
+  else if(e.key==='Escape' && document.activeElement!==$('padTitle')) closePad();
+});
+window.addEventListener('resize',()=>{ if(!$('pad').hidden) layoutPad(); });
+
+/* ----- drawing ----- */
+function ptOf(e){ const r=$('padLive').getBoundingClientRect(); return [Math.round((e.clientX-r.left)/PAD.k), Math.round((e.clientY-r.top)/PAD.k)]; }
+function addPt(e){
+  const [x,y]=ptOf(e), p=PAD.cur.p, n=p.length;
+  const pr = e.pointerType==='pen' ? Math.round(Math.min(1,Math.max(.05,e.pressure||.5))*100) : 50;
+  if(n && Math.abs(p[n-3]-x)+Math.abs(p[n-2]-y)<2) return;
+  p.push(x,y,pr);
+}
+function eraseAt(e){
+  const [x,y]=ptOf(e), s=PAD.sk.strokes; let hit=false;
+  for(let i=s.length-1;i>=0;i--){
+    const st=s[i], f=st.p, r=16+st.s*(st.t==='hl'?2:1);
+    for(let j=0;j<f.length;j+=3){ if(Math.abs(f[j]-x)<r && Math.abs(f[j+1]-y)<r && (f[j]-x)**2+(f[j+1]-y)**2<r*r){ PAD.cur.items.push({st,i}); s.splice(i,1); hit=true; break; } }
+  }
+  if(hit) redrawBase();
+  showEraser(x,y);
+}
+const live=$('padLive');
+live.addEventListener('pointerdown',e=>{
+  if(e.pointerType==='pen') PAD.penSeen=true;
+  if(PAD.penSeen && e.pointerType==='touch') return;      // palm rejection once a pen is used
+  if(e.button>0 || PAD.cur) return;
+  e.preventDefault(); try{ live.setPointerCapture(e.pointerId); }catch(_){ }
+  PAD.pid=e.pointerId;
+  if(PAD.tool==='eraser'){ PAD.cur={a:'erase',items:[]}; eraseAt(e); return; }
+  PAD.cur={t:PAD.tool==='hl'?'hl':'pen', c:PAD.tool==='hl'?PAD.hl:PAD.color, s:PAD.size, p:[]};
+  addPt(e); drawLive();
+});
+live.addEventListener('pointermove',e=>{
+  if(PAD.pid!==e.pointerId || !PAD.cur){ if(PAD.tool==='eraser' && e.pointerType!=='touch'){ const [x,y]=ptOf(e); showEraser(x,y); } return; }
+  const evs=(e.getCoalescedEvents&&e.getCoalescedEvents().length)?e.getCoalescedEvents():[e];
+  if(PAD.cur.a==='erase'){ evs.forEach(eraseAt); return; }
+  evs.forEach(addPt); if(!PAD.raf) PAD.raf=requestAnimationFrame(drawLive);
+});
+function endStroke(e){
+  if(PAD.pid!==e.pointerId || !PAD.cur) return;
+  const cur=PAD.cur; PAD.cur=null; PAD.pid=null; if(PAD.raf){ cancelAnimationFrame(PAD.raf); PAD.raf=0; }
+  if(cur.a==='erase'){ if(cur.items.length){ PAD.undo.push(cur); PAD.redo=[]; padChanged(); } clearLive(); return; }
+  if(cur.p.length){ PAD.sk.strokes.push(cur); PAD.undo.push({a:'add',st:cur}); PAD.redo=[]; const ctx=baseCtx(); if(ctx) drawStroke(ctx,cur,PAD.k*PAD.dpr); padChanged(); }
+  clearLive();
+}
+live.addEventListener('pointerup',endStroke);
+live.addEventListener('pointercancel',endStroke);
+live.addEventListener('pointerleave',e=>{ if(!PAD.cur && PAD.tool==='eraser') clearLive(); });
+
+/* ----- sketchbook & idea links ----- */
+function renderGallery(){
+  const list=sketchList();
+  $('gallery').innerHTML = `<button type="button" class="gtile" data-newsketch><span class="newbox"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/></svg>رسمة جديدة</span><span class="gt muted">بالقلم أو بصباعك</span></button>`+
+    list.map(sk=>{ const x=sk.ideaId&&ideaById(sk.ideaId), a=x&&(AREA_BY[x.area]||AREA_BY.self);
+      return `<button type="button" class="gtile" data-sketch="${sk.id}"><canvas data-thumb="${sk.id}" data-fit="contain" aria-hidden="true"></canvas><span class="gt">${esc(sk.title||'من غير اسم')}</span>${x?`<span class="ia" style="--ac:${a.color}">${esc(x.title)}</span>`:`<span class="muted" style="font-size:.76rem">${shortDay((sk.updated||sk.created||TODAY).slice(0,10))}</span>`}</button>`; }).join('');
+}
+function renderSheetSketches(x){
+  const list=sketchesOf(x.id);
+  $('isSketches').innerHTML = list.map(sk=>`<button type="button" class="gtile mini" data-sketch="${sk.id}" aria-label="افتح ${esc(sk.title||'الرسمة')}"><canvas data-thumb="${sk.id}" data-fit="contain"></canvas></button>`).join('')+
+    `<button type="button" class="tool" data-newsketch-idea><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/></svg>${list.length?'رسمة تانية':'ارسم الفكرة دي'}</button>`;
+  drawThumbs($('isSketches'));
+}
+$('isSketches').addEventListener('click',e=>{
+  const s=e.target.closest('[data-sketch]'); if(s) return openPad(s.dataset.sketch);
+  if(e.target.closest('[data-newsketch-idea]')) openPad(null, openIdea);
+});
+$('v-ideas').addEventListener('click',e=>{
+  const s=e.target.closest('[data-sketch]'); if(s){ openPad(s.dataset.sketch); return; }
+  if(e.target.closest('[data-newsketch]')||e.target.closest('#toolDraw')) openPad(null);
+});
+
+/* ----- sparks ----- */
+const SPARKS=[
+  'إيه أكتر حاجة بتضيّع وقتك في الشغل؟ وإزاي تتحل؟',
+  'لو هتبدأ مشروع جانبي بكره، هيبقى إيه؟',
+  'إيه خدمة جديدة ممكن تقدمها لعملائك الحاليين؟',
+  'مين 3 ناس لو اتكلمت معاهم الشهر ده هيفرق معاك؟',
+  'إيه مهارة لو اتعلمتها السنة دي هتضاعف دخلك؟',
+  'لو معاك 100 ألف زيادة النهارده، هتعمل بيهم إيه؟',
+  'إيه حاجة نفسك تجربها من زمان ومأجّلها؟',
+  'إيه عادة صغيرة لو بدأتها هتغيّر يومك؟',
+  'إيه أكتر حاجة بتضايقك في البيت؟ وإيه الحل؟',
+  'إزاي تقضي وقت أحلى مع عيلتك الأسبوع ده؟',
+  'إيه المشكلة اللي بتسمع الناس بتشتكي منها كتير؟',
+  'لو عندك ساعة زيادة كل يوم، هتعمل فيها إيه؟',
+  'إيه حاجة بتعملها بإيدك كل مرة وممكن تتعمل أوتوماتيك؟',
+  'إيه اللي هيخليك فخور بنفسك آخر السنة؟',
+  'اختار حاجة بتعملها كل يوم: إزاي تعملها في نص الوقت؟',
+  'لو هتعلّم الناس حاجة واحدة بتعرفها كويس، هتبقى إيه؟',
+  'إيه مكان نفسك تسافره؟ وإيه أول خطوة؟',
+  'مين عميل نفسك تشتغل معاه؟ وإزاي توصله؟',
+  'إيه فكرة قديمة سبتها؟ ترجعلها بشكل جديد إزاي؟',
+  'إيه حاجة ممكن تبطّل تعملها عشان ترتاح؟',
+  'اكتب 5 حاجات بتحبها في شغلك. إزاي تزوّدها؟',
+  'إيه الناقص في السوق حواليك؟',
+  'إيه هدف صحي تقدر تبدأه النهارده؟',
+  'إيه حاجة لو اتعملت هتسهّل كل الحاجات التانية؟',
+  'خد حاجة موجودة عندك: تدمجها مع إيه؟ تشيل منها إيه؟ تعكسها إزاي؟',
+  'إيه أكبر حاجة قلقاك الشهر ده؟ وإيه خطوة صغيرة تقلّلها؟',
+  'لو مستحيل تفشل، هتجرب إيه؟',
+  'لو هتعيّن حد يساعدك، هيعمل إيه بالظبط؟',
+  'إيه حاجة الناس بتطلبها منك على طول؟ ممكن تبقى خدمة؟',
+  'تخيّل نفسك بعد 5 سنين: إيه اللي اتغيّر؟',
+  'إيه تطبيق تاني نفسك تضيفه لـ«حياتي»؟'
+];
+let sparkI=-1, pendingSpark='';
+function randomSpark(){ let i; do{ i=Math.floor(Math.random()*SPARKS.length); }while(i===sparkI && SPARKS.length>1); sparkI=i; return SPARKS[i]; }
+function showSpark(){ $('sparkQ').textContent=randomSpark(); const sp=$('spark'); sp.classList.remove('pop'); void sp.offsetWidth; sp.classList.add('pop'); }
+$('toolSpark').addEventListener('click',()=>{ const sp=$('spark'); if(!sp.hidden){ sp.hidden=true; $('toolSpark').classList.remove('on'); return; } sp.hidden=false; $('toolSpark').classList.add('on'); showSpark(); });
+$('sparkNext').addEventListener('click',showSpark);
+$('sparkAns').addEventListener('click',()=>{ pendingSpark=$('sparkQ').textContent; $('ideaEntry').placeholder='إجابتك… كل فكرة في سطر'; $('ideaEntry').focus(); });
+
+/* ----- 5-minute brain dump ----- */
+let dumpT=null, dumpEnd=0, dumpLast=0, dumpNudge='';
+const DUMP_MS=5*60*1000;
+function tickDump(){
+  const left=Math.max(0,dumpEnd-Date.now());
+  $('dumpTime').textContent=`${Math.floor(left/60000)}:${pad(Math.floor(left/1000)%60)}`;
+  $('dumpBar').style.width=(left/DUMP_MS*100)+'%';
+  if(Date.now()-dumpLast>25000){ dumpNudge='كمّل… '+randomSpark(); dumpLast=Date.now(); }
+  const n=parseIdeas($('ideaEntry').value).length;
+  $('dumpCount').textContent = dumpNudge || (n?`كتبت ${n} ${n===1?'فكرة':'أفكار'}`:'اكتب أي حاجة تيجي في بالك، متفكرش كتير');
+  if(!left) stopDump(true);
+}
+function stopDump(done){
+  clearInterval(dumpT); dumpT=null; $('dump').hidden=true; $('toolDump').classList.remove('on');
+  if(done){ const n=parseIdeas($('ideaEntry').value).length;
+    showToast(n?`الوقت خلص! طلّعت ${n} ${n===1?'فكرة':'أفكار'}. دوس «أضف» عشان تحفظهم`:'الوقت خلص',null);
+    $('ideaAdd').classList.add('flash-btn'); setTimeout(()=>$('ideaAdd').classList.remove('flash-btn'),2400); }
+}
+$('toolDump').addEventListener('click',()=>{
+  if(dumpT) return stopDump(false);
+  dumpEnd=Date.now()+DUMP_MS; dumpLast=Date.now(); dumpNudge='';
+  $('dump').hidden=false; $('toolDump').classList.add('on'); $('ideaEntry').focus(); tickDump(); dumpT=setInterval(tickDump,500);
+});
+$('dumpStop').addEventListener('click',()=>stopDump(false));
+$('ideaEntry').addEventListener('input',()=>{ dumpLast=Date.now(); dumpNudge=''; });
+
+$('ideaEntry').dataset.ph=$('ideaEntry').placeholder;
+
 /* ---------- account & sync (Supabase) ---------- */
 const sb = (window.supabase && CFG.supabaseUrl && !/YOUR|xxxx/i.test(CFG.supabaseUrl)) ? window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey) : null;
 let USER=null, channel=null, inflight=0;
@@ -1783,6 +2170,7 @@ function applyDoc(t,id,v){
   else if(id==='holdings') t.holdings=v.list||[];
   else if(id==='banks') t.banks=v.list||[];
   else if(id==='ideas') t.ideas=v.list||[];
+  else if(id.startsWith('sk-')){ const k=id.slice(3); if(v.deleted) delete t.sketches[k]; else t.sketches[k]=v; }
   else if(id.startsWith('m-')) t.exp[id.slice(2)]=v.items||[];
   else if(id.startsWith('i-')) t.inc[id.slice(2)]=v.items||[];
 }
@@ -1790,18 +2178,18 @@ function docsOf(st){
   const d={};
   Object.keys(st.exp).forEach(k=>d['m-'+k]={items:st.exp[k]});
   Object.keys(st.inc).forEach(k=>d['i-'+k]={items:st.inc[k]});
-  d.goals={list:st.goals}; d.moves={list:st.moves}; d.holdings={list:st.holdings}; d.banks={list:st.banks}; d.ideas={list:st.ideas||[]}; d.prefs=st.prefs;
+  d.goals={list:st.goals}; d.moves={list:st.moves}; d.holdings={list:st.holdings}; d.banks={list:st.banks}; d.ideas={list:st.ideas||[]}; Object.keys(st.sketches||{}).forEach(k=>{ d['sk-'+k]=st.sketches[k]; }); d.prefs=st.prefs;
   return d;
 }
 function pushAll(){ const d=docsOf(S); Object.keys(d).forEach(id=>writeRemote(id,d[id])); }
-const hasData = st=>Object.keys(st.exp).length||Object.keys(st.inc).length||st.goals.length||st.holdings.length||st.banks.length||st.moves.length||(st.ideas||[]).length;
+const hasData = st=>Object.keys(st.exp).length||Object.keys(st.inc).length||st.goals.length||st.holdings.length||st.banks.length||st.moves.length||(st.ideas||[]).length||Object.keys(st.sketches||{}).length;
 async function pull(){
   if(!sb||!USER||inflight>0) return;
   setSync('loading');
   const {data,error}=await sb.from('masrofi_docs').select('doc_id,body').eq('user_id',USER.id);
   if(error){ setSync('error'); return; }
   if(!data.length){ if(hasData(S)) pushAll(); setSync('ok'); return; }
-  const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],prefs:blankPrefs()};
+  const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},prefs:blankPrefs()};
   data.forEach(r=>applyDoc(next,r.doc_id,r.body));
   dirty.forEach(id=>{ const d=docsOf(S); if(d[id]) applyDoc(next,id,d[id]); }); // keep edits that never reached the server
   S=next; migrateAssets(); saveLocal(); render(); updatePreview();
@@ -1823,7 +2211,7 @@ async function handleSession(session){
   if(u && USER && u.id===USER.id) return;
   if(!u){ USER=null; if(channel){ sb.removeChannel(channel); channel=null; } showApp(false); return; }
   USER=u; LS_KEY='masrofi-'+u.id;
-  S={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],prefs:blankPrefs()};
+  S={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},prefs:blankPrefs()};
   loadLocal(); migrateAssets(); showApp(true); setTab(['home','exp','inc','sav','goals'].includes(tab)?tab:'home'); setApp(location.hash==='#ideas'?'ideas':appSec); updatePreview();
   $('acctName').textContent=displayName(u);
   await pull(); subscribe();
@@ -1872,7 +2260,7 @@ $('importFile').addEventListener('change',async e=>{
   const f=e.target.files[0]; e.target.value=''; if(!f) return;
   try{
     const j=JSON.parse(await f.text()); if(!j||!j.docs) throw 0;
-    const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],prefs:blankPrefs()};
+    const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},prefs:blankPrefs()};
     Object.keys(j.docs).forEach(id=>applyDoc(next,id,j.docs[id]));
     const prev=S; S=next; migrateAssets(); saveLocal(); pushAll(); render();
     showToast('اترفعت النسخة الاحتياطية', ()=>{ S=prev; saveLocal(); pushAll(); render(); });
