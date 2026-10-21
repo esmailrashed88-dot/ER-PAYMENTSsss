@@ -788,6 +788,59 @@ body.app-lock .navbtn[data-app=money]{background:var(--accent-soft);color:var(--
 @media (max-width:900px){body.app-lock .bottomnav .navbtn[data-app=money]{background:transparent}body.app-lock .bottomnav .navbtn[data-app=money] .ic{background:var(--accent-soft);border-radius:99px;padding:3px 14px;width:48px;height:28px}}
 body.money-hidden .navbtn[data-app=money],body.money-hidden [data-quick=exp],body.money-hidden #dashMoney{display:none!important}
 @media (max-width:420px){.pinpad{grid-template-columns:repeat(3,64px)}.pinpad button{width:64px;height:56px}}
+
+/* ---- mind map ---- */
+.mm-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.mm-new{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 12px;align-items:end;padding:14px;border:1.5px dashed var(--line2);border-radius:14px;background:var(--bg)}
+.mm-new .field{grid-column:1/2}
+.mm-new .switch-row{grid-column:1/-1;grid-row:2}
+.mm-new .btn{grid-column:2;grid-row:1}
+.switch-row.sm b{font-size:.86rem}
+.mmtile{display:grid;gap:6px;align-content:start;text-align:start;background:transparent;border:0;padding:0;color:var(--ink);font:inherit;min-width:0}
+.mmprev{display:block;aspect-ratio:4/3;border-radius:12px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh1);overflow:hidden;transition:transform .15s,box-shadow .15s;background-image:radial-gradient(circle,var(--line) 1px,transparent 1.2px);background-size:14px 14px}
+.mmprev svg{width:100%;height:100%;display:block}
+.mmtile:hover .mmprev{transform:translateY(-2px);box-shadow:var(--sh2)}
+.mmtile .gt{font-weight:600;font-size:.9rem;overflow-wrap:anywhere}
+.mm{user-select:none;-webkit-user-select:none;position:fixed;inset:0;z-index:40;background:var(--bg);display:grid;grid-template-rows:auto minmax(0,1fr)}
+.mm-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 10px max(12px,env(safe-area-inset-left,0px));background:var(--surface);border-bottom:1px solid var(--line);position:relative;z-index:3}
+.mm-name{flex:1 1 120px;min-width:0;font-family:var(--f-display);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mm-stage{position:relative;overflow:hidden;touch-action:none;cursor:grab;background-color:var(--bg);background-image:radial-gradient(circle,var(--line2) 1px,transparent 1.3px);background-size:24px 24px}
+.mm-stage.panning{cursor:grabbing}
+.mm-world{position:absolute;left:0;top:0;transform-origin:0 0;direction:ltr;will-change:transform}
+#mmEdges{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible;pointer-events:none}
+.mmn{position:absolute;transform:translate(-50%,-50%);direction:rtl;width:max-content;min-width:70px;max-width:230px;padding:9px 14px;border-radius:12px;background:var(--surface);border:1.5px solid color-mix(in srgb,var(--c) 55%,var(--line));color:var(--ink);font-size:.9rem;line-height:1.5;text-align:center;box-shadow:var(--sh1);user-select:none;-webkit-user-select:none;cursor:pointer;white-space:pre-wrap;overflow-wrap:anywhere;display:flex;align-items:center;justify-content:center;gap:6px;transition:box-shadow .15s}
+.mmn.d0{background:var(--hero);color:var(--hero-ink);border:0;font-family:var(--f-display);font-size:1.12rem;font-weight:600;padding:16px 24px;border-radius:18px;max-width:300px;min-width:150px;box-shadow:var(--sh2),0 0 0 6px color-mix(in srgb,var(--accent) 22%,transparent)}
+.mmn.d1{background:color-mix(in srgb,var(--c) 13%,var(--surface));border-color:var(--c);font-weight:600}
+.mmn.q{border-style:dashed;color:var(--muted);font-weight:500}
+.mmn.sel{box-shadow:0 0 0 3px var(--surface),0 0 0 5.5px var(--c),var(--sh2)}
+.mmn.d0.sel{box-shadow:0 0 0 3px var(--bg),0 0 0 6px var(--accent),var(--sh2)}
+.mmn.done .mmt{text-decoration:line-through;opacity:.55}
+.mmck,.mmtask{display:grid;place-items:center;flex:none}
+.mmck svg,.mmtask svg{width:16px;height:16px;fill:none;stroke:var(--c);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.mmtask svg{stroke-width:1.8;opacity:.8}
+.mmt{min-width:1ch;outline:none}
+.mmt:empty::before{content:'اكتب…';color:var(--muted);font-weight:400}
+.mmn.d0 .mmt:empty::before{content:'هدفك إيه؟';color:var(--hero-mute)}
+.mmn.editing{cursor:text}
+.mmn.editing .mmt{user-select:text;-webkit-user-select:text;cursor:text}
+.mm-zoom{position:absolute;top:12px;left:12px;display:flex;align-items:center;gap:2px;padding:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh1);z-index:2;direction:ltr}
+.mm-zoom button{width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:var(--ink);font-size:1.15rem;display:grid;place-items:center}
+.mm-zoom button:hover{background:var(--bg)}
+.mm-zoom svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mm-zoom span{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);min-width:42px;text-align:center}
+.mm-tip{position:absolute;top:12px;right:12px;max-width:320px;margin:0;font-size:.78rem;line-height:1.6;color:var(--muted);background:color-mix(in srgb,var(--surface) 90%,transparent);border:1px solid var(--line);border-radius:10px;padding:8px 12px;z-index:1;pointer-events:none}
+.mm-float{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:flex;gap:2px;padding:5px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--sh2);z-index:2;max-width:calc(100% - 20px);overflow-x:auto}
+.mm-float[hidden]{display:none}
+.mm-float button{display:flex;flex-direction:column;align-items:center;gap:3px;border:0;background:transparent;color:var(--ink);font-size:.72rem;font-weight:600;padding:7px 8px;border-radius:10px;min-width:54px;flex:none}
+.mm-float button:hover{background:var(--bg)}
+.mm-float button.danger{color:var(--warn)}
+.mm-float button[hidden]{display:none}
+.mm-float svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.mm-pal{position:absolute;bottom:calc(92px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:flex;gap:8px;padding:8px 10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh2);z-index:2}
+.mm-pal[hidden]{display:none}
+.mm-pal button{width:28px;height:28px;border-radius:50%;border:0;background:var(--c)}
+.mm-pal button[aria-pressed=true]{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--c)}
+@media (max-width:700px){.mm-tip{display:none}.mm-new{grid-template-columns:minmax(0,1fr)}.mm-new .btn{grid-column:1;grid-row:3}.mm-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.mm-new .field,.mm-new .switch-row{grid-column:1}}
 </style>
 </head>
 <body>
@@ -956,6 +1009,11 @@ body.money-hidden .navbtn[data-app=money],body.money-hidden [data-quick=exp],bod
     </section>
 
     <div class="board" id="board"></div>
+
+    <section class="panel" id="mapPanel">
+      <div class="panel-head"><h2>خرايط أهدافي</h2><span class="muted" style="font-size:.8rem">حط هدفك في النص وطلّع منه كل الطرق اللي توصّلك ليه</span></div>
+      <div class="mm-gallery" id="mmGallery"></div>
+    </section>
 
     <section class="panel" id="sketchPanel">
       <div class="panel-head"><h2>كراستي</h2><span class="muted" style="font-size:.8rem">كل اللي كتبته أو رسمته بالقلم</span></div>
@@ -1234,6 +1292,31 @@ body.money-hidden .navbtn[data-app=money],body.money-hidden [data-quick=exp],bod
     <div class="sheet-actions"><span class="muted" id="tsMeta" style="font-size:.8rem"></span><button class="link danger" id="tsDel" type="button">امسح المهمة</button></div>
   </div>
 </div>
+<div class="mm" id="mm" hidden role="dialog" aria-label="خريطة الهدف">
+  <div class="mm-bar">
+    <button type="button" class="btn sm" id="mmClose">تم</button>
+    <b class="mm-name" id="mmName"></b>
+    <button type="button" class="pbtn" id="mmUndo" aria-label="رجوع" title="رجوع (Ctrl+Z)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>
+    <button type="button" class="btn ghost sm" id="mmLayout">رتّبها</button>
+    <button type="button" class="btn ghost sm" id="mmPlan">حوّلها لخطة</button>
+    <button type="button" class="link danger" id="mmDelMap">امسح الخريطة</button>
+  </div>
+  <div class="mm-stage" id="mmStage">
+    <div class="mm-world" id="mmWorld"><svg id="mmEdges"></svg><div id="mmNodes"></div></div>
+    <div class="mm-zoom"><button type="button" id="mmZin" aria-label="كبّر">+</button><span id="mmZoomLbl">100%</span><button type="button" id="mmZout" aria-label="صغّر">−</button><button type="button" id="mmFitBtn" aria-label="اعرض الخريطة كلها" title="اعرض الكل"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></button></div>
+    <p class="mm-tip">دوس على أي فكرة عشان تطلّع منها فرع. دوستين عشان تكتب. اسحب الفكرة تتحرك هي وفروعها، واسحب الفاضي عشان تتحرك في الخريطة.</p>
+    <div class="mm-pal" id="mmPal" hidden></div>
+    <div class="mm-float" id="mmFloat" hidden>
+      <button type="button" data-mm="child"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2.5"/><path d="M8.5 12H16M13 8.5l3.5 3.5-3.5 3.5M20 8v8"/></svg><span>فرع</span></button>
+      <button type="button" data-mm="sib"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="6" rx="2"/><rect x="4" y="14" width="16" height="6" rx="2" stroke-dasharray="3 2"/></svg><span>جنبها</span></button>
+      <button type="button" data-mm="edit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/></svg><span>اكتب</span></button>
+      <button type="button" data-mm="color"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="9" cy="10" r="1.2"/><circle cx="14.5" cy="9" r="1.2"/><circle cx="15.5" cy="14" r="1.2"/></svg><span>لون</span></button>
+      <button type="button" data-mm="done"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>خلصت</span></button>
+      <button type="button" data-mm="task"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 12.2l2.6 2.6L16.2 9"/></svg><span>مهمة</span></button>
+      <button type="button" data-mm="del" class="danger"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg><span>امسح</span></button>
+    </div>
+  </div>
+</div>
 <div class="pad" id="pad" hidden role="dialog" aria-label="ارسم بالقلم">
   <div class="pad-bar">
     <button type="button" class="btn sm" id="padClose">تم</button>
@@ -1463,7 +1546,7 @@ const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 function loadLocal(){
   try{
     const raw=localStorage.getItem(LS_KEY);
-    if(raw){ const v=JSON.parse(raw); S={exp:v.exp||{},inc:v.inc||{},goals:v.goals||[],moves:v.moves||[],holdings:v.holdings||[],banks:v.banks||[],ideas:v.ideas||[],sketches:v.sketches||{},tasks:v.tasks||[],tlists:v.tlists||[],prefs:Object.assign(blankPrefs(),v.prefs||{}),lock:v.lock||{}}; }
+    if(raw){ const v=JSON.parse(raw); S={exp:v.exp||{},inc:v.inc||{},goals:v.goals||[],moves:v.moves||[],holdings:v.holdings||[],banks:v.banks||[],ideas:v.ideas||[],sketches:v.sketches||{},maps:v.maps||{},tasks:v.tasks||[],tlists:v.tlists||[],prefs:Object.assign(blankPrefs(),v.prefs||{}),lock:v.lock||{}}; }
     if(raw) { try{ tab = localStorage.getItem('masrofi-tab') || 'home'; }catch(e){} return; }
     const old=localStorage.getItem('masrofi-v1'); // first version
     if(old){ const v=JSON.parse(old); S.exp=v.months||{}; Object.assign(S.prefs,{budget:v.prefs?.budget||0,learned:v.prefs?.learned||{}}); }
@@ -2176,7 +2259,7 @@ function renderIdeas(){
   $('nextSteps').innerHTML = withSteps.length ? withSteps.map(x=>{ const st=stepsOf(x).find(z=>!z.done);
       return `<div class="next-step" data-iid="${x.id}" data-sid="${st.id}"><input type="checkbox" aria-label="خلصت: ${esc(st.t)}"><div class="tx">${esc(st.t)}<small><span class="ia" style="--ac:${STAGE_BY[x.stage].color}">${STAGE_BY[x.stage].name}</span> · ${esc(x.title)}</small></div><span style="display:grid;gap:4px;justify-items:end">${dueBadge(x)}<button class="open" type="button" data-open="${x.id}">افتح</button></span></div>`; }).join('')
     : '<p class="empty-note">كل خطواتك خلصت. افتح أي خطة أو هدف وضيف الخطوة الجاية.</p>';
-  renderGallery(); drawThumbs($('gallery'));
+  renderGallery(); drawThumbs($('gallery')); renderMaps();
   // board
   const board=$('board');
   if(!S.ideas.length){
@@ -2533,12 +2616,14 @@ function renderGallery(){
 function renderSheetSketches(x){
   const list=sketchesOf(x.id);
   $('isSketches').innerHTML = list.map(sk=>`<button type="button" class="gtile mini" data-sketch="${sk.id}" aria-label="افتح ${esc(sk.title||'الرسمة')}"><canvas data-thumb="${sk.id}" data-fit="contain"></canvas></button>`).join('')+
-    `<button type="button" class="tool" data-newsketch-idea><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/></svg>${list.length?'رسمة تانية':'ارسم الفكرة دي'}</button>`;
+    `<button type="button" class="tool" data-newsketch-idea><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/></svg>${list.length?'رسمة تانية':'ارسم الفكرة دي'}</button>`+
+    `<button type="button" class="tool" data-map-idea><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="4.5" cy="5" r="2"/><circle cx="19.5" cy="5" r="2"/><circle cx="19.5" cy="19" r="2"/><path d="M9.6 10.2 6 6.4M14.4 10.2 18 6.4M14.4 13.8l3.6 3.7"/></svg>${mapList().some(m=>m.ideaId===x.id)?'افتح الخريطة':'اعمل خريطة للفكرة'}</button>`;
   drawThumbs($('isSketches'));
 }
 $('isSketches').addEventListener('click',e=>{
   const s=e.target.closest('[data-sketch]'); if(s) return openPad(s.dataset.sketch);
   if(e.target.closest('[data-newsketch-idea]')) openPad(null, openIdea);
+  if(e.target.closest('[data-map-idea]')){ const x=ideaById(openIdea); if(!x) return; let m=mapList().find(z=>z.ideaId===x.id); if(!m) m=newMap(x.title,true,x.id); closeSheet(); mmOpen(m.id); }
 });
 $('v-ideas').addEventListener('click',e=>{
   const s=e.target.closest('[data-sketch]'); if(s){ openPad(s.dataset.sketch); return; }
@@ -3522,6 +3607,7 @@ function applyDoc(t,id,v){
   else if(id==='tasks') t.tasks=v.list||[];
   else if(id==='tlists') t.tlists=v.list||[];
   else if(id==='lock') t.lock=v||{};
+  else if(id.startsWith('mm-')){ const k=id.slice(3); if(!t.maps) t.maps={}; if(v.deleted) delete t.maps[k]; else t.maps[k]=v; }
   else if(id.startsWith('sk-')){ const k=id.slice(3); if(v.deleted) delete t.sketches[k]; else t.sketches[k]=v; }
   else if(id.startsWith('m-')) t.exp[id.slice(2)]=v.items||[];
   else if(id.startsWith('i-')) t.inc[id.slice(2)]=v.items||[];
@@ -3530,18 +3616,18 @@ function docsOf(st){
   const d={};
   Object.keys(st.exp).forEach(k=>d['m-'+k]={items:st.exp[k]});
   Object.keys(st.inc).forEach(k=>d['i-'+k]={items:st.inc[k]});
-  d.goals={list:st.goals}; d.moves={list:st.moves}; d.holdings={list:st.holdings}; d.banks={list:st.banks}; d.ideas={list:st.ideas||[]}; d.tasks={list:st.tasks||[]}; if((st.tlists||[]).length) d.tlists={list:st.tlists}; Object.keys(st.sketches||{}).forEach(k=>{ d['sk-'+k]=st.sketches[k]; }); d.prefs=st.prefs; if(st.lock&&st.lock.hash) d.lock=st.lock;
+  d.goals={list:st.goals}; d.moves={list:st.moves}; d.holdings={list:st.holdings}; d.banks={list:st.banks}; d.ideas={list:st.ideas||[]}; d.tasks={list:st.tasks||[]}; if((st.tlists||[]).length) d.tlists={list:st.tlists}; Object.keys(st.sketches||{}).forEach(k=>{ d['sk-'+k]=st.sketches[k]; }); Object.keys(st.maps||{}).forEach(k=>{ d['mm-'+k]=st.maps[k]; }); d.prefs=st.prefs; if(st.lock&&st.lock.hash) d.lock=st.lock;
   return d;
 }
 function pushAll(){ const d=docsOf(S); Object.keys(d).forEach(id=>writeRemote(id,d[id])); }
-const hasData = st=>Object.keys(st.exp).length||Object.keys(st.inc).length||st.goals.length||st.holdings.length||st.banks.length||st.moves.length||(st.ideas||[]).length||Object.keys(st.sketches||{}).length||(st.tasks||[]).length;
+const hasData = st=>Object.keys(st.exp).length||Object.keys(st.inc).length||st.goals.length||st.holdings.length||st.banks.length||st.moves.length||(st.ideas||[]).length||Object.keys(st.sketches||{}).length||Object.keys(st.maps||{}).length||(st.tasks||[]).length;
 async function pull(){
   if(!sb||!USER||inflight>0) return;
   setSync('loading');
   const {data,error}=await sb.from('masrofi_docs').select('doc_id,body').eq('user_id',USER.id);
   if(error){ setSync('error'); return; }
   if(!data.length){ if(hasData(S)) pushAll(); setSync('ok'); return; }
-  const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},tasks:[],tlists:[],prefs:blankPrefs(),lock:{}};
+  const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},maps:{},tasks:[],tlists:[],prefs:blankPrefs(),lock:{}};
   data.forEach(r=>applyDoc(next,r.doc_id,r.body));
   dirty.forEach(id=>{ const d=docsOf(S); if(d[id]) applyDoc(next,id,d[id]); }); // keep edits that never reached the server
   S=next; migrateAssets(); saveLocal(); lockChanged(); render(); updatePreview();
@@ -3554,7 +3640,7 @@ function subscribe(){
     .on('postgres_changes',{event:'*',schema:'public',table:'masrofi_docs',filter:'user_id=eq.'+USER.id},p=>{
       const row=p.new; if(!row||!row.doc_id) return;
       if(Date.now()-(lastLocalWrite[row.doc_id]||0)<5000) return; // our own echo
-      applyDoc(S,row.doc_id,row.body); saveLocal(); if(row.doc_id==='lock') lockChanged(); render(); updatePreview();
+      applyDoc(S,row.doc_id,row.body); saveLocal(); if(row.doc_id.startsWith('mm-')&&MM.map&&MM.map.id===row.doc_id.slice(3)&&!MM.edit&&!mmDrag){ const fresh=S.maps[MM.map.id]; if(fresh){ MM.map=JSON.parse(JSON.stringify(fresh)); mmRender(); } } if(row.doc_id==='lock') lockChanged(); render(); updatePreview();
     }).subscribe();
 }
 function showApp(on){ $('auth').hidden=on; $('appRoot').hidden=!on; }
@@ -3563,7 +3649,7 @@ async function handleSession(session){
   if(u && USER && u.id===USER.id) return;
   if(!u){ USER=null; if(channel){ sb.removeChannel(channel); channel=null; } showApp(false); return; }
   USER=u; LS_KEY='masrofi-'+u.id;
-  S={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},tasks:[],tlists:[],prefs:blankPrefs(),lock:{}};
+  S={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},maps:{},tasks:[],tlists:[],prefs:blankPrefs(),lock:{}};
   loadLocal(); migrateAssets(); showApp(true); setTab(['home','exp','inc','sav','goals'].includes(tab)?tab:'home'); setApp(APP_META[location.hash.slice(1)]?location.hash.slice(1):appSec); updatePreview();
   $('acctName').textContent=displayName(u); $('sideUser').textContent=displayName(u); $('sideAvatar').textContent=(displayName(u)[0]||'?').toUpperCase();
   lockChanged();
@@ -3614,12 +3700,287 @@ $('importFile').addEventListener('change',async e=>{
   const f=e.target.files[0]; e.target.value=''; if(!f) return;
   try{
     const j=JSON.parse(await f.text()); if(!j||!j.docs) throw 0;
-    const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},tasks:[],tlists:[],prefs:blankPrefs(),lock:{}};
+    const next={exp:{},inc:{},goals:[],moves:[],holdings:[],banks:[],ideas:[],sketches:{},maps:{},tasks:[],tlists:[],prefs:blankPrefs(),lock:{}};
     Object.keys(j.docs).forEach(id=>{ if(id!=='lock') applyDoc(next,id,j.docs[id]); }); next.lock=S.lock;
     const prev=S; S=next; migrateAssets(); saveLocal(); pushAll(); render();
     showToast('اترفعت النسخة الاحتياطية', ()=>{ S=prev; saveLocal(); pushAll(); render(); });
   }catch(_){ showToast('الملف ده مش نسخة احتياطية من مصروفي.',null); }
 });
+
+/* ================= خرايط الأهداف (mind map) ================= */
+const MMC=['#0E7C66','#2563EB','#C2410C','#9333EA','#B7791F','#DB2777','#0891B2','#64748B'];
+const MM_HELP=['ليه عايز أوصل للهدف ده؟','محتاج أتعلم إيه؟','محتاج فلوس وموارد قد إيه؟','مين ممكن يساعدني؟','إيه اللي ممكن يعطّلني؟','أول خطوة أعملها'];
+const MM={map:null,sel:null,tx:0,ty:0,k:1,edit:null,undo:[],saveT:null,delArm:false,palette:false};
+const mapList=()=>Object.values(S.maps||{}).filter(m=>m&&m.nodes).sort((a,b)=>(b.updated||'').localeCompare(a.updated||''));
+const mmRoot=m=>m.nodes.find(n=>!n.parent);
+const mmNode=id=>MM.map&&MM.map.nodes.find(n=>n.id===id);
+const mmKids=(m,id)=>m.nodes.filter(n=>n.parent===id);
+function mmDepth(m,n){ let d=0, c=n; while(c&&c.parent&&d<50){ c=m.nodes.find(x=>x.id===c.parent); d++; } return d; }
+function mmSubtree(m,id){ const out=[id]; for(let i=0;i<out.length;i++) m.nodes.forEach(n=>{ if(n.parent===out[i]) out.push(n.id); }); return out; }
+function mmLeaves(m){ const r=mmRoot(m), out=[]; const walk=n=>{ const ch=mmKids(m,n.id); if(!ch.length&&n!==r) out.push(n); ch.forEach(walk); }; if(r) walk(r); return out; }
+
+function newMap(goal, helpers, ideaId){
+  const now=new Date().toISOString(), root={id:uid(),parent:'',t:goal||'',x:0,y:0,c:'#0E7C66'};
+  const m={id:uid(),nodes:[root],ideaId:ideaId||'',created:now,updated:now};
+  if(helpers) MM_HELP.forEach((t,i)=>m.nodes.push({id:uid(),parent:root.id,t,x:0,y:0,c:MMC[i%MMC.length],q:true}));
+  if(helpers) mmLayout(m);
+  S.maps[m.id]=m; writeDoc('mm-'+m.id,m);
+  return m;
+}
+/* ---- layout ---- */
+function mmLayout(m){
+  const r=mmRoot(m); if(!r) return; const narrow=innerWidth<700, fx=narrow?.62:1.3, fy=narrow?1.15:.95;
+  const cnt=n=>{ const ch=mmKids(m,n.id); return ch.length?ch.reduce((s,c)=>s+cnt(c),0):1; };
+  const place=(n,a0,a1,d)=>{ const ch=mmKids(m,n.id); let a=a0; const tot=ch.reduce((s,c)=>s+cnt(c),0)||1;
+    ch.forEach(c=>{ const span=(a1-a0)*cnt(c)/tot, mid=a+span/2, R=d===1?250:250+(d-1)*215;
+      c.x=Math.round(r.x+Math.cos(mid)*R*fx); c.y=Math.round(r.y+Math.sin(mid)*R*fy); place(c,a,a+span,d+1); a+=span; }); };
+  const n1=mmKids(m,r.id).length||1;
+  place(r,-Math.PI/2-Math.PI/n1,3*Math.PI/2-Math.PI/n1,1);
+}
+function mmFree(m,x,y,skip){ return !m.nodes.some(n=>n.id!==skip&&Math.abs(n.x-x)<150&&Math.abs(n.y-y)<62); }
+function mmPlaceChild(m,p,c){
+  const ch=mmKids(m,p.id).filter(z=>z.id!==c.id);
+  if(!p.parent){
+    const angs=ch.map(z=>Math.atan2(z.y-p.y,(z.x-p.x)/1.3)).sort((a,b)=>a-b); let ang=0;
+    if(angs.length===1) ang=angs[0]+Math.PI;
+    else if(angs.length){ let best=-1; angs.forEach((a,i)=>{ const b=i+1<angs.length?angs[i+1]:angs[0]+2*Math.PI; if(b-a>best){ best=b-a; ang=a+(b-a)/2; } }); }
+    for(let R=250;R<700;R+=60){ const x=p.x+Math.cos(ang)*R*1.3, y=p.y+Math.sin(ang)*R*0.95; if(mmFree(m,x,y,c.id)||R>=640){ c.x=Math.round(x); c.y=Math.round(y); return; } }
+  }
+  const gp=m.nodes.find(z=>z.id===p.parent); const base=Math.atan2(p.y-gp.y,p.x-gp.x);
+  for(let i=ch.length;i<ch.length+14;i++){ const off=(i%2?1:-1)*Math.ceil(i/2)*0.42;
+    for(const D of [210,270]){ const x=p.x+Math.cos(base+off)*D, y=p.y+Math.sin(base+off)*D*0.8; if(mmFree(m,x,y,c.id)){ c.x=Math.round(x); c.y=Math.round(y); return; } } }
+  c.x=p.x+Math.cos(base)*230; c.y=p.y+Math.sin(base)*180+ch.length*70;
+}
+/* ---- persistence / undo ---- */
+function mmSnap(){ MM.undo.push(JSON.stringify(MM.map.nodes)); if(MM.undo.length>40) MM.undo.shift(); $('mmUndo').disabled=false; }
+function mmSave(now){
+  const m=MM.map; if(!m) return; m.updated=new Date().toISOString(); S.maps[m.id]=m;
+  clearTimeout(MM.saveT); MM.saveT=null;
+  const go=()=>{ MM.saveT=null; writeDoc('mm-'+m.id,m); };
+  if(now) go(); else MM.saveT=setTimeout(go,500);
+}
+/* ---- view ---- */
+function mmApply(){
+  $('mmWorld').style.transform=`translate(${MM.tx}px,${MM.ty}px) scale(${MM.k})`;
+  const st=$('mmStage'), g=24*MM.k; st.style.backgroundSize=`${g}px ${g}px`; st.style.backgroundPosition=`${MM.tx}px ${MM.ty}px`;
+  $('mmZoomLbl').textContent=Math.round(MM.k*100)+'%';
+}
+function mmZoomAt(k,cx,cy){ k=Math.max(.2,Math.min(2.5,k)); MM.tx=cx-(cx-MM.tx)*k/MM.k; MM.ty=cy-(cy-MM.ty)*k/MM.k; MM.k=k; mmApply(); }
+function mmFit(){
+  const st=$('mmStage').getBoundingClientRect(), els=[...$('mmNodes').children]; if(!els.length) return;
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+  els.forEach(el=>{ const n=mmNode(el.dataset.id); if(!n) return; const w=el.offsetWidth/2,h=el.offsetHeight/2; x0=Math.min(x0,n.x-w); x1=Math.max(x1,n.x+w); y0=Math.min(y0,n.y-h); y1=Math.max(y1,n.y+h); });
+  const padB=st.width<700?150:90, padS=40;
+  const k=Math.max(st.width<700?.6:.3,Math.min(1.15,(st.width-padS*2)/(x1-x0),(st.height-padS-padB)/(y1-y0)));
+  MM.k=k; MM.tx=st.width/2-(x0+x1)/2*k; MM.ty=(st.height-padB+padS)/2-(y0+y1)/2*k; mmApply();
+}
+/* ---- render ---- */
+const MM_IC={check:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>',task:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 12.2l2.6 2.6L16.2 9"/></svg>'};
+function mmRender(){
+  const m=MM.map; if(!m) return; const r=mmRoot(m);
+  $('mmName').textContent=(r&&r.t)||'خريطة جديدة';
+  $('mmNodes').innerHTML=m.nodes.map(n=>{ const d=mmDepth(m,n);
+    return `<div class="mmn d${Math.min(d,2)}${n.id===MM.sel?' sel':''}${n.done?' done':''}${n.q?' q':''}" data-id="${n.id}" style="left:${n.x}px;top:${n.y}px;--c:${n.c||'#0E7C66'}">${n.done?`<span class="mmck">${MM_IC.check}</span>`:''}<span class="mmt">${esc(n.t)}</span>${n.task?`<span class="mmtask" title="اتعملت مهمة">${MM_IC.task}</span>`:''}</div>`; }).join('');
+  mmEdges(); mmFloat();
+  $('mmUndo').disabled=!MM.undo.length;
+}
+function mmEdge(el){ const n=mmNode(el.dataset.id); return {x:n.x,y:n.y,w:el.offsetWidth/2+6,h:el.offsetHeight/2+6}; }
+function mmCut(b,dx,dy){ const t=Math.min(dx?b.w/Math.abs(dx):1e9, dy?b.h/Math.abs(dy):1e9); return {x:b.x+dx*t,y:b.y+dy*t}; }
+function mmEdges(){
+  const m=MM.map, els={}; $('mmNodes').querySelectorAll('.mmn').forEach(el=>els[el.dataset.id]=el);
+  let out='';
+  m.nodes.forEach(n=>{ if(!n.parent||!els[n.parent]||!els[n.id]) return;
+    const a=mmEdge(els[n.parent]), b=mmEdge(els[n.id]); let dx=b.x-a.x, dy=b.y-a.y; if(!dx&&!dy) return;
+    const s=mmCut(a,dx,dy), e=mmCut(b,-dx,-dy); const hz=Math.abs(e.x-s.x)>=Math.abs(e.y-s.y);
+    const mx=(e.x-s.x)*.5, my=(e.y-s.y)*.5;
+    const c1=hz?{x:s.x+mx,y:s.y}:{x:s.x,y:s.y+my}, c2=hz?{x:e.x-mx,y:e.y}:{x:e.x,y:e.y-my};
+    let tx=e.x-c2.x, ty=e.y-c2.y; const L=Math.hypot(tx,ty)||1; tx/=L; ty/=L;
+    const d=mmDepth(m,n), w=d===1?2.6:1.8, A=d===1?11:9;
+    const p1=`${e.x-tx*A+ty*A*.55},${e.y-ty*A-tx*A*.55}`, p2=`${e.x-tx*A-ty*A*.55},${e.y-ty*A+tx*A*.55}`;
+    const col=n.c||'#0E7C66';
+    out+=`<path d="M${s.x},${s.y} C${c1.x},${c1.y} ${c2.x},${c2.y} ${e.x-tx*A*.6},${e.y-ty*A*.6}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" opacity="${n.done?.45:.85}"/><path d="M${e.x},${e.y} L${p1} L${p2} Z" fill="${col}" opacity="${n.done?.45:.9}"/>`;
+  });
+  $('mmEdges').innerHTML=out;
+}
+function mmFloat(){
+  const n=MM.sel&&mmNode(MM.sel), f=$('mmFloat'); f.hidden=!n||!!MM.edit; if(!n) { $('mmPal').hidden=true; return; }
+  const isRoot=!n.parent;
+  f.querySelector('[data-mm=sib]').hidden=isRoot; f.querySelector('[data-mm=del]').hidden=isRoot; f.querySelector('[data-mm=done]').hidden=isRoot;
+  f.querySelector('[data-mm=done] span').textContent=n.done?'رجّعها':'خلصت';
+  f.querySelector('[data-mm=task] span').textContent=n.task?'اتعملت مهمة':'مهمة';
+  $('mmPal').hidden=!MM.palette;
+  $('mmPal').innerHTML=MMC.map(c=>`<button type="button" data-col="${c}" style="--c:${c}" aria-label="لون" aria-pressed="${(n.c||'')===c}"></button>`).join('');
+}
+function mmSelect(id){ MM.sel=id; MM.palette=false; MM.delArm=false; $('mmNodes').querySelectorAll('.mmn').forEach(el=>el.classList.toggle('sel',el.dataset.id===id)); mmFloat(); }
+/* ---- open / close ---- */
+function mmOpen(id){
+  const m=S.maps[id]; if(!m) return;
+  MM.map=JSON.parse(JSON.stringify(m)); MM.sel=null; MM.edit=null; MM.undo=[]; MM.palette=false; MM.delArm=false;
+  $('mm').hidden=false; document.body.style.overflow='hidden'; $('mmDelMap').textContent='امسح الخريطة';
+  mmRender(); requestAnimationFrame(()=>{ mmFit(); const r=mmRoot(MM.map); if(r&&!r.t) mmEdit(r.id,true); });
+}
+function mmClose(){
+  if(MM.edit) mmCommit();
+  if(MM.map){ if(MM.saveT) mmSave(true); }
+  $('mm').hidden=true; document.body.style.overflow=''; MM.map=null; try{ getSelection().removeAllRanges(); }catch(_){} renderMaps(); renderIdeas();
+}
+/* ---- editing ---- */
+function mmEdit(id,isNew){
+  const el=$('mmNodes').querySelector(`.mmn[data-id="${id}"]`); if(!el) return;
+  mmSelect(id); MM.edit={id,isNew,old:mmNode(id).t};
+  const t=el.querySelector('.mmt'); el.classList.add('editing'); t.contentEditable='true'; $('mmFloat').hidden=true;
+  if(mmNode(id).q){ t.textContent=mmNode(id).t; }
+  t.focus(); const rg=document.createRange(); rg.selectNodeContents(t); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(rg);
+}
+function mmCommit(cancel){
+  const E=MM.edit; if(!E) return; MM.edit=null;
+  const n=mmNode(E.id), el=$('mmNodes').querySelector(`.mmn[data-id="${E.id}"]`);
+  const v=el?el.querySelector('.mmt').innerText.replace(/\s+\n/g,'\n').trim():'';
+  if(n){
+    if(cancel){ if(E.isNew&&n.parent&&!E.old){ MM.map.nodes=MM.map.nodes.filter(z=>z.id!==n.id); MM.sel=n.parent; } }
+    else if(!v&&n.parent){ MM.map.nodes=MM.map.nodes.filter(z=>z.id!==n.id); MM.sel=n.parent; }
+    else if(v&&v!==E.old){ n.t=v; n.q=false; }
+    else if(v&&E.old===v) n.q=n.q&&true;
+    mmSave();
+  }
+  mmRender();
+}
+function mmAdd(kind){
+  const m=MM.map, s=mmNode(MM.sel)||mmRoot(m); if(MM.edit) mmCommit();
+  const p= kind==='sib'&&s.parent ? mmNode(s.parent) : s;
+  mmSnap();
+  const c={id:uid(),parent:p.id,t:'',x:p.x,y:p.y,c: p.parent? (p.c||'#0E7C66') : MMC[mmKids(m,p.id).length%MMC.length]};
+  if(!p.parent){ const used=mmKids(m,p.id).map(z=>z.c); c.c=MMC.find(x=>!used.includes(x))||c.c; }
+  m.nodes.push(c); mmPlaceChild(m,p,c); mmRender(); mmEnsureVisible(c); mmEdit(c.id,true);
+}
+function mmEnsureVisible(n){
+  const st=$('mmStage').getBoundingClientRect(); const sx=n.x*MM.k+MM.tx, sy=n.y*MM.k+MM.ty, pad=90;
+  let dx=0,dy=0; if(sx<pad) dx=pad-sx; if(sx>st.width-pad) dx=st.width-pad-sx; if(sy<pad) dy=pad-sy; if(sy>st.height-pad-110) dy=st.height-pad-110-sy;
+  if(dx||dy){ MM.tx+=dx; MM.ty+=dy; mmApply(); }
+}
+function mmDelete(){
+  const n=mmNode(MM.sel); if(!n||!n.parent) return; mmSnap();
+  const ids=mmSubtree(MM.map,n.id); MM.map.nodes=MM.map.nodes.filter(z=>!ids.includes(z.id)); MM.sel=n.parent; mmSave(); mmRender();
+  showToast(ids.length>1?`اتمسح الفرع (${ids.length} أفكار)`:'اتمسحت',()=>mmUndo());
+}
+function mmUndo(){ if(!MM.map||!MM.undo.length) return; if(MM.edit){ MM.edit=null; } MM.map.nodes=JSON.parse(MM.undo.pop()); if(MM.sel&&!mmNode(MM.sel)) MM.sel=null; mmSave(); mmRender(); }
+function mmToTask(){
+  const n=mmNode(MM.sel); if(!n||!n.t) return;
+  if(n.task&&taskById(n.task)){ showToast('الفكرة دي اتعملت مهمة قبل كده',null); return; }
+  const r=parseTask(n.t), now=new Date().toISOString();
+  const t={id:uid(),title:r.title||n.t,notes:'من خريطة: '+(mmRoot(MM.map).t||''),due:r.due||'',time:r.time,prio:r.prio,list:r.list||'inbox',rep:r.rep,sub:[],done:false,doneAt:'',created:now,updated:now};
+  S.tasks.push(t); saveTasks(); mmSnap(); n.task=t.id; mmSave(); mmRender(); showToast(`اتضافت للمهام: «${t.title}»`,null);
+}
+function mmToPlan(){
+  const m=MM.map, r=mmRoot(m); const leaves=mmLeaves(m).filter(n=>n.t&&!n.q);
+  if(!r.t){ showToast('اكتب الهدف في النص الأول',null); return; }
+  if(!leaves.length){ showToast('ضيف فروع فيها حاجات تعملها الأول',null); return; }
+  let x=m.ideaId&&ideaById(m.ideaId); const now=new Date().toISOString(); let added=0;
+  if(!x){ x={id:uid(),title:r.t,area:guessArea(r.t),stage:'plan',notes:'',why:'',outcome:'',deadline:'',budget:0,steps:[],created:TODAY,updated:now}; S.ideas.unshift(x); m.ideaId=x.id; }
+  if(x.stage==='idea'||x.stage==='think') x.stage='plan';
+  x.steps=x.steps||[]; const have=new Set(x.steps.map(z=>norm(z.t)));
+  leaves.forEach(n=>{ if(!have.has(norm(n.t))){ x.steps.push({id:uid(),t:n.t,done:!!n.done}); added++; } });
+  x.updated=now; saveIdeas(); mmSave(true);
+  showToast(added?`«${x.title}» بقت خطة فيها ${x.steps.length} خطوات`:'كل الخطوات موجودة في الخطة',null);
+}
+/* ---- pointer: pan / drag / pinch / tap ---- */
+const mmPtr=new Map(); let mmDrag=null, mmPinch=null, mmLastTap={id:'',t:0};
+function mmPt(e){ const r=$('mmStage').getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top}; }
+$('mmStage').addEventListener('pointerdown',e=>{
+  if(e.target.closest('.mm-float,.mm-zoom,.mm-pal')) return;
+  if(MM.edit){ const el=e.target.closest('.mmn'); if(el&&el.dataset.id===MM.edit.id) return; mmCommit(); }
+  e.preventDefault(); try{ getSelection().removeAllRanges(); }catch(_){}
+  $('mmStage').setPointerCapture(e.pointerId); mmPtr.set(e.pointerId,mmPt(e));
+  if(mmPtr.size===2){ const [a,b]=[...mmPtr.values()]; mmPinch={d:Math.hypot(a.x-b.x,a.y-b.y),k:MM.k}; if(mmDrag&&mmDrag.moved&&mmDrag.id) mmSave(); mmDrag=null; return; }
+  const el=e.target.closest('.mmn'), p=mmPt(e);
+  mmDrag={id:el?el.dataset.id:null,sx:p.x,sy:p.y,moved:false,tx:MM.tx,ty:MM.ty,orig:null};
+  if(el){ const ids=mmSubtree(MM.map,el.dataset.id); mmDrag.orig=ids.map(id=>{ const n=mmNode(id); return [n,n.x,n.y]; }); }
+  else $('mmStage').classList.add('panning');
+});
+$('mmStage').addEventListener('pointermove',e=>{
+  if(!mmPtr.has(e.pointerId)) return; mmPtr.set(e.pointerId,mmPt(e));
+  if(mmPinch&&mmPtr.size===2){ const [a,b]=[...mmPtr.values()]; const d=Math.hypot(a.x-b.x,a.y-b.y); mmZoomAt(mmPinch.k*d/mmPinch.d,(a.x+b.x)/2,(a.y+b.y)/2); return; }
+  if(!mmDrag) return; const p=mmPt(e), dx=p.x-mmDrag.sx, dy=p.y-mmDrag.sy;
+  if(!mmDrag.moved&&Math.hypot(dx,dy)<5) return;
+  if(!mmDrag.moved&&mmDrag.id) mmSnap();
+  mmDrag.moved=true;
+  if(mmDrag.id){ const kk=MM.k; mmDrag.orig.forEach(([n,x,y])=>{ n.x=Math.round(x+dx/kk); n.y=Math.round(y+dy/kk); const el=$('mmNodes').querySelector(`.mmn[data-id="${n.id}"]`); if(el){ el.style.left=n.x+'px'; el.style.top=n.y+'px'; } }); mmEdges(); }
+  else { MM.tx=mmDrag.tx+dx; MM.ty=mmDrag.ty+dy; mmApply(); }
+});
+function mmUp(e){
+  if(!mmPtr.has(e.pointerId)) return; mmPtr.delete(e.pointerId); $('mmStage').classList.remove('panning');
+  if(mmPinch){ if(mmPtr.size<2) mmPinch=null; mmDrag=null; return; }
+  const D=mmDrag; mmDrag=null; if(!D) return;
+  if(D.moved){ if(D.id) mmSave(); return; }
+  if(D.id){ const now=Date.now(); if(mmLastTap.id===D.id&&now-mmLastTap.t<380){ mmLastTap={id:'',t:0}; mmEdit(D.id); return; } mmLastTap={id:D.id,t:now}; mmSelect(D.id); }
+  else mmSelect(null);
+}
+$('mmStage').addEventListener('pointerup',mmUp); $('mmStage').addEventListener('pointercancel',mmUp);
+$('mmStage').addEventListener('wheel',e=>{ e.preventDefault(); const p=mmPt(e);
+  if(e.ctrlKey||e.metaKey||Math.abs(e.deltaY)>=Math.abs(e.deltaX)&&!e.shiftKey&&e.deltaMode===0&&Math.abs(e.deltaY)>40) mmZoomAt(MM.k*Math.exp(-e.deltaY*.0018),p.x,p.y);
+  else { MM.tx-=e.deltaX; MM.ty-=e.deltaY; mmApply(); } },{passive:false});
+$('mmNodes').addEventListener('keydown',e=>{
+  if(!MM.edit) return;
+  if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); const id=MM.edit.id; mmCommit(); if(mmNode(id)) mmSelect(id); }
+  else if(e.key==='Tab'){ e.preventDefault(); const id=MM.edit.id; mmCommit(); if(mmNode(id)){ MM.sel=id; mmAdd('child'); } }
+  else if(e.key==='Escape'){ e.preventDefault(); mmCommit(true); }
+  e.stopPropagation();
+});
+document.addEventListener('keydown',e=>{
+  if($('mm').hidden||MM.edit||e.target.closest('input,textarea,[contenteditable=true]')) return;
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){ e.preventDefault(); mmUndo(); return; }
+  if(e.key==='Escape'){ if(MM.sel) mmSelect(null); else mmClose(); return; }
+  if(!MM.sel) return;
+  if(e.key==='Tab'){ e.preventDefault(); mmAdd('child'); }
+  else if(e.key==='Enter'){ e.preventDefault(); mmAdd(mmNode(MM.sel).parent?'sib':'child'); }
+  else if(e.key==='F2'||e.key===' '){ e.preventDefault(); mmEdit(MM.sel); }
+  else if(e.key==='Delete'||e.key==='Backspace'){ e.preventDefault(); mmDelete(); }
+});
+$('mmFloat').addEventListener('click',e=>{
+  const b=e.target.closest('[data-mm]'); if(!b) return; const a=b.dataset.mm, n=mmNode(MM.sel); if(!n) return;
+  if(a==='child') mmAdd('child'); else if(a==='sib') mmAdd('sib'); else if(a==='edit') mmEdit(n.id);
+  else if(a==='color'){ MM.palette=!MM.palette; mmFloat(); }
+  else if(a==='done'){ mmSnap(); n.done=!n.done; mmSave(); mmRender(); }
+  else if(a==='task') mmToTask(); else if(a==='del') mmDelete();
+});
+$('mmPal').addEventListener('click',e=>{ const b=e.target.closest('[data-col]'); if(!b) return; const n=mmNode(MM.sel); if(!n) return; mmSnap();
+  mmSubtree(MM.map,n.id).forEach(id=>{ const z=mmNode(id); if(z.parent||z===n) z.c=b.dataset.col; }); MM.palette=false; mmSave(); mmRender(); });
+$('mmClose').addEventListener('click',mmClose);
+$('mmUndo').addEventListener('click',mmUndo);
+$('mmLayout').addEventListener('click',()=>{ mmSnap(); mmLayout(MM.map); mmSave(); mmRender(); requestAnimationFrame(mmFit); });
+$('mmFitBtn').addEventListener('click',mmFit);
+$('mmZin').addEventListener('click',()=>{ const r=$('mmStage').getBoundingClientRect(); mmZoomAt(MM.k*1.2,r.width/2,r.height/2); });
+$('mmZout').addEventListener('click',()=>{ const r=$('mmStage').getBoundingClientRect(); mmZoomAt(MM.k/1.2,r.width/2,r.height/2); });
+$('mmPlan').addEventListener('click',mmToPlan);
+$('mmDelMap').addEventListener('click',()=>{
+  if(!MM.delArm){ MM.delArm=true; $('mmDelMap').textContent='متأكد؟ دوس تاني'; setTimeout(()=>{ MM.delArm=false; if($('mmDelMap')) $('mmDelMap').textContent='امسح الخريطة'; },3000); return; }
+  const m=MM.map; delete S.maps[m.id]; writeDoc('mm-'+m.id,{deleted:true}); clearTimeout(MM.saveT); MM.saveT=null; MM.map=null;
+  $('mm').hidden=true; document.body.style.overflow=''; renderMaps();
+  showToast('اتمسحت الخريطة',()=>{ S.maps[m.id]=m; writeDoc('mm-'+m.id,m); renderMaps(); });
+});
+window.addEventListener('resize',()=>{ if(MM.map) mmApply(); });
+/* ---- gallery in ideas ---- */
+function mmPreview(m){
+  const ns=m.nodes; if(!ns.length) return '';
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9; ns.forEach(n=>{ x0=Math.min(x0,n.x); x1=Math.max(x1,n.x); y0=Math.min(y0,n.y); y1=Math.max(y1,n.y); });
+  const pw=Math.max(200,x1-x0)+260, ph=Math.max(150,y1-y0)+160, cx=(x0+x1)/2, cy=(y0+y1)/2;
+  const by={}; ns.forEach(n=>by[n.id]=n);
+  const lines=ns.filter(n=>n.parent&&by[n.parent]).map(n=>{ const p=by[n.parent]; return `<path d="M${p.x},${p.y} C${(p.x+n.x)/2},${p.y} ${(p.x+n.x)/2},${n.y} ${n.x},${n.y}" stroke="${n.c||'#0E7C66'}" stroke-width="5" fill="none" opacity=".75"/>`; }).join('');
+  const dots=ns.map(n=>!n.parent?`<rect x="${n.x-70}" y="${n.y-26}" width="140" height="52" rx="16" fill="var(--hero)"/>`:`<rect x="${n.x-44}" y="${n.y-16}" width="88" height="32" rx="10" fill="${n.c||'#0E7C66'}" opacity="${n.done?.35:.9}"/>`).join('');
+  return `<svg viewBox="${cx-pw/2} ${cy-ph/2} ${pw} ${ph}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${lines}${dots}</svg>`;
+}
+function renderMaps(){
+  if(!$('mmGallery')) return;
+  const list=mapList();
+  $('mmGallery').innerHTML=`<form class="mm-new" id="mmNewForm"><label class="field">هدف جديد تفكّر فيه<input id="mmGoal" placeholder="مثلاً: أفتح فرع لـ SUSTRA في السعودية" autocomplete="off"></label>
+      <label class="switch-row sm"><input type="checkbox" id="mmHelp" checked><span><b>ابدأ بأسئلة تساعدك تفكّر</b><small>ليه، أتعلم إيه، محتاج إيه، مين يساعد، إيه اللي يعطّل، وأول خطوة</small></span></label>
+      <button class="btn" type="submit">ارسم الخريطة</button></form>`+
+    list.map(m=>{ const r=mmRoot(m)||{t:''}, n=m.nodes.length-1, lv=mmLeaves(m).filter(z=>!z.q), dn=lv.filter(z=>z.done).length, x=m.ideaId&&ideaById(m.ideaId);
+      return `<button type="button" class="mmtile" data-map="${m.id}"><span class="mmprev">${mmPreview(m)}</span><span class="gt">${esc(r.t||'من غير اسم')}</span><span class="muted" style="font-size:.76rem">${n===0?'لسه فاضية':n===1?'فكرة واحدة':n===2?'فكرتين':n<=10?n+' أفكار':n+' فكرة'}${lv.length?` · ${dn}/${lv.length} خلصت`:''}${x?` · <span class="ia" style="--ac:${STAGE_BY[x.stage]?.color||'var(--accent)'}">${STAGE_BY[x.stage]?.name||''}</span>`:''}</span></button>`; }).join('');
+}
+$('mapPanel').addEventListener('click',e=>{ const t=e.target.closest('[data-map]'); if(t) mmOpen(t.dataset.map); });
+$('mapPanel').addEventListener('submit',e=>{ if(e.target.id!=='mmNewForm') return; e.preventDefault();
+  const g=$('mmGoal').value.trim(); const m=newMap(g,$('mmHelp').checked); mmOpen(m.id); });
 
 /* ================= قفل مصروفي ================= */
 const LOCK_IDLE=5*60*1000, LOCK_AWAY=60*1000, PIN_LEN=4;
